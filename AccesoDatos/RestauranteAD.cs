@@ -1,0 +1,71 @@
+﻿using System;
+using Entidades;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+
+namespace AccesoDatos
+{
+    public static class RestauranteAD
+    {
+       private static Restaurante[] restaurantes = new Restaurante[20];
+
+
+        public static void AgregarRestaurante(Restaurante restaurante)
+        {
+
+            int contador = 0;
+            bool revision = true;
+
+            for (int i = 0; i < restaurantes.Count(); i++)
+            {
+
+                if (restaurantes[i] == null)
+                {
+                    contador = i;
+                    revision = false;
+                    break;
+                }
+            }
+
+            if (!revision)
+            {
+                restaurantes[contador] = restaurante;
+            }
+            else
+            {
+                throw new Exception("La lista se encuentra llena.");
+            }
+
+
+        }
+
+        public static Restaurante[] ListarRestaurante()
+        {
+            try
+            {
+            return restaurantes;
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+
+        }
+
+        public static Restaurante ObtenerRestaurante(int idRestaurante)
+        {
+
+            return restaurantes.Where(x=>x.IdRestaurante == idRestaurante).FirstOrDefault();
+
+        }
+
+
+
+
+    }
+}
