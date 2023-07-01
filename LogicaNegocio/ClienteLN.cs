@@ -8,16 +8,14 @@ using System.Collections.Generic;
 
 namespace LogicaNegocio
 {
-
-    //se consulta el acceso de datos y se proceda la informacion nesesaria pen caso de manipular la informacion.
-    public class RestauranteLN
+    public class ClienteLN
     {
 
-        public void AgregarRestaurante(Restaurante restaurante)
+        public void AgregarCliente(Cliente ingresarClientes)
         {
             try
             {
-                RestauranteAD.AgregarRestaurante(restaurante);
+                ClienteAD.AgregarCliente(ingresarClientes);
 
             }
             catch (Exception ex)
@@ -30,12 +28,12 @@ namespace LogicaNegocio
         }
 
 
-        public Restaurante[] ListarRestaurantes()
+        public Cliente[] ListarCliente()
         {
 
             try
             {
-                return RestauranteAD.ListarRestaurante();
+                return ClienteAD.ListarCliente();
             }
             catch (Exception ex)
             {
@@ -44,7 +42,5 @@ namespace LogicaNegocio
             }
 
         }
-
-
     }
 }

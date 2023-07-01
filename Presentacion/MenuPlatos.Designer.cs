@@ -28,30 +28,33 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.descripcion = new System.Windows.Forms.TextBox();
+            this.txtNombrePlato = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.idPlato = new System.Windows.Forms.TextBox();
+            this.txtIdPlato = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.precioPlato = new System.Windows.Forms.TextBox();
+            this.txtPrecioPlato = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.txtIdValidar = new System.Windows.Forms.TextBox();
+            this.dgvPlato = new System.Windows.Forms.DataGridView();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.dgvListaCategoriaPlato = new System.Windows.Forms.DataGridView();
+            this.label5 = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvPlato)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvListaCategoriaPlato)).BeginInit();
             this.SuspendLayout();
             // 
-            // descripcion
+            // txtNombrePlato
             // 
-            this.descripcion.BackColor = System.Drawing.SystemColors.InactiveBorder;
-            this.descripcion.Location = new System.Drawing.Point(152, 42);
-            this.descripcion.Name = "descripcion";
-            this.descripcion.Size = new System.Drawing.Size(149, 20);
-            this.descripcion.TabIndex = 20;
-            this.descripcion.TextChanged += new System.EventHandler(this.descripcion_TextChanged);
+            this.txtNombrePlato.BackColor = System.Drawing.SystemColors.InactiveBorder;
+            this.txtNombrePlato.Location = new System.Drawing.Point(152, 42);
+            this.txtNombrePlato.Name = "txtNombrePlato";
+            this.txtNombrePlato.Size = new System.Drawing.Size(149, 20);
+            this.txtNombrePlato.TabIndex = 20;
+            this.txtNombrePlato.TextChanged += new System.EventHandler(this.descripcion_TextChanged);
             // 
             // label2
             // 
@@ -61,13 +64,13 @@
             this.label2.Size = new System.Drawing.Size(0, 13);
             this.label2.TabIndex = 18;
             // 
-            // idPlato
+            // txtIdPlato
             // 
-            this.idPlato.BackColor = System.Drawing.SystemColors.InactiveBorder;
-            this.idPlato.Location = new System.Drawing.Point(125, 12);
-            this.idPlato.Name = "idPlato";
-            this.idPlato.Size = new System.Drawing.Size(94, 20);
-            this.idPlato.TabIndex = 17;
+            this.txtIdPlato.BackColor = System.Drawing.SystemColors.InactiveBorder;
+            this.txtIdPlato.Location = new System.Drawing.Point(125, 12);
+            this.txtIdPlato.Name = "txtIdPlato";
+            this.txtIdPlato.Size = new System.Drawing.Size(94, 20);
+            this.txtIdPlato.TabIndex = 17;
             // 
             // label1
             // 
@@ -77,13 +80,13 @@
             this.label1.Size = new System.Drawing.Size(0, 13);
             this.label1.TabIndex = 15;
             // 
-            // precioPlato
+            // txtPrecioPlato
             // 
-            this.precioPlato.BackColor = System.Drawing.SystemColors.InactiveBorder;
-            this.precioPlato.Location = new System.Drawing.Point(146, 89);
-            this.precioPlato.Name = "precioPlato";
-            this.precioPlato.Size = new System.Drawing.Size(78, 20);
-            this.precioPlato.TabIndex = 25;
+            this.txtPrecioPlato.BackColor = System.Drawing.SystemColors.InactiveBorder;
+            this.txtPrecioPlato.Location = new System.Drawing.Point(146, 89);
+            this.txtPrecioPlato.Name = "txtPrecioPlato";
+            this.txtPrecioPlato.Size = new System.Drawing.Size(78, 20);
+            this.txtPrecioPlato.TabIndex = 25;
             // 
             // label3
             // 
@@ -121,20 +124,20 @@
             this.label4.TabIndex = 34;
             this.label4.Text = "Ingrese el id de la categoria:";
             // 
-            // textBox1
+            // txtIdValidar
             // 
-            this.textBox1.Location = new System.Drawing.Point(152, 157);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
-            this.textBox1.TabIndex = 35;
+            this.txtIdValidar.Location = new System.Drawing.Point(152, 157);
+            this.txtIdValidar.Name = "txtIdValidar";
+            this.txtIdValidar.Size = new System.Drawing.Size(100, 20);
+            this.txtIdValidar.TabIndex = 35;
             // 
-            // dataGridView1
+            // dgvPlato
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(329, 56);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(416, 136);
-            this.dataGridView1.TabIndex = 36;
+            this.dgvPlato.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvPlato.Location = new System.Drawing.Point(329, 259);
+            this.dgvPlato.Name = "dgvPlato";
+            this.dgvPlato.Size = new System.Drawing.Size(416, 136);
+            this.dgvPlato.TabIndex = 36;
             // 
             // button1
             // 
@@ -144,6 +147,7 @@
             this.button1.TabIndex = 37;
             this.button1.Text = "Guardar";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
             // 
@@ -154,45 +158,67 @@
             this.button2.Text = "Regresar";
             this.button2.UseVisualStyleBackColor = true;
             // 
+            // dgvListaCategoriaPlato
+            // 
+            this.dgvListaCategoriaPlato.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvListaCategoriaPlato.Location = new System.Drawing.Point(329, 31);
+            this.dgvListaCategoriaPlato.Name = "dgvListaCategoriaPlato";
+            this.dgvListaCategoriaPlato.Size = new System.Drawing.Size(416, 158);
+            this.dgvListaCategoriaPlato.TabIndex = 39;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(449, 12);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(153, 13);
+            this.label5.TabIndex = 40;
+            this.label5.Text = "Lista de categorias Disponibles";
+            // 
             // MenuPlatos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.dgvListaCategoriaPlato);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.dataGridView1);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.dgvPlato);
+            this.Controls.Add(this.txtIdValidar);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.precioPlato);
-            this.Controls.Add(this.descripcion);
+            this.Controls.Add(this.txtPrecioPlato);
+            this.Controls.Add(this.txtNombrePlato);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.idPlato);
+            this.Controls.Add(this.txtIdPlato);
             this.Controls.Add(this.label1);
             this.Name = "MenuPlatos";
             this.Text = "MenuRegistrarPlatos";
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvPlato)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvListaCategoriaPlato)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-        private System.Windows.Forms.TextBox descripcion;
+        private System.Windows.Forms.TextBox txtNombrePlato;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox idPlato;
+        private System.Windows.Forms.TextBox txtIdPlato;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox precioPlato;
+        private System.Windows.Forms.TextBox txtPrecioPlato;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.TextBox txtIdValidar;
+        private System.Windows.Forms.DataGridView dgvPlato;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.DataGridView dgvListaCategoriaPlato;
+        private System.Windows.Forms.Label label5;
     }
 }

@@ -41,6 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CategoriaPlatoLN.cs" />
+    <Compile Include="ClienteLN.cs" />
+    <Compile Include="PlatoLN.cs" />
     <Compile Include="RestauranteLN.cs" />
     <Compile Include="Arrays.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

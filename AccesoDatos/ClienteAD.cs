@@ -7,21 +7,22 @@ using System.Collections.Generic;
 
 namespace AccesoDatos
 {
-    public static class RestauranteAD
+    public static class ClienteAD
     {
-       private static Restaurante[] restaurantes = new Restaurante[20];
+
+        private static Cliente[] ingresarCliente = new Cliente[20];
 
 
-        public static void AgregarRestaurante(Restaurante restaurante)
+        public static void AgregarCliente(Cliente ingresarClientes)
         {
 
             int contador = 0;
             bool revision = true;
 
-            for (int i = 0; i < restaurantes.Count(); i++)
+            for (int i = 0; i < ingresarCliente.Count(); i++)
             {
 
-                if (restaurantes[i] == null)
+                if (ingresarCliente[i] == null)
                 {
                     contador = i;
                     revision = false;
@@ -31,7 +32,7 @@ namespace AccesoDatos
 
             if (!revision)
             {
-                restaurantes[contador] = restaurante;
+                ingresarCliente[contador] = ingresarClientes;
             }
             else
             {
@@ -41,11 +42,11 @@ namespace AccesoDatos
 
         }
 
-        public static Restaurante[] ListarRestaurante()
+        public static Cliente[] ListarCliente()
         {
             try
             {
-            return restaurantes;
+                return ingresarCliente;
 
             }
             catch (Exception ex)
@@ -57,12 +58,13 @@ namespace AccesoDatos
 
         }
 
-        public static Restaurante ObtenerRestaurante(int idRestaurante)
+        public static Cliente ObtenerRestaurante(string idCliente)
         {
 
-            return restaurantes.Where(x=>x.IdRestaurante == idRestaurante).FirstOrDefault();
+            return ingresarCliente.Where(x => x.IdPersona == idCliente).FirstOrDefault();
 
         }
+
 
     }
 }

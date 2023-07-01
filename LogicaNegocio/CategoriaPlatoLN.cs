@@ -10,14 +10,14 @@ namespace LogicaNegocio
 {
 
     //se consulta el acceso de datos y se proceda la informacion nesesaria pen caso de manipular la informacion.
-    public class RestauranteLN
+    public class CategoriaPlatoLN
     {
 
-        public void AgregarRestaurante(Restaurante restaurante)
+        public void AgregarCategoriaPlato(CategoriaPlato categoria)
         {
             try
             {
-                RestauranteAD.AgregarRestaurante(restaurante);
+                CategoriaPlatoAD.AgregarCategoria(categoria);
 
             }
             catch (Exception ex)
@@ -30,12 +30,12 @@ namespace LogicaNegocio
         }
 
 
-        public Restaurante[] ListarRestaurantes()
+        public CategoriaPlato[] ListarCategoriaPlato()
         {
 
             try
             {
-                return RestauranteAD.ListarRestaurante();
+                return CategoriaPlatoAD.ListarCategoriaPlato();
             }
             catch (Exception ex)
             {
@@ -44,7 +44,7 @@ namespace LogicaNegocio
             }
 
         }
-
-
     }
 }
+
+

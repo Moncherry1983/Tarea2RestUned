@@ -39,18 +39,18 @@
             this.label4 = new System.Windows.Forms.Label();
             this.dgvRestaurantes = new System.Windows.Forms.DataGridView();
             this.cmbEstado = new System.Windows.Forms.ComboBox();
-            this.btnRegresar = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
+            this.button2 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRestaurantes)).BeginInit();
             this.SuspendLayout();
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(12, 283);
+            this.button1.Location = new System.Drawing.Point(12, 238);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(114, 67);
             this.button1.TabIndex = 0;
@@ -129,15 +129,15 @@
             // dgvRestaurantes
             // 
             this.dgvRestaurantes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvRestaurantes.Location = new System.Drawing.Point(165, 213);
+            this.dgvRestaurantes.Location = new System.Drawing.Point(178, 236);
             this.dgvRestaurantes.Name = "dgvRestaurantes";
-            this.dgvRestaurantes.Size = new System.Drawing.Size(586, 202);
+            this.dgvRestaurantes.Size = new System.Drawing.Size(590, 202);
             this.dgvRestaurantes.TabIndex = 29;
             this.dgvRestaurantes.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // cmbEstado
             // 
-            this.cmbEstado.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            this.cmbEstado.BackColor = System.Drawing.SystemColors.HighlightText;
             this.cmbEstado.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.cmbEstado.FormattingEnabled = true;
             this.cmbEstado.Items.AddRange(new object[] {
@@ -147,16 +147,6 @@
             this.cmbEstado.Name = "cmbEstado";
             this.cmbEstado.Size = new System.Drawing.Size(101, 21);
             this.cmbEstado.TabIndex = 30;
-            // 
-            // btnRegresar
-            // 
-            this.btnRegresar.Location = new System.Drawing.Point(12, 379);
-            this.btnRegresar.Name = "btnRegresar";
-            this.btnRegresar.Size = new System.Drawing.Size(126, 36);
-            this.btnRegresar.TabIndex = 31;
-            this.btnRegresar.Text = "Regresar";
-            this.btnRegresar.UseVisualStyleBackColor = true;
-            this.btnRegresar.Click += new System.EventHandler(this.btnRegresar_Click);
             // 
             // label5
             // 
@@ -203,17 +193,27 @@
             this.label9.TabIndex = 36;
             this.label9.Text = "Ingrese el nombre del restaurante:";
             // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(12, 331);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(114, 67);
+            this.button2.TabIndex = 37;
+            this.button2.Text = "Regresar";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
             // MenuRestaurante
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.btnRegresar);
             this.Controls.Add(this.cmbEstado);
             this.Controls.Add(this.dgvRestaurantes);
             this.Controls.Add(this.txtTelefono);
@@ -247,11 +247,11 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.DataGridView dgvRestaurantes;
         private System.Windows.Forms.ComboBox cmbEstado;
-        private System.Windows.Forms.Button btnRegresar;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Button button2;
     }
 }

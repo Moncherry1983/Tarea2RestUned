@@ -82,7 +82,7 @@ namespace Presentacion
             catch (Exception ex)
             {
 
-                MessageBox.Show(ex.Message + "  HA SUCEDIDO UN error  " + MessageBoxButtons.OK + MessageBoxIcon.Error) ;
+                MessageBox.Show(ex.Message + "\n\tHa sucedido un error y no podido registrar el restaurante\n");
             }
 
 
@@ -96,12 +96,14 @@ namespace Presentacion
 
         private void btnRegresar_Click(object sender, EventArgs e)
         {
+           
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
             this.Close();
 
         }
-
-
-
     }
 }
 

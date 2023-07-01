@@ -11,78 +11,16 @@ namespace LogicaNegocio
     public class Arrays
     {
 
-        // Inicializar el arreglo con 20 posiciones
-        Restaurante[] restaurantes = new Restaurante[20];
-        CategoriaPlato[] categorias = new CategoriaPlato[20];
-        RegistrarPlato[] ingresarPlato = new RegistrarPlato[20];
-        Cliente[] ingresarCliente = new Cliente[20];
+       
+       
+       
+       ;
         PlatoRestaurante[] platos = new PlatoRestaurante[10];
         PlatoRestaurante[] platoRestaurante = new PlatoRestaurante[20];
        
 
 
-        public void GuardarRestaurante(Restaurante restaurante)
-        {
-
-// hola aqui estoy dando fuerte.
-
-        }
-
-
-
-        public void GuardarCategoria(CategoriaPlato categoria)
-        {
-            int contador = 0;
-            bool revision = true;
-
-            for (int i = 0; i < categorias.Count(); i++)
-            {
-
-                if (categorias[i] == null)
-                {
-                    contador = i;
-                    revision = false;
-                    break;
-                }
-            }
-
-            if (!revision)
-            {
-                categorias[contador] = categoria;
-            }
-            else
-            {
-                throw new Exception("La lista se encuentra llena.");
-            }
-
-        }
-
-        public void GuardarIngresarPlato(RegistrarPlato ingresarPlatos)
-        {
-            int contador = 0;
-            bool revision = true;
-
-            for (int i = 0; i < ingresarPlato.Count(); i++)
-            {
-
-                if (ingresarPlato[i] == null)
-                {
-                    contador = i;
-                    revision = false;
-                    break;
-                }
-            }
-
-            if (!revision)
-            {
-                ingresarPlato[contador] = ingresarPlatos;
-            }
-            else
-            {
-                throw new Exception("La lista se encuentra llena.");
-            }
-
-        }
+      
 
         public void GuardaringresarClient(Cliente ingresarClientes)
         {
