@@ -25,11 +25,11 @@ namespace Presentacion
 
             try
             {
-                PlatoLN platoLN = new PlatoLN();
-                RegistrarPlato registrarPlato= new RegistrarPlato(int.Parse(txtIdPlato.Text), txtNombrePlato, int.Parse(txtPrecioPlato.Text), int.Parse(txtIdValidar.Text));
-                platoLN.AgregarPlato(registrarPlato);
-                dgvPlato.DataSource = platoLN.ListarPlato();
-                dgvPlato.Refresh();
+            //    PlatoLN platoLN = new PlatoLN();
+            //    RegistrarPlato registrarPlato= new RegistrarPlato(int.Parse(txtIdPlato.Text), txtNombrePlato, int.Parse(txtPrecioPlato.Text), int.Parse(txtIdValidar.Text));
+            //    platoLN.AgregarPlato(registrarPlato);
+            //    dgvPlato.DataSource = platoLN.ListarPlato();
+            //    dgvPlato.Refresh();
 
 
             }
@@ -42,6 +42,12 @@ namespace Presentacion
 
 
 
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            new MenuPrincipal().Show();
+            this.Hide();
         }
     }
 }

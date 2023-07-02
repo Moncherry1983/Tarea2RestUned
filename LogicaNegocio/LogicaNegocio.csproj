@@ -44,8 +44,9 @@
     <Compile Include="CategoriaPlatoLN.cs" />
     <Compile Include="ClienteLN.cs" />
     <Compile Include="PlatoLN.cs" />
+    <Compile Include="PlatoRestaurante2LG.cs" />
+    <Compile Include="PlatoRestauranteLN.cs" />
     <Compile Include="RestauranteLN.cs" />
-    <Compile Include="Arrays.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ValidacionArrays.cs" />
   </ItemGroup>

@@ -82,6 +82,12 @@
     <Compile Include="ConsultarExtra.Designer.cs">
       <DependentUpon>ConsultarExtra.cs</DependentUpon>
     </Compile>
+    <Compile Include="ConsultarRestaurante.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ConsultarRestaurante.Designer.cs">
+      <DependentUpon>ConsultarRestaurante.cs</DependentUpon>
+    </Compile>
     <Compile Include="MenuCategoríaPlato.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -143,6 +149,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ConsultarExtra.resx">
       <DependentUpon>ConsultarExtra.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ConsultarRestaurante.resx">
+      <DependentUpon>ConsultarRestaurante.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MenuCategoríaPlato.resx">
       <DependentUpon>MenuCategoríaPlato.cs</DependentUpon>

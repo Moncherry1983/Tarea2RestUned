@@ -101,6 +101,7 @@
             this.button6.TabIndex = 5;
             this.button6.Text = "Registrar Extras";
             this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
             // button7
             // 
@@ -110,6 +111,7 @@
             this.button7.TabIndex = 6;
             this.button7.Text = "Consultar Restaurante";
             this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
             // button8
             // 
@@ -119,6 +121,7 @@
             this.button8.TabIndex = 7;
             this.button8.Text = "Consultar Categoría Plato";
             this.button8.UseVisualStyleBackColor = true;
+            this.button8.Click += new System.EventHandler(this.button8_Click);
             // 
             // button9
             // 
@@ -128,6 +131,7 @@
             this.button9.TabIndex = 8;
             this.button9.Text = "Consultar Plato";
             this.button9.UseVisualStyleBackColor = true;
+            this.button9.Click += new System.EventHandler(this.button9_Click);
             // 
             // button10
             // 
@@ -172,7 +176,7 @@
             this.titulo.Text = " Bienvenido al Programa Rest-Uned";
             this.titulo.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
-            // MenuPrincipla
+            // MenuPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -190,7 +194,8 @@
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
-            this.Name = "MenuPrincipla";
+            this.Name = "MenuPrincipal";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
             this.ResumeLayout(false);
             this.PerformLayout();

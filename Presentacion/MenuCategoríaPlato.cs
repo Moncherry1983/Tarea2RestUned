@@ -34,7 +34,8 @@ namespace Presentacion
 
         private void button1_Click(object sender, System.EventArgs e)
         {
-            Close();
+            new MenuPrincipal().Show();
+            this.Hide();
         }
 
         private void textBox1_TextChanged(object sender, System.EventArgs e)
