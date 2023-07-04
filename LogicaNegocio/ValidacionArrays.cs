@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace LogicaNegocios
 {
-    public class ValidacionArrays
+    public static class ValidacionArrays
     {
         // Método que permite buscar un restaurante por su id en el arreglo
         public static Restaurante BuscarRestaurante(Restaurante[] restaurantes, int id)

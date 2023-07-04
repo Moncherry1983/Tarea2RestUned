@@ -169,9 +169,10 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.titulo.BackColor = System.Drawing.SystemColors.MenuHighlight;
-            this.titulo.Location = new System.Drawing.Point(338, 2);
+            this.titulo.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.titulo.Location = new System.Drawing.Point(246, 0);
             this.titulo.Name = "titulo";
-            this.titulo.Size = new System.Drawing.Size(252, 20);
+            this.titulo.Size = new System.Drawing.Size(476, 38);
             this.titulo.TabIndex = 12;
             this.titulo.Text = " Bienvenido al Programa Rest-Uned";
             this.titulo.TextChanged += new System.EventHandler(this.textBox1_TextChanged);

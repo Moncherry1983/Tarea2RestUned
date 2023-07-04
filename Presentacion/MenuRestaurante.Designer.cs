@@ -37,7 +37,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.txtTelefono = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.dgvRestaurantes = new System.Windows.Forms.DataGridView();
             this.cmbEstado = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
@@ -45,6 +44,7 @@
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
+            this.dgvRestaurantes = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRestaurantes)).BeginInit();
             this.SuspendLayout();
             // 
@@ -117,6 +117,7 @@
             this.txtTelefono.Name = "txtTelefono";
             this.txtTelefono.Size = new System.Drawing.Size(101, 20);
             this.txtTelefono.TabIndex = 28;
+            this.txtTelefono.TextChanged += new System.EventHandler(this.txtTelefono_TextChanged);
             // 
             // label4
             // 
@@ -125,15 +126,6 @@
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(0, 13);
             this.label4.TabIndex = 26;
-            // 
-            // dgvRestaurantes
-            // 
-            this.dgvRestaurantes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvRestaurantes.Location = new System.Drawing.Point(178, 236);
-            this.dgvRestaurantes.Name = "dgvRestaurantes";
-            this.dgvRestaurantes.Size = new System.Drawing.Size(590, 202);
-            this.dgvRestaurantes.TabIndex = 29;
-            this.dgvRestaurantes.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // cmbEstado
             // 
@@ -147,6 +139,7 @@
             this.cmbEstado.Name = "cmbEstado";
             this.cmbEstado.Size = new System.Drawing.Size(101, 21);
             this.cmbEstado.TabIndex = 30;
+            this.cmbEstado.SelectedIndexChanged += new System.EventHandler(this.cmbEstado_SelectedIndexChanged);
             // 
             // label5
             // 
@@ -203,11 +196,20 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
+            // dgvRestaurantes
+            // 
+            this.dgvRestaurantes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvRestaurantes.Location = new System.Drawing.Point(178, 198);
+            this.dgvRestaurantes.Name = "dgvRestaurantes";
+            this.dgvRestaurantes.Size = new System.Drawing.Size(610, 240);
+            this.dgvRestaurantes.TabIndex = 38;
+            // 
             // MenuRestaurante
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.dgvRestaurantes);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.label8);
@@ -215,7 +217,6 @@
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.cmbEstado);
-            this.Controls.Add(this.dgvRestaurantes);
             this.Controls.Add(this.txtTelefono);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.txtDireccion);
@@ -245,7 +246,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txtTelefono;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.DataGridView dgvRestaurantes;
         private System.Windows.Forms.ComboBox cmbEstado;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
@@ -253,5 +253,6 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.DataGridView dgvRestaurantes;
     }
 }
