@@ -41,23 +41,44 @@ namespace AccesoDatos
 
         }
 
-        public static Restaurante[] ListarRestaurante()
+        //public static Restaurante[] ListarRestaurante()
+        //{
+        //    try
+        //    {
+        //        return restaurantes;
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+
+        //        throw ex;
+        //    }
+
+        //}
+
+    public static Restaurante[] ListarRestaurante()
+    {
+        try
         {
-            try
-            {
-            return restaurantes;
 
-            }
-            catch (Exception ex)
-            {
-
-                throw ex;
-            }
-
+            Restaurante[] restaurante = new Restaurante[2];
+            restaurante[0] = new Restaurante(1, "Restaurante Entre nubes", "100 norte", true, "24866587");
+            restaurante[1] = new Restaurante(2, "Restaurante como en casa", "200 sur", true, "57985321");
+            restaurante[0] = new Restaurante(1, "Restaurante La cocina", "100 norte", false, "24866587");
+            restaurante[1] = new Restaurante(2, "Restaurante mi cuñado", "200 sur", true, "57985321");
+            return restaurante;
 
         }
+        catch (Exception ex)
+        {
 
-        public static Restaurante ObtenerRestaurante(int idRestaurante)
+            throw ex;
+        }
+
+
+    }
+
+    public static Restaurante ObtenerRestaurante(int idRestaurante)
         {
 
             return restaurantes.Where(x=>x.IdRestaurante == idRestaurante).FirstOrDefault();

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using static LogicaNegocio.PlatoRestauranteLN;
 
 namespace LogicaNegocio
 {
@@ -13,9 +14,14 @@ namespace LogicaNegocio
 
         public void AgregarCliente(Cliente ingresarClientes)
         {
+           
             try
             {
-                ClienteAD.AgregarCliente(ingresarClientes);
+                var clienteActuales = ClienteAD.ListarCliente();
+                if (clienteActuales.Where(clien => clien != null && clien.IdPersona == ingresarClientes.IdPersona).Count() == 0)
+                    ClienteAD.AgregarCliente(ingresarClientes);
+                else
+                    throw new Exception("Ya existe un cliente con ese Id");
 
             }
             catch (Exception ex)
@@ -23,7 +29,6 @@ namespace LogicaNegocio
 
                 throw ex;
             }
-
 
         }
 

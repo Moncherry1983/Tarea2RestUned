@@ -36,15 +36,12 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.txtIdValidar = new System.Windows.Forms.TextBox();
             this.dgvPlato = new System.Windows.Forms.DataGridView();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
-            this.dgvListaCategoriaPlato = new System.Windows.Forms.DataGridView();
             this.label5 = new System.Windows.Forms.Label();
+            this.cmbPlatos = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPlato)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvListaCategoriaPlato)).BeginInit();
             this.SuspendLayout();
             // 
             // txtNombrePlato
@@ -71,6 +68,7 @@
             this.txtIdPlato.Name = "txtIdPlato";
             this.txtIdPlato.Size = new System.Drawing.Size(94, 20);
             this.txtIdPlato.TabIndex = 17;
+            this.txtIdPlato.TextChanged += new System.EventHandler(this.txtIdPlato_TextChanged);
             // 
             // label1
             // 
@@ -87,6 +85,7 @@
             this.txtPrecioPlato.Name = "txtPrecioPlato";
             this.txtPrecioPlato.Size = new System.Drawing.Size(78, 20);
             this.txtPrecioPlato.TabIndex = 25;
+            this.txtPrecioPlato.TextChanged += new System.EventHandler(this.txtPrecioPlato_TextChanged);
             // 
             // label3
             // 
@@ -115,29 +114,14 @@
             this.label8.TabIndex = 33;
             this.label8.Text = "Ingrese el nombre del plato:";
             // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(0, 160);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(140, 13);
-            this.label4.TabIndex = 34;
-            this.label4.Text = "Ingrese el id de la categoria:";
-            // 
-            // txtIdValidar
-            // 
-            this.txtIdValidar.Location = new System.Drawing.Point(152, 157);
-            this.txtIdValidar.Name = "txtIdValidar";
-            this.txtIdValidar.Size = new System.Drawing.Size(100, 20);
-            this.txtIdValidar.TabIndex = 35;
-            // 
             // dgvPlato
             // 
             this.dgvPlato.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvPlato.Location = new System.Drawing.Point(329, 259);
+            this.dgvPlato.Location = new System.Drawing.Point(239, 214);
             this.dgvPlato.Name = "dgvPlato";
             this.dgvPlato.Size = new System.Drawing.Size(416, 136);
             this.dgvPlato.TabIndex = 36;
+            this.dgvPlato.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvPlato_CellFormatting);
             // 
             // button1
             // 
@@ -159,35 +143,34 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
-            // dgvListaCategoriaPlato
-            // 
-            this.dgvListaCategoriaPlato.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvListaCategoriaPlato.Location = new System.Drawing.Point(329, 31);
-            this.dgvListaCategoriaPlato.Name = "dgvListaCategoriaPlato";
-            this.dgvListaCategoriaPlato.Size = new System.Drawing.Size(416, 158);
-            this.dgvListaCategoriaPlato.TabIndex = 39;
-            // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(449, 12);
+            this.label5.Location = new System.Drawing.Point(9, 141);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(153, 13);
             this.label5.TabIndex = 40;
             this.label5.Text = "Lista de categorias Disponibles";
+            // 
+            // cmbPlatos
+            // 
+            this.cmbPlatos.FormattingEnabled = true;
+            this.cmbPlatos.Location = new System.Drawing.Point(178, 133);
+            this.cmbPlatos.Name = "cmbPlatos";
+            this.cmbPlatos.Size = new System.Drawing.Size(121, 21);
+            this.cmbPlatos.TabIndex = 41;
+            this.cmbPlatos.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // MenuPlatos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.cmbPlatos);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.dgvListaCategoriaPlato);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.dgvPlato);
-            this.Controls.Add(this.txtIdValidar);
-            this.Controls.Add(this.label4);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label3);
@@ -199,7 +182,6 @@
             this.Name = "MenuPlatos";
             this.Text = "MenuRegistrarPlatos";
             ((System.ComponentModel.ISupportInitialize)(this.dgvPlato)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvListaCategoriaPlato)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -214,12 +196,10 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox txtIdValidar;
         private System.Windows.Forms.DataGridView dgvPlato;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.DataGridView dgvListaCategoriaPlato;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.ComboBox cmbPlatos;
     }
 }

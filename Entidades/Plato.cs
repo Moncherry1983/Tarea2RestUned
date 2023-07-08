@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace Entidades
 {
-    public class RegistrarPlato
+    public class Plato
     {
 
         #region "Atributos"
@@ -15,17 +15,17 @@ namespace Entidades
         private int idPlato; // Identificador único de la categoría
         private string nombrePlato; // Nombre del plato
         private int precio; //precio del plato
-        private int idValidar;
+        private int idCategoria;
 
 
 
         // Constructor de la clase
-        public RegistrarPlato(int idPlato, string nombrePlato, int precio, int idValidar, CategoriaPlato[] categorias)
+        public Plato(int idPlato, string nombrePlato, int precio, int idCategoria)
         {
             this.idPlato = idPlato;
             this.nombrePlato = nombrePlato;
             this.precio = precio;
-            this.idValidar = idValidar;
+            this.idCategoria = idCategoria;
 
         }
 
@@ -47,10 +47,10 @@ namespace Entidades
             get { return precio; }
             set { precio = value; }
         }
-        public int IdValidar
+        public int IdCategoria
         {
-            get { return idValidar; }
-            set { idValidar = value; }
+            get { return idCategoria; }
+            set { idCategoria = value; }
         }
         #endregion
     }

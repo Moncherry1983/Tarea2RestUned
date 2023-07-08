@@ -17,7 +17,11 @@ namespace LogicaNegocio
         {
             try
             {
-                RestauranteAD.AgregarRestaurante(restaurante);
+                var restaurantesActuales= RestauranteAD.ListarRestaurante();                
+                if (restaurantesActuales.Where(rest => rest != null && rest.IdRestaurante == restaurante.IdRestaurante).Count() == 0)
+                    RestauranteAD.AgregarRestaurante(restaurante);
+                else
+                    throw new Exception("Ya existe un restaurate con ese Id");
 
             }
             catch (Exception ex)
@@ -45,6 +49,20 @@ namespace LogicaNegocio
 
         }
 
+        public Restaurante[] ListarRestaurantesActivos()
+        {
+
+            try
+            {
+                return RestauranteAD.ListarRestaurante().Where(cat => cat != null && cat.Estado == true).ToArray();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+        }
 
     }
 }

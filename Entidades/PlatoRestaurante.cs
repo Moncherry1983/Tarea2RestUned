@@ -12,18 +12,16 @@ namespace Entidades
         private int idAsignacion;
         private DateTime fechaAfiliacion;
         private int restauranteAsignado;
+        private Plato[] platos = new Plato[10];
 
-
-        public PlatoRestaurante(int idAsignacion, int restauranteAsignado, Restaurante[] restaurantes, PlatoRestaurante[] platos)
+        public PlatoRestaurante(int idAsignacion, int restauranteAsignado)
         {
             this.idAsignacion = idAsignacion;
             this.restauranteAsignado = restauranteAsignado;
-
-
         }
 
 
-        public PlatoRestaurante(int idAsignacion, int restauranteAsignado, DateTime fechaAfiliacion, Restaurante[] restaurantes, PlatoRestaurante[] platos)
+        public PlatoRestaurante(int idAsignacion, int restauranteAsignado, DateTime fechaAfiliacion)
         {
             this.idAsignacion = idAsignacion;
             this.fechaAfiliacion = fechaAfiliacion;

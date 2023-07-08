@@ -43,7 +43,7 @@
   <ItemGroup>
     <Compile Include="CategoriaPlatoAD.cs" />
     <Compile Include="ClienteAD.cs" />
-    <Compile Include="PlatoRestaurante2AD.cs" />
+    <Compile Include="ExtraAD.cs" />
     <Compile Include="PlatosRestauranteAD.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PlatoAD.cs" />

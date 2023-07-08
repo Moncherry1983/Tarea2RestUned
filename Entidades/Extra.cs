@@ -7,29 +7,30 @@ using System.Collections.Generic;
 
 namespace Entidades
 {
-    public class Extras
+    public class Extra
     {
         #region "Atributos"
         private int idExtra;
         private string descripcion;
         private bool estado;
         private int precio;
-        
+        private int idCategoriaExtra;
 
         // Constructor de la clase
-        public Extras(int idExtra,string descripcion,bool estado,int precio)
+        public Extra(int idExtra,string descripcion,bool estado,int precio, int idCategoriaExtra)
         {
             this.idExtra = idExtra;
             this.descripcion = descripcion;
             this.estado = estado;
-            this.precio = precio;     
+            this.precio = precio;
+            this.idCategoriaExtra = idCategoriaExtra;
         }
 
         // Métodos de acceso (getters y setters) de los atributos
         public int IdExtra
         {
-            get { return IdExtra; }
-            set { IdExtra = value; }
+            get { return idExtra; }
+            set { idExtra = value; }
         }
         public string Descripcion
         {
@@ -50,7 +51,11 @@ namespace Entidades
             set { precio = value; }
         }
 
-
+        public int IdCategoriaextra
+        {
+            get { return idCategoriaExtra; }
+            set { idCategoriaExtra = value; }
+        }
         #endregion
 
     }

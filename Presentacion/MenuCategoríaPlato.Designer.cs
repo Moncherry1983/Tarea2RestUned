@@ -50,6 +50,7 @@
             this.txtidCategoria.Name = "txtidCategoria";
             this.txtidCategoria.Size = new System.Drawing.Size(94, 20);
             this.txtidCategoria.TabIndex = 6;
+            this.txtidCategoria.TextChanged += new System.EventHandler(this.txtidCategoria_TextChanged);
             // 
             // label1
             // 
@@ -100,6 +101,7 @@
             this.dgvCategoriaPlato.Name = "dgvCategoriaPlato";
             this.dgvCategoriaPlato.Size = new System.Drawing.Size(383, 235);
             this.dgvCategoriaPlato.TabIndex = 15;
+            this.dgvCategoriaPlato.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvCategoriaPlato_CellFormatting);
             // 
             // cmbEstado
             // 
@@ -107,10 +109,14 @@
             "Activo",
             "Inactivo"});
             this.cmbEstado.FormattingEnabled = true;
+            this.cmbEstado.Items.AddRange(new object[] {
+            "Activo",
+            "Inactivo"});
             this.cmbEstado.Location = new System.Drawing.Point(64, 90);
             this.cmbEstado.Name = "cmbEstado";
             this.cmbEstado.Size = new System.Drawing.Size(121, 21);
             this.cmbEstado.TabIndex = 16;
+            this.cmbEstado.SelectedIndexChanged += new System.EventHandler(this.cmbEstado_SelectedIndexChanged);
             // 
             // button1
             // 

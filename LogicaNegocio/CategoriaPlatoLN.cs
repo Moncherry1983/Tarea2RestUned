@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using static LogicaNegocio.PlatoRestauranteLN;
 
 namespace LogicaNegocio
 {
@@ -15,9 +16,14 @@ namespace LogicaNegocio
 
         public void AgregarCategoriaPlato(CategoriaPlato categoria)
         {
+          
             try
             {
-                CategoriaPlatoAD.AgregarCategoria(categoria);
+                var categoriaPlatoActuales = CategoriaPlatoAD.ListarCategoriaPlato();
+                if (categoriaPlatoActuales.Where(categoPlato => categoPlato != null && categoPlato.IdCategoria == categoria.IdCategoria).Count()==0)
+                    CategoriaPlatoAD.AgregarCategoria(categoria);
+                else
+                    throw new Exception("Ya el id de la categoria existe ");
 
             }
             catch (Exception ex)
@@ -25,7 +31,6 @@ namespace LogicaNegocio
 
                 throw ex;
             }
-
 
         }
 
@@ -36,6 +41,21 @@ namespace LogicaNegocio
             try
             {
                 return CategoriaPlatoAD.ListarCategoriaPlato();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+        }
+
+        public CategoriaPlato[] ListarCategoriaPlatoCombo()
+        {
+
+            try
+            {
+                return CategoriaPlatoAD.ListarCategoriaPlato().Where( cat => cat != null && cat.Estado == true).ToArray();
             }
             catch (Exception ex)
             {

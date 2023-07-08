@@ -41,11 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Extras.cs" />
+    <Compile Include="Extra.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CategoriaPlato.cs" />
     <Compile Include="Cliente.cs" />
-    <Compile Include="RegistrarPlato.cs" />
+    <Compile Include="Plato.cs" />
     <Compile Include="PlatoRestaurante.cs" />
     <Compile Include="Restaurante.cs" />
   </ItemGroup>

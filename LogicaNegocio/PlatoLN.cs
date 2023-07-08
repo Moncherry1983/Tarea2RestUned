@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using static LogicaNegocio.PlatoRestauranteLN;
 
 namespace LogicaNegocio
 {
@@ -12,24 +13,25 @@ namespace LogicaNegocio
     public class PlatoLN
     {
 
-        public void AgregarPlato(RegistrarPlato ingresarPlato)
+        public void AgregarPlato(Plato ingresarPlato)
         {
+           
             try
             {
-                PlatoAD.AgregarPlato(ingresarPlato);
-
+                var PlatoActuales = PlatoAD.ListarPlatos();
+                if (PlatoActuales.Where(plato => plato != null && plato.IdPlato == ingresarPlato.IdPlato).Count() == 0)
+                    PlatoAD.AgregarPlato(ingresarPlato);
+                else
+                    throw new Exception("Ya existe el id de plato");
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
-
-
         }
 
 
-        public RegistrarPlato[] ListarPlato()
+        public Plato[] ListarPlato()
         {
 
             try

@@ -33,22 +33,21 @@
             this.cmbEstado = new System.Windows.Forms.ComboBox();
             this.txtDescripcion = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.txtIdcategoriaPlato = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.dtgvListaCategoriaPlatos = new System.Windows.Forms.DataGridView();
-            this.label4 = new System.Windows.Forms.Label();
+            this.dgvExtra = new System.Windows.Forms.DataGridView();
             this.label5 = new System.Windows.Forms.Label();
-            this.txtPrecioExtra = new System.Windows.Forms.TextBox();
+            this.txtPrecio = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.dtgvListaCategoriaPlatos)).BeginInit();
+            this.cmbCategoria = new System.Windows.Forms.ComboBox();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvExtra)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 19);
+            this.label1.Location = new System.Drawing.Point(12, 9);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(179, 13);
             this.label1.TabIndex = 0;
@@ -56,10 +55,11 @@
             // 
             // txtIdextra
             // 
-            this.txtIdextra.Location = new System.Drawing.Point(197, 12);
+            this.txtIdextra.Location = new System.Drawing.Point(15, 25);
             this.txtIdextra.Name = "txtIdextra";
             this.txtIdextra.Size = new System.Drawing.Size(100, 20);
             this.txtIdextra.TabIndex = 1;
+            this.txtIdextra.TextChanged += new System.EventHandler(this.txtIdextra_TextChanged);
             // 
             // cmbEstado
             // 
@@ -67,14 +67,15 @@
             this.cmbEstado.Items.AddRange(new object[] {
             "Activo",
             "Inactivo"});
-            this.cmbEstado.Location = new System.Drawing.Point(61, 125);
+            this.cmbEstado.Location = new System.Drawing.Point(61, 194);
             this.cmbEstado.Name = "cmbEstado";
             this.cmbEstado.Size = new System.Drawing.Size(127, 21);
             this.cmbEstado.TabIndex = 2;
+            this.cmbEstado.SelectedIndexChanged += new System.EventHandler(this.cmbEstado_SelectedIndexChanged);
             // 
             // txtDescripcion
             // 
-            this.txtDescripcion.Location = new System.Drawing.Point(243, 49);
+            this.txtDescripcion.Location = new System.Drawing.Point(12, 68);
             this.txtDescripcion.Name = "txtDescripcion";
             this.txtDescripcion.Size = new System.Drawing.Size(177, 20);
             this.txtDescripcion.TabIndex = 4;
@@ -90,59 +91,45 @@
             this.label2.Text = "Ingrese descripcion extra que quieres agregar:";
             this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
-            // txtIdcategoriaPlato
-            // 
-            this.txtIdcategoriaPlato.Location = new System.Drawing.Point(270, 90);
-            this.txtIdcategoriaPlato.Name = "txtIdcategoriaPlato";
-            this.txtIdcategoriaPlato.Size = new System.Drawing.Size(100, 20);
-            this.txtIdcategoriaPlato.TabIndex = 6;
-            // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(12, 93);
+            this.label3.Location = new System.Drawing.Point(12, 98);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(252, 13);
             this.label3.TabIndex = 5;
             this.label3.Text = "Ingrese id de la categoria plato que quieres agregar:";
             // 
-            // dtgvListaCategoriaPlatos
+            // dgvExtra
             // 
-            this.dtgvListaCategoriaPlatos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dtgvListaCategoriaPlatos.Location = new System.Drawing.Point(476, 25);
-            this.dtgvListaCategoriaPlatos.Name = "dtgvListaCategoriaPlatos";
-            this.dtgvListaCategoriaPlatos.Size = new System.Drawing.Size(303, 320);
-            this.dtgvListaCategoriaPlatos.TabIndex = 7;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(560, 9);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(127, 13);
-            this.label4.TabIndex = 8;
-            this.label4.Text = "Lista categorias de platos";
+            this.dgvExtra.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvExtra.Location = new System.Drawing.Point(376, 93);
+            this.dgvExtra.Name = "dgvExtra";
+            this.dgvExtra.Size = new System.Drawing.Size(494, 307);
+            this.dgvExtra.TabIndex = 7;
+            this.dgvExtra.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvExtra_CellFormatting);
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(12, 128);
+            this.label5.Location = new System.Drawing.Point(12, 197);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(43, 13);
             this.label5.TabIndex = 9;
             this.label5.Text = "Estado:";
             // 
-            // txtPrecioExtra
+            // txtPrecio
             // 
-            this.txtPrecioExtra.Location = new System.Drawing.Point(149, 173);
-            this.txtPrecioExtra.Name = "txtPrecioExtra";
-            this.txtPrecioExtra.Size = new System.Drawing.Size(100, 20);
-            this.txtPrecioExtra.TabIndex = 11;
+            this.txtPrecio.Location = new System.Drawing.Point(149, 240);
+            this.txtPrecio.Name = "txtPrecio";
+            this.txtPrecio.Size = new System.Drawing.Size(100, 20);
+            this.txtPrecio.TabIndex = 11;
+            this.txtPrecio.TextChanged += new System.EventHandler(this.txtPrecioExtra_TextChanged);
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(12, 176);
+            this.label6.Location = new System.Drawing.Point(9, 243);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(131, 13);
             this.label6.TabIndex = 10;
@@ -150,16 +137,17 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(15, 246);
+            this.button1.Location = new System.Drawing.Point(38, 335);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(128, 65);
             this.button1.TabIndex = 12;
             this.button1.Text = "Guardar";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(15, 317);
+            this.button2.Location = new System.Drawing.Point(223, 335);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(128, 65);
             this.button2.TabIndex = 13;
@@ -167,19 +155,26 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
+            // cmbCategoria
+            // 
+            this.cmbCategoria.FormattingEnabled = true;
+            this.cmbCategoria.Location = new System.Drawing.Point(15, 126);
+            this.cmbCategoria.Name = "cmbCategoria";
+            this.cmbCategoria.Size = new System.Drawing.Size(230, 21);
+            this.cmbCategoria.TabIndex = 14;
+            // 
             // MenuExtra
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(854, 436);
+            this.ClientSize = new System.Drawing.Size(942, 436);
+            this.Controls.Add(this.cmbCategoria);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.txtPrecioExtra);
+            this.Controls.Add(this.txtPrecio);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.dtgvListaCategoriaPlatos);
-            this.Controls.Add(this.txtIdcategoriaPlato);
+            this.Controls.Add(this.dgvExtra);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.txtDescripcion);
             this.Controls.Add(this.label2);
@@ -189,7 +184,7 @@
             this.Name = "MenuExtra";
             this.Text = "MenuExtra";
             this.Load += new System.EventHandler(this.MenuExtra_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dtgvListaCategoriaPlatos)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvExtra)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -202,14 +197,13 @@
         private System.Windows.Forms.ComboBox cmbEstado;
         private System.Windows.Forms.TextBox txtDescripcion;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox txtIdcategoriaPlato;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.DataGridView dtgvListaCategoriaPlatos;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.DataGridView dgvExtra;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox txtPrecioExtra;
+        private System.Windows.Forms.TextBox txtPrecio;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.ComboBox cmbCategoria;
     }
 }

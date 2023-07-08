@@ -10,11 +10,48 @@ namespace Presentacion
 {
     public partial class MenuRestaurante : Form
     {
+
+        RestauranteLN restaLN = new RestauranteLN();
+
         public MenuRestaurante()
         {
             InitializeComponent();
             dgvRestaurantes.ReadOnly = true;
+            InitializeDataGridView();
+            CargarDatos();
         }
+
+
+        void InitializeDataGridView()
+        {
+            //se bloquea para no se pueda manipular permite columnas personalizadas
+            dgvRestaurantes.ReadOnly = true;
+            dgvRestaurantes.AutoGenerateColumns = false;
+
+            dgvRestaurantes.Columns.Add("IdRestaurante", "IdRestaurante");
+            dgvRestaurantes.Columns.Add("NombreRestaurante", "NombreRestaurante");
+            dgvRestaurantes.Columns.Add("Direccion", "Direccion");
+            dgvRestaurantes.Columns.Add("Estado", "Estado");
+            dgvRestaurantes.Columns.Add("Telefono", "Telefono");
+
+            dgvRestaurantes.Columns["IdRestaurante"].DataPropertyName = "IdRestaurante";
+            dgvRestaurantes.Columns["IdRestaurante"].Width = 80;
+
+            dgvRestaurantes.Columns["NombreRestaurante"].DataPropertyName = "NombreRestaurante";
+            dgvRestaurantes.Columns["NombreRestaurante"].Width = 150;
+
+            dgvRestaurantes.Columns["Direccion"].DataPropertyName = "Direccion";
+            dgvRestaurantes.Columns["Direccion"].Width = 180;
+
+            dgvRestaurantes.Columns["Estado"].DataPropertyName = "Estado";
+            dgvRestaurantes.Columns["Estado"].Width = 60;
+
+            dgvRestaurantes.Columns["Telefono"].DataPropertyName = "Telefono";
+            dgvRestaurantes.Columns["Telefono"].Width = 70;
+
+            CargarDatos();
+        }
+
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
@@ -44,6 +81,12 @@ namespace Presentacion
         private void label2_Click(object sender, EventArgs e)
         {
 
+        }
+        //VA ACTUALIZAR EL GRID Y VA APLICr un refresh
+        void CargarDatos()
+        {
+            dgvRestaurantes.DataSource = restaLN.ListarRestaurantes();
+            dgvRestaurantes.Refresh();
         }
 
         private void idCategoria_TextChanged(object sender, EventArgs e)
@@ -192,7 +235,25 @@ namespace Presentacion
 
 
         }
+        // metod para cambiar 
+        private void dgvRestaurantes_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            DataGridViewColumn col = dgvRestaurantes.Columns[e.ColumnIndex];
 
+            try
+            {
+                if (col.Name == "Estado")
+                {
+                    if (e.Value != null)
+                        e.Value = Convert.ToBoolean(e.Value) ? "Activo" : "Inactivo";
+                }
+            }
+            catch (Exception ex)
+            {
+                e.Value = "Unknown";
+            }
+
+        }
     }
 }
 

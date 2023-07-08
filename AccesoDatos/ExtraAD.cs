@@ -7,23 +7,22 @@ using System.Collections.Generic;
 
 namespace AccesoDatos
 {
-    public static class PlatosRestauranteAD
+    public static class ExtraAD
     {
 
-       
-        private static PlatoRestaurante[] platoRestaurante = new PlatoRestaurante[20];
+        private static Extra [] ingresarExtra = new Extra[20];
 
 
-        public static void AgregarPlatoRestaurante(PlatoRestaurante plato)
+        public static void AgregarExtra(Extra ingresarExtras)
         {
 
             int contador = 0;
             bool revision = true;
 
-            for (int i = 0; i < platoRestaurante.Count(); i++)
+            for (int i = 0; i < ingresarExtra.Count(); i++)
             {
 
-                if (platoRestaurante[i] == null)
+                if (ingresarExtra[i] == null)
                 {
                     contador = i;
                     revision = false;
@@ -33,7 +32,7 @@ namespace AccesoDatos
 
             if (!revision)
             {
-                platoRestaurante[contador] = plato;
+                ingresarExtra[contador] = ingresarExtras;
             }
             else
             {
@@ -43,11 +42,11 @@ namespace AccesoDatos
 
         }
 
-        public static PlatoRestaurante[] ListarPlatoRestaurante()
+        public static Extra[] ListarExtra()
         {
             try
             {
-                return platoRestaurante;
+                return ingresarExtra;
 
             }
             catch (Exception ex)
@@ -59,16 +58,12 @@ namespace AccesoDatos
 
         }
 
-        public static PlatoRestaurante ObtenerPlatoRestaurante(int idAsignacion)
+        public static Extra ObtenerExtra(int idExtra)
         {
 
-            return platoRestaurante.Where(x => x.IdAsignacion == idAsignacion).FirstOrDefault();
+            return ingresarExtra.Where(x => x.IdExtra == idExtra).FirstOrDefault();
 
         }
 
     }
 }
-
-
-
-

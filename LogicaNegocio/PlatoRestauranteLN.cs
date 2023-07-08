@@ -26,7 +26,7 @@ namespace LogicaNegocio
 
                     throw ex;
                 }
-
+              
 
             }
 

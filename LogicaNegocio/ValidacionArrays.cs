@@ -52,10 +52,10 @@ namespace LogicaNegocios
         }
 
         // Método que permite buscar un Plato por su id en el arreglo
-        public static RegistrarPlato BuscarPlato(RegistrarPlato[] ingresarPlato, int id)
+        public static Plato BuscarPlato(Plato[] ingresarPlato, int id)
         {
             // Variable para almacenar el resultado de la búsqueda
-            RegistrarPlato encontrado = null;
+            Plato encontrado = null;
 
             // Recorrer el arreglo hasta encontrar el restaurante con el id buscado o hasta llegar al final del arreglo
             for (int i = 0; i < 20 && encontrado == null; i++)

@@ -39,7 +39,7 @@ namespace Presentacion
         private void button12_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Estas saliendo del programa Rest-Uned adios...");
-            Application.Exit();
+            Application.Exit();            
         }
 
         private void button2_Click(object sender, EventArgs e)

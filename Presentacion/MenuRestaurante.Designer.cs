@@ -199,10 +199,11 @@
             // dgvRestaurantes
             // 
             this.dgvRestaurantes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvRestaurantes.Location = new System.Drawing.Point(178, 198);
+            this.dgvRestaurantes.Location = new System.Drawing.Point(176, 198);
             this.dgvRestaurantes.Name = "dgvRestaurantes";
-            this.dgvRestaurantes.Size = new System.Drawing.Size(610, 240);
+            this.dgvRestaurantes.Size = new System.Drawing.Size(612, 240);
             this.dgvRestaurantes.TabIndex = 38;
+            this.dgvRestaurantes.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvRestaurantes_CellFormatting);
             // 
             // MenuRestaurante
             // 

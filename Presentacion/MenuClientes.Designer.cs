@@ -42,7 +42,7 @@
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
-            this.txtCedula = new System.Windows.Forms.TextBox();
+            this.txtIdPersona = new System.Windows.Forms.TextBox();
             this.cmbGenero = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCliente)).BeginInit();
             this.SuspendLayout();
@@ -84,7 +84,7 @@
             // 
             this.dtpFNacimiento.Location = new System.Drawing.Point(194, 202);
             this.dtpFNacimiento.Name = "dtpFNacimiento";
-            this.dtpFNacimiento.Size = new System.Drawing.Size(225, 20);
+            this.dtpFNacimiento.Size = new System.Drawing.Size(162, 20);
             this.dtpFNacimiento.TabIndex = 16;
             this.dtpFNacimiento.ValueChanged += new System.EventHandler(this.dateTimePicker1_ValueChanged);
             // 
@@ -138,14 +138,15 @@
             // dgvCliente
             // 
             this.dgvCliente.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvCliente.Location = new System.Drawing.Point(440, 246);
+            this.dgvCliente.Location = new System.Drawing.Point(294, 241);
             this.dgvCliente.Name = "dgvCliente";
-            this.dgvCliente.Size = new System.Drawing.Size(331, 175);
+            this.dgvCliente.Size = new System.Drawing.Size(695, 221);
             this.dgvCliente.TabIndex = 27;
+            this.dgvCliente.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvCliente_CellFormatting);
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(14, 310);
+            this.button1.Location = new System.Drawing.Point(2, 310);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(127, 61);
             this.button1.TabIndex = 28;
@@ -155,7 +156,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(245, 310);
+            this.button2.Location = new System.Drawing.Point(161, 310);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(127, 61);
             this.button2.TabIndex = 29;
@@ -172,31 +173,30 @@
             this.label7.TabIndex = 30;
             this.label7.Text = "Ingrese la cedula del cliente:";
             // 
-            // txtCedula
+            // txtIdPersona
             // 
-            this.txtCedula.Location = new System.Drawing.Point(194, 19);
-            this.txtCedula.Name = "txtCedula";
-            this.txtCedula.Size = new System.Drawing.Size(225, 20);
-            this.txtCedula.TabIndex = 31;
+            this.txtIdPersona.Location = new System.Drawing.Point(194, 19);
+            this.txtIdPersona.Name = "txtIdPersona";
+            this.txtIdPersona.Size = new System.Drawing.Size(225, 20);
+            this.txtIdPersona.TabIndex = 31;
+            this.txtIdPersona.TextChanged += new System.EventHandler(this.txtCedula_TextChanged);
             // 
             // cmbGenero
             // 
             this.cmbGenero.FormattingEnabled = true;
-            this.cmbGenero.Items.AddRange(new object[] {
-            "Masculino",
-            "Femenino\t"});
             this.cmbGenero.Location = new System.Drawing.Point(100, 253);
             this.cmbGenero.Name = "cmbGenero";
             this.cmbGenero.Size = new System.Drawing.Size(121, 21);
             this.cmbGenero.TabIndex = 32;
+            this.cmbGenero.SelectedIndexChanged += new System.EventHandler(this.cmbGenero_SelectedIndexChanged);
             // 
             // MenuClientes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1001, 462);
             this.Controls.Add(this.cmbGenero);
-            this.Controls.Add(this.txtCedula);
+            this.Controls.Add(this.txtIdPersona);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
@@ -235,7 +235,7 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.TextBox txtCedula;
+        private System.Windows.Forms.TextBox txtIdPersona;
         private System.Windows.Forms.ComboBox cmbGenero;
     }
 }
