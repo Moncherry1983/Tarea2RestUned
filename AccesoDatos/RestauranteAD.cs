@@ -9,7 +9,7 @@ namespace AccesoDatos
 {
     public static class RestauranteAD
     {
-       private static Restaurante[] restaurantes = new Restaurante[20];
+        private static Restaurante[] restaurantes = new Restaurante[20];
 
 
         public static void AgregarRestaurante(Restaurante restaurante)
@@ -56,34 +56,34 @@ namespace AccesoDatos
 
         //}
 
-    public static Restaurante[] ListarRestaurante()
-    {
-        try
+        public static Restaurante[] ListarRestaurante()
         {
+            try
+            {
 
-            Restaurante[] restaurante = new Restaurante[2];
-            restaurante[0] = new Restaurante(1, "Restaurante Entre nubes", "100 norte", true, "24866587");
-            restaurante[1] = new Restaurante(2, "Restaurante como en casa", "200 sur", true, "57985321");
-            restaurante[0] = new Restaurante(1, "Restaurante La cocina", "100 norte", false, "24866587");
-            restaurante[1] = new Restaurante(2, "Restaurante mi cuñado", "200 sur", true, "57985321");
-            return restaurante;
+                Restaurante[] restaurante = new Restaurante[4];
+                restaurante[0] = new Restaurante(1, "Restaurante Entre nubes", "100 norte", true, "24866587");
+                restaurante[1] = new Restaurante(2, "Restaurante como en casa", "200 sur", true, "57985321");
+                restaurante[2] = new Restaurante(1, "Restaurante La cocina", "100 norte", true, "24866587");
+                restaurante[3] = new Restaurante(2, "Restaurante mi cuñado", "200 sur", true, "57985321");
+                return restaurante;
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
 
         }
-        catch (Exception ex)
+
+        public static Restaurante ObtenerRestaurante(int idRestaurante)
         {
 
-            throw ex;
-        }
-
-
-    }
-
-    public static Restaurante ObtenerRestaurante(int idRestaurante)
-        {
-
-            return restaurantes.Where(x=>x.IdRestaurante == idRestaurante).FirstOrDefault();
+            return restaurantes.Where(x => x.IdRestaurante == idRestaurante).FirstOrDefault();
 
         }
-       
+
     }
 }

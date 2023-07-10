@@ -45,5 +45,10 @@ namespace LogicaNegocio
             }
 
         }
+
+        public List<Plato> ListarPlatosSeleccionados(List<int> listaIdsPlatosSeleccionados)
+        {
+            return PlatoAD.ListarPlatos().Where(plato => listaIdsPlatosSeleccionados.Contains(plato.IdPlato)).ToList();
+        }
     }
 }

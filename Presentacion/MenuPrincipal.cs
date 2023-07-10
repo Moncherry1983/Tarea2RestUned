@@ -69,7 +69,7 @@ namespace Presentacion
 
         private void button10_Click(object sender, EventArgs e)
         {
-            new ConsultaCliente().Show(); 
+            new ConsultarCliente().Show(); 
             this.Hide();
         }
 
@@ -96,6 +96,13 @@ namespace Presentacion
         {
             new ConsultaPlato().Show(); 
             this.Hide();
+        }
+
+        private void button13_Click(object sender, EventArgs e)
+        {
+            new ConsultarExtra().Show();
+            this.Hide();
+
         }
     }
 }

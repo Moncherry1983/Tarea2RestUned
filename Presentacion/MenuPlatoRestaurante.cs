@@ -20,6 +20,7 @@ namespace Presentacion
 
         PlatoLN platoLn = new PlatoLN();
         PlatoLN plato;
+        List<Plato> platosSeleccionados = new List<Plato>();
 
         public MenuPlatoRestaurante()
         {
@@ -41,20 +42,20 @@ namespace Presentacion
             dgvAsociacionesPlatos.ReadOnly = true;
             dgvAsociacionesPlatos.AutoGenerateColumns = false;
 
-            dgvAsociacionesRestaurantes.Columns.Add("IdRestaurante", "Id Restaurante");
+            dgvAsociacionesRestaurantes.Columns.Add("RestauranteAsignado", "Id Restaurante");
             dgvAsociacionesRestaurantes.Columns.Add("NombreRestaurante", "Nombre del Restaurante");
             dgvAsociacionesRestaurantes.Columns.Add("Direccion", "Direccion");
 
             /////////////////////////////////////////////////////////////////////////////////////////////
 
-            dgvAsociacionesPlatos.Columns.Add("IdPlato", "Id Plato");
+            dgvAsociacionesPlatos.Columns.Add("IdAsignacion", "Id Plato");
             dgvAsociacionesPlatos.Columns.Add("NombrePlato", "Nombre Plato");
             dgvAsociacionesPlatos.Columns.Add("Precio", "Precio");
 
 
             ////////////////////////////////////////////////////////////////////////////////////////////
-            dgvAsociacionesRestaurantes.Columns["IdRestaurante"].DataPropertyName = "IdRestaurante";
-            dgvAsociacionesRestaurantes.Columns["IdRestaurante"].Width = 80;
+            dgvAsociacionesRestaurantes.Columns["RestauranteAsignado"].DataPropertyName = "RestauranteAsignado";
+            dgvAsociacionesRestaurantes.Columns["RestauranteAsignado"].Width = 80;
 
             dgvAsociacionesRestaurantes.Columns["NombreRestaurante"].DataPropertyName = "NombreRestaurante";
             dgvAsociacionesRestaurantes.Columns["NombreRestaurante"].Width = 180;
@@ -63,8 +64,8 @@ namespace Presentacion
             dgvAsociacionesRestaurantes.Columns["Direccion"].Width = 180;
 
             ///////////////////////////////////////////////////////////////////////////////////////////
-            dgvAsociacionesPlatos.Columns["IdPlato"].DataPropertyName = "IdPlato";
-            dgvAsociacionesPlatos.Columns["IdPlato"].Width = 50;
+            dgvAsociacionesPlatos.Columns["IdAsignacion"].DataPropertyName = "IdAsignacion";
+            dgvAsociacionesPlatos.Columns["IdAsignacion"].Width = 50;
 
             dgvAsociacionesPlatos.Columns["NombrePlato"].DataPropertyName = "NombrePlato";
             dgvAsociacionesPlatos.Columns["NombrePlato"].Width = 120;
@@ -93,10 +94,15 @@ namespace Presentacion
 
         void CargarDatos()
         {
-            dgvAsociacionesRestaurantes.DataSource = restaurante.ListarRestaurantesActivos();
+            /* dgvAsociacionesRestaurantes.DataSource = restaurante.ListarRestaurantesActivos();*/
+            
+            dgvAsociacionesRestaurantes.DataSource = cmbRestaurantesDisponibles.SelectedItem;
             dgvAsociacionesRestaurantes.Refresh();
 
-            dgvAsociacionesPlatos.DataSource = plato.ListarPlato();
+
+            dgvAsociacionesPlatos.DataSource = platosSeleccionados;
+
+            /*dgvAsociacionesPlatos.DataSource = plato.ListarPlato()*/;
             dgvAsociacionesRestaurantes.Refresh();
         }
 
@@ -109,6 +115,51 @@ namespace Presentacion
         private void button1_Click(object sender, EventArgs e)
         {
 
+            try
+            {
+
+               
+                DateTime fechaAfiliacion = dtpFechaAfiliacion.Value;
+                int restauranteAsignado=(int)cmbRestaurantesDisponibles.SelectedValue;
+               
+
+                DateTime fechaActual = DateTime.Now;
+                if (fechaAfiliacion > fechaActual)
+                {
+                    // El usuario ha seleccionado una fecha posterior a la fecha actual.
+                    // Realiza acciones de validación o muestra un mensaje de error al usuario.
+                    MessageBox.Show("La fecha seleccionada no tiene un orden cronologico...");
+                }
+                else
+                {
+                    if (cmbRestaurantesDisponibles.SelectedIndex == -1)
+                    {
+
+                        MessageBox.Show("No deje campos vacios por favor...");
+
+
+                    }
+                    else
+                    {
+
+                        PlatoRestauranteLN platoRestauranteLN = new PlatoRestauranteLN();
+                        PlatoRestaurante platoRestaurante = new PlatoRestaurante(1, 1,fechaAfiliacion);
+                        dgvAsociacionesRestaurantes.Refresh();
+                        dgvAsociacionesPlatos.Refresh();
+                    }
+
+
+                }
+                
+                cmbRestaurantesDisponibles.SelectedIndex = -1;
+                dtpFechaAfiliacion.ResetText();
+
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message + "\n\tHa sucedido un error y no podido registrar el restaurante\n");
+            }
 
 
 
@@ -162,8 +213,17 @@ namespace Presentacion
 
         private void btnPLatos_Click(object sender, EventArgs e)
         {
-            new ListaPlatos().Show();
             this.Hide();
+            using (ListaPlatos platosDialog = new ListaPlatos())
+            {
+                DialogResult result = platosDialog.ShowDialog();
+                if (result == DialogResult.Cancel)
+                {
+                    var listaIdsPlatosSeleccionados = platosDialog.idPlatosSeleccionados;
+                    //Consultar Logica de negocios -> AccesoDatos mi lista de Ids Seleccionadas contra la lista existente, que retorne la lista de platos 
+                    platosSeleccionados = platoLn.ListarPlatosSeleccionados(listaIdsPlatosSeleccionados);
+                }
+            }
         }
 
         private void cmbRestaurantesDisponibles_SelectedIndexChanged(object sender, EventArgs e)
@@ -198,6 +258,11 @@ namespace Presentacion
         }
 
         private void label3_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dgvAsociacionesRestaurantes_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
         }

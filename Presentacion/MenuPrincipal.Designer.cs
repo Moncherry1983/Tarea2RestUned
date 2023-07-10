@@ -41,6 +41,7 @@
             this.button11 = new System.Windows.Forms.Button();
             this.button12 = new System.Windows.Forms.Button();
             this.titulo = new System.Windows.Forms.TextBox();
+            this.button13 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
@@ -145,7 +146,7 @@
             // 
             // button11
             // 
-            this.button11.Location = new System.Drawing.Point(156, 394);
+            this.button11.Location = new System.Drawing.Point(166, 321);
             this.button11.Name = "button11";
             this.button11.Size = new System.Drawing.Size(140, 38);
             this.button11.TabIndex = 10;
@@ -177,11 +178,22 @@
             this.titulo.Text = " Bienvenido al Programa Rest-Uned";
             this.titulo.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
+            // button13
+            // 
+            this.button13.Location = new System.Drawing.Point(168, 280);
+            this.button13.Name = "button13";
+            this.button13.Size = new System.Drawing.Size(138, 35);
+            this.button13.TabIndex = 13;
+            this.button13.Text = "Consultar extras";
+            this.button13.UseVisualStyleBackColor = true;
+            this.button13.Click += new System.EventHandler(this.button13_Click);
+            // 
             // MenuPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(871, 452);
+            this.Controls.Add(this.button13);
             this.Controls.Add(this.titulo);
             this.Controls.Add(this.button12);
             this.Controls.Add(this.button11);
@@ -218,6 +230,7 @@
         private System.Windows.Forms.Button button11;
         private System.Windows.Forms.Button button12;
         private System.Windows.Forms.TextBox titulo;
+        private System.Windows.Forms.Button button13;
     }
 }
 

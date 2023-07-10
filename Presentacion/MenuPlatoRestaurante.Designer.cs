@@ -57,7 +57,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(29, 136);
+            this.label6.Location = new System.Drawing.Point(8, 139);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(217, 13);
             this.label6.TabIndex = 5;
@@ -75,17 +75,18 @@
             // dgvAsociacionesRestaurantes
             // 
             this.dgvAsociacionesRestaurantes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvAsociacionesRestaurantes.Location = new System.Drawing.Point(406, 306);
+            this.dgvAsociacionesRestaurantes.Location = new System.Drawing.Point(531, 41);
             this.dgvAsociacionesRestaurantes.Name = "dgvAsociacionesRestaurantes";
-            this.dgvAsociacionesRestaurantes.Size = new System.Drawing.Size(516, 125);
+            this.dgvAsociacionesRestaurantes.Size = new System.Drawing.Size(476, 296);
             this.dgvAsociacionesRestaurantes.TabIndex = 12;
+            this.dgvAsociacionesRestaurantes.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvAsociacionesRestaurantes_CellContentClick);
             this.dgvAsociacionesRestaurantes.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvAsociacionesCompletadas_CellFormatting);
             // 
             // dtpFechaAfiliacion
             // 
-            this.dtpFechaAfiliacion.Location = new System.Drawing.Point(11, 25);
+            this.dtpFechaAfiliacion.Location = new System.Drawing.Point(15, 25);
             this.dtpFechaAfiliacion.Name = "dtpFechaAfiliacion";
-            this.dtpFechaAfiliacion.Size = new System.Drawing.Size(200, 20);
+            this.dtpFechaAfiliacion.Size = new System.Drawing.Size(163, 20);
             this.dtpFechaAfiliacion.TabIndex = 13;
             // 
             // label4
@@ -99,7 +100,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(96, 353);
+            this.button1.Location = new System.Drawing.Point(11, 388);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(115, 66);
             this.button1.TabIndex = 15;
@@ -109,7 +110,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(96, 477);
+            this.button2.Location = new System.Drawing.Point(182, 388);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(115, 66);
             this.button2.TabIndex = 16;
@@ -119,7 +120,7 @@
             // 
             // btnPLatos
             // 
-            this.btnPLatos.Location = new System.Drawing.Point(55, 168);
+            this.btnPLatos.Location = new System.Drawing.Point(3, 168);
             this.btnPLatos.Name = "btnPLatos";
             this.btnPLatos.Size = new System.Drawing.Size(156, 86);
             this.btnPLatos.TabIndex = 17;
@@ -130,34 +131,36 @@
             // listBox1
             // 
             this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(286, 172);
+            this.listBox1.Location = new System.Drawing.Point(182, 172);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(392, 82);
+            this.listBox1.Size = new System.Drawing.Size(307, 82);
             this.listBox1.TabIndex = 18;
             // 
             // dgvAsociacionesPlatos
             // 
             this.dgvAsociacionesPlatos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvAsociacionesPlatos.Location = new System.Drawing.Point(485, 506);
+            this.dgvAsociacionesPlatos.Location = new System.Drawing.Point(641, 376);
             this.dgvAsociacionesPlatos.Name = "dgvAsociacionesPlatos";
-            this.dgvAsociacionesPlatos.Size = new System.Drawing.Size(386, 125);
+            this.dgvAsociacionesPlatos.Size = new System.Drawing.Size(289, 257);
             this.dgvAsociacionesPlatos.TabIndex = 19;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(603, 290);
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(695, 9);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(122, 13);
+            this.label2.Size = new System.Drawing.Size(170, 18);
             this.label2.TabIndex = 20;
             this.label2.Text = "Restaurantes Asociados";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(623, 477);
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(720, 353);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(88, 13);
+            this.label3.Size = new System.Drawing.Size(124, 18);
             this.label3.TabIndex = 21;
             this.label3.Text = "Platos Asociados";
             this.label3.Click += new System.EventHandler(this.label3_Click_1);
@@ -166,7 +169,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(988, 690);
+            this.ClientSize = new System.Drawing.Size(1019, 659);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.dgvAsociacionesPlatos);

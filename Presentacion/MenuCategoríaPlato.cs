@@ -28,7 +28,7 @@ namespace Presentacion
 
 
             dgvCategoriaPlato.Columns["IdCategoria"].DataPropertyName = "IdCategoria";
-            dgvCategoriaPlato.Columns["IdCategoria"].Width = 50;
+            dgvCategoriaPlato.Columns["IdCategoria"].Width = 70;
 
             dgvCategoriaPlato.Columns["Descripcion"].DataPropertyName = "Descripcion";
             dgvCategoriaPlato.Columns["Descripcion"].Width = 120;
