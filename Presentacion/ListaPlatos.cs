@@ -91,7 +91,6 @@ namespace Presentacion
 
             if (pregunta == DialogResult.No)
             {
-                new MenuPlatoRestaurante().Show();
                 this.Hide();
             }
 

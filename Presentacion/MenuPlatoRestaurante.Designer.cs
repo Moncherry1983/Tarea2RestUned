@@ -37,7 +37,7 @@
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.btnPLatos = new System.Windows.Forms.Button();
-            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.lbxPlatosSeleccionados = new System.Windows.Forms.ListBox();
             this.dgvAsociacionesPlatos = new System.Windows.Forms.DataGridView();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -81,6 +81,7 @@
             this.dgvAsociacionesRestaurantes.TabIndex = 12;
             this.dgvAsociacionesRestaurantes.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvAsociacionesRestaurantes_CellContentClick);
             this.dgvAsociacionesRestaurantes.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvAsociacionesCompletadas_CellFormatting);
+            this.dgvAsociacionesRestaurantes.SelectionChanged += new System.EventHandler(this.dgvAsociacionesRestaurantes_SelectionChanged);
             // 
             // dtpFechaAfiliacion
             // 
@@ -128,13 +129,13 @@
             this.btnPLatos.UseVisualStyleBackColor = true;
             this.btnPLatos.Click += new System.EventHandler(this.btnPLatos_Click);
             // 
-            // listBox1
+            // lbxPlatosSeleccionados
             // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(182, 172);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(307, 82);
-            this.listBox1.TabIndex = 18;
+            this.lbxPlatosSeleccionados.FormattingEnabled = true;
+            this.lbxPlatosSeleccionados.Location = new System.Drawing.Point(182, 172);
+            this.lbxPlatosSeleccionados.Name = "lbxPlatosSeleccionados";
+            this.lbxPlatosSeleccionados.Size = new System.Drawing.Size(307, 82);
+            this.lbxPlatosSeleccionados.TabIndex = 18;
             // 
             // dgvAsociacionesPlatos
             // 
@@ -173,7 +174,7 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.dgvAsociacionesPlatos);
-            this.Controls.Add(this.listBox1);
+            this.Controls.Add(this.lbxPlatosSeleccionados);
             this.Controls.Add(this.btnPLatos);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
@@ -203,7 +204,7 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button btnPLatos;
-        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.ListBox lbxPlatosSeleccionados;
         private System.Windows.Forms.DataGridView dgvAsociacionesPlatos;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;

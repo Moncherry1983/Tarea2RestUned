@@ -10,6 +10,7 @@ namespace Entidades
     public class Extra
     {
         #region "Atributos"
+        // Atributos de la clase
         private int idExtra;
         private string descripcion;
         private bool estado;

@@ -59,12 +59,12 @@ namespace AccesoDatos
 
         }
 
-        public static PlatoRestaurante ObtenerPlatoRestaurante(int idAsignacion)
-        {
+        //public static PlatoRestaurante ObtenerPlatoRestaurante(int idAsignacion)
+        //{
 
-            return platoRestaurante.Where(x => x.IdAsignacion == idAsignacion).FirstOrDefault();
+        //    return platoRestaurante.Where(x => x.IdAsignacion == idAsignacion).FirstOrDefault();
 
-        }
+        //}
 
     }
 }

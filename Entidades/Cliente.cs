@@ -9,6 +9,7 @@ namespace Entidades
     public class Cliente
     {
         #region "Atributos"
+        // Atributos de la clase
         private string idPersona;
         private string nombre;
         private string pApellido;

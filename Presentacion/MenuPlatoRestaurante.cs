@@ -14,20 +14,19 @@ namespace Presentacion
 {
     public partial class MenuPlatoRestaurante : Form
     {
-        
+
         RestauranteLN restauranteLn = new RestauranteLN();
         RestauranteLN restaurante;
 
         PlatoLN platoLn = new PlatoLN();
-        PlatoLN plato;
-        List<Plato> platosSeleccionados = new List<Plato>();
+        PlatoRestauranteLN platoRestauranteLN = new PlatoRestauranteLN();
+        List<Plato> platosSeleccionados = new List<Plato>();        
 
         public MenuPlatoRestaurante()
         {
             InitializeComponent();
             dgvAsociacionesRestaurantes.ReadOnly = true;
-            dgvAsociacionesPlatos.ReadOnly = true;
-            plato = new PlatoLN();
+            dgvAsociacionesPlatos.ReadOnly = true;            
             restaurante = new RestauranteLN();
             ObtenerInformacionRestaurantes();
             InitializeDataGridView();
@@ -38,9 +37,11 @@ namespace Presentacion
         {
             dgvAsociacionesRestaurantes.ReadOnly = true;
             dgvAsociacionesRestaurantes.AutoGenerateColumns = false;
+            dgvAsociacionesRestaurantes.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
 
             dgvAsociacionesPlatos.ReadOnly = true;
             dgvAsociacionesPlatos.AutoGenerateColumns = false;
+            dgvAsociacionesPlatos.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
 
             dgvAsociacionesRestaurantes.Columns.Add("RestauranteAsignado", "Id Restaurante");
             dgvAsociacionesRestaurantes.Columns.Add("NombreRestaurante", "Nombre del Restaurante");
@@ -48,24 +49,24 @@ namespace Presentacion
 
             /////////////////////////////////////////////////////////////////////////////////////////////
 
-            dgvAsociacionesPlatos.Columns.Add("IdAsignacion", "Id Plato");
+            dgvAsociacionesPlatos.Columns.Add("IdPlato", "Id Plato");
             dgvAsociacionesPlatos.Columns.Add("NombrePlato", "Nombre Plato");
             dgvAsociacionesPlatos.Columns.Add("Precio", "Precio");
 
 
             ////////////////////////////////////////////////////////////////////////////////////////////
-            dgvAsociacionesRestaurantes.Columns["RestauranteAsignado"].DataPropertyName = "RestauranteAsignado";
+            dgvAsociacionesRestaurantes.Columns["RestauranteAsignado"].DataPropertyName = "GetNombreIdRestaurante";
             dgvAsociacionesRestaurantes.Columns["RestauranteAsignado"].Width = 80;
 
-            dgvAsociacionesRestaurantes.Columns["NombreRestaurante"].DataPropertyName = "NombreRestaurante";
+            dgvAsociacionesRestaurantes.Columns["NombreRestaurante"].DataPropertyName = "GetNombreNombreRestaurante";
             dgvAsociacionesRestaurantes.Columns["NombreRestaurante"].Width = 180;
 
-            dgvAsociacionesRestaurantes.Columns["Direccion"].DataPropertyName = "Direccion";
+            dgvAsociacionesRestaurantes.Columns["Direccion"].DataPropertyName = "GetNombreDireccionRestaurante";
             dgvAsociacionesRestaurantes.Columns["Direccion"].Width = 180;
 
             ///////////////////////////////////////////////////////////////////////////////////////////
-            dgvAsociacionesPlatos.Columns["IdAsignacion"].DataPropertyName = "IdAsignacion";
-            dgvAsociacionesPlatos.Columns["IdAsignacion"].Width = 50;
+            dgvAsociacionesPlatos.Columns["IdPlato"].DataPropertyName = "IdPlato";
+            dgvAsociacionesPlatos.Columns["IdPlato"].Width = 50;
 
             dgvAsociacionesPlatos.Columns["NombrePlato"].DataPropertyName = "NombrePlato";
             dgvAsociacionesPlatos.Columns["NombrePlato"].Width = 120;
@@ -76,7 +77,7 @@ namespace Presentacion
             CargarDatos();
         }
 
-            private void ObtenerInformacionRestaurantes()
+        private void ObtenerInformacionRestaurantes()
         {
             //llamar metodo listar Categorias desde la logica de negocio
 
@@ -95,14 +96,15 @@ namespace Presentacion
         void CargarDatos()
         {
             /* dgvAsociacionesRestaurantes.DataSource = restaurante.ListarRestaurantesActivos();*/
-            
+
             dgvAsociacionesRestaurantes.DataSource = cmbRestaurantesDisponibles.SelectedItem;
             dgvAsociacionesRestaurantes.Refresh();
 
 
             dgvAsociacionesPlatos.DataSource = platosSeleccionados;
 
-            /*dgvAsociacionesPlatos.DataSource = plato.ListarPlato()*/;
+            /*dgvAsociacionesPlatos.DataSource = plato.ListarPlato()*/
+
             dgvAsociacionesRestaurantes.Refresh();
         }
 
@@ -118,63 +120,60 @@ namespace Presentacion
             try
             {
 
-               
+
                 DateTime fechaAfiliacion = dtpFechaAfiliacion.Value;
-                int restauranteAsignado=(int)cmbRestaurantesDisponibles.SelectedValue;
-               
+                int restauranteAsignado = (int)cmbRestaurantesDisponibles.SelectedValue;
+
 
                 DateTime fechaActual = DateTime.Now;
                 if (fechaAfiliacion > fechaActual)
                 {
                     // El usuario ha seleccionado una fecha posterior a la fecha actual.
                     // Realiza acciones de validación o muestra un mensaje de error al usuario.
-                    MessageBox.Show("La fecha seleccionada no tiene un orden cronologico...");
+                    throw new Exception("\"La fecha seleccionada no tiene un orden cronologico...\"");
+
+                }
+                if (cmbRestaurantesDisponibles.SelectedIndex == -1)
+                {
+                    throw new Exception("Seleccione un Restaurante...");
+
+                }
+                if (platosSeleccionados.Count > 10)
+                {
+                    throw new Exception("Seleccione un Restaurante...");
                 }
                 else
                 {
-                    if (cmbRestaurantesDisponibles.SelectedIndex == -1)
+                    Restaurante infoRestaurante = restauranteLn.ObtenerRestaurantePorId((int)cmbRestaurantesDisponibles.SelectedValue);
+                    PlatoRestaurante platoRestaurante = new PlatoRestaurante(infoRestaurante, platosSeleccionados.ToArray(), fechaAfiliacion);
+
+                    if (platoRestauranteLN.ListarPlatoRestaurantes().Where(rest => rest != null && rest.RestauranteAsignado.IdRestaurante == infoRestaurante.IdRestaurante).Count() == 0)
                     {
+                        platoRestauranteLN.AgregarPlatoRestaurante(platoRestaurante);
+                        PlatoRestaurante[] platoRest = platoRestauranteLN.ListarPlatoRestaurantes();                        
+                        dgvAsociacionesRestaurantes.DataSource = platoRest;
 
-                        MessageBox.Show("No deje campos vacios por favor...");
+                        dgvAsociacionesRestaurantes.Refresh();
 
-
+                        lbxPlatosSeleccionados.DataSource = null;
+                        lbxPlatosSeleccionados.Items.Clear();
                     }
                     else
-                    {
+                        throw new Exception("El Restaurante ya fue incluido previamente...");
 
-                        PlatoRestauranteLN platoRestauranteLN = new PlatoRestauranteLN();
-                        PlatoRestaurante platoRestaurante = new PlatoRestaurante(1, 1,fechaAfiliacion);
-                        dgvAsociacionesRestaurantes.Refresh();
-                        dgvAsociacionesPlatos.Refresh();
-                    }
 
 
                 }
-                
+
+
                 cmbRestaurantesDisponibles.SelectedIndex = -1;
                 dtpFechaAfiliacion.ResetText();
 
             }
             catch (Exception ex)
             {
-
                 MessageBox.Show(ex.Message + "\n\tHa sucedido un error y no podido registrar el restaurante\n");
             }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         }
 
         private void txtIdAsociacionRestaurantes_TextChanged(object sender, EventArgs e)
@@ -213,7 +212,7 @@ namespace Presentacion
 
         private void btnPLatos_Click(object sender, EventArgs e)
         {
-            this.Hide();
+            
             using (ListaPlatos platosDialog = new ListaPlatos())
             {
                 DialogResult result = platosDialog.ShowDialog();
@@ -222,8 +221,12 @@ namespace Presentacion
                     var listaIdsPlatosSeleccionados = platosDialog.idPlatosSeleccionados;
                     //Consultar Logica de negocios -> AccesoDatos mi lista de Ids Seleccionadas contra la lista existente, que retorne la lista de platos 
                     platosSeleccionados = platoLn.ListarPlatosSeleccionados(listaIdsPlatosSeleccionados);
-                }
+                }                    
             }
+
+            lbxPlatosSeleccionados.DisplayMember = "NombrePlato";
+            lbxPlatosSeleccionados.ValueMember = "IdPlato";
+            lbxPlatosSeleccionados.DataSource = platosSeleccionados;
         }
 
         private void cmbRestaurantesDisponibles_SelectedIndexChanged(object sender, EventArgs e)
@@ -266,6 +269,30 @@ namespace Presentacion
         {
 
         }
+
+        private void dgvAsociacionesRestaurantes_SelectionChanged(object sender, EventArgs e)
+        {
+          
+            DataGridViewRow selectedRow = dgvAsociacionesRestaurantes.CurrentRow;
+
+            if (selectedRow != null)
+            {
+                if (selectedRow.Cells[0].Value != null)
+                    ActualizarListaPlatos(int.Parse(selectedRow.Cells[0].Value.ToString()));
+                else
+                    ActualizarListaPlatos(-1);
+            }
+        }
+
+        private void ActualizarListaPlatos(int idRestaurante)
+        {
+            
+            PlatoRestaurante platoRest = platoRestauranteLN.ObtenerPlatosRestaurante(idRestaurante);
+            dgvAsociacionesPlatos.DataSource = platoRest != null ? platoRest.Platos : new Plato[10];
+            dgvAsociacionesPlatos.Refresh();
+            
+        }
+
     }
 
 }

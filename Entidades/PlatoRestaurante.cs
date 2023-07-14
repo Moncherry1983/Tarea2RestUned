@@ -8,31 +8,19 @@ namespace Entidades
 {
     public class PlatoRestaurante
     {
+        // Atributos de la clase
         #region "Atributos"
-        private int idAsignacion;
         private DateTime fechaAfiliacion;
-        private int restauranteAsignado;
+        private Restaurante restauranteAsignado;
         private Plato[] platos = new Plato[10];
 
-        public PlatoRestaurante(int idAsignacion, int restauranteAsignado)
+        public PlatoRestaurante(Restaurante restauranteAsignado, Plato[] platos, DateTime fechaAfiliacion)
         {
-            this.idAsignacion = idAsignacion;
             this.restauranteAsignado = restauranteAsignado;
-        }
-
-
-        public PlatoRestaurante(int idAsignacion, int restauranteAsignado, DateTime fechaAfiliacion)
-        {
-            this.idAsignacion = idAsignacion;
             this.fechaAfiliacion = fechaAfiliacion;
+            this.platos = platos;
 
 
-        }
-
-        public int IdAsignacion
-        {
-            get { return idAsignacion; }
-            set { idAsignacion = value; }
         }
 
         public DateTime FechaAfilicion
@@ -41,12 +29,40 @@ namespace Entidades
             set { fechaAfiliacion = value; }
         }
 
-
-
-        public int RestauranteAsignado
+        public Restaurante RestauranteAsignado
         {
             get { return restauranteAsignado; }
             set { restauranteAsignado = value; }
+
+        }
+
+
+        public int GetNombreIdRestaurante
+        {
+            get { return restauranteAsignado.IdRestaurante; }            
+
+        }
+
+        public string GetNombreNombreRestaurante
+        {
+            get { return restauranteAsignado.NombreRestaurante; }
+
+        }
+
+        public string GetNombreDireccionRestaurante
+        {
+            get { return restauranteAsignado.Direccion; }
+
+        }
+
+
+
+
+        public Plato[] Platos
+        {
+            get { return platos; }
+            set { platos = value; }
+
         }
 
 
