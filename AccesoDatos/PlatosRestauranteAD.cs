@@ -59,12 +59,6 @@ namespace AccesoDatos
 
         }
 
-        //public static PlatoRestaurante ObtenerPlatoRestaurante(int idAsignacion)
-        //{
-
-        //    return platoRestaurante.Where(x => x.IdAsignacion == idAsignacion).FirstOrDefault();
-
-        //}
 
     }
 }

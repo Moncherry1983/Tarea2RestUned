@@ -78,7 +78,7 @@ namespace Presentacion
             {
                 int idPlato = int.Parse(txtIdPlato.Text);
                 string nombrePlato = txtNombrePlato.Text;
-                int idCategoria = (int)cmbPlatos.SelectedValue;
+                
                 int precio = int.Parse(txtPrecioPlato.Text);
 
                 if (String.IsNullOrEmpty(txtIdPlato.Text) || String.IsNullOrEmpty(txtNombrePlato.Text) || String.IsNullOrEmpty(txtPrecioPlato.Text))
@@ -96,7 +96,7 @@ namespace Presentacion
                 }
                 else
                 {
-
+                    int idCategoria = (int)cmbPlatos.SelectedValue;
                     PlatoLN platoLn = new PlatoLN();
                     Plato registrarPlato = new Plato(int.Parse(txtIdPlato.Text), txtNombrePlato.Text, int.Parse(txtPrecioPlato.Text), (int)cmbPlatos.SelectedValue);
                     platoLn.AgregarPlato(registrarPlato);

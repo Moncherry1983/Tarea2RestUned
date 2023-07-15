@@ -6,6 +6,7 @@ using Entidades;
 using AccesoDatos;
 using System.Linq;
 using System.Text;
+using System.Collections;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using static LogicaNegocio.PlatoRestauranteLN;
@@ -72,9 +73,11 @@ namespace LogicaNegocio
 
                 throw ex;
             }
-
         }
 
+
+       // Este método busca un restaurante por su identificador en una lista de restaurantes que se obtiene de la capa de acceso a datos.
+       //Si encuentra un restaurante que cumpla con el criterio, lo devuelve.Si no, devuelve null. Si ocurre algún error.
         public Restaurante ObtenerRestaurantePorId(int id)
         {
 

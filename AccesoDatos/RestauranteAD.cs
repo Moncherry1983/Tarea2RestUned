@@ -48,6 +48,8 @@ namespace AccesoDatos
 
         }
 
+        //Este método devuelve un arreglo de objetos de tipo Restaurante, que representa los restaurantes registrados en el sistema.
+        //Si ocurre algún error durante la ejecución del método, se lanza una excepción con el mensaje correspondiente.
         //public static Restaurante[] ListarRestaurante()
         //{
         //    try
@@ -84,6 +86,7 @@ namespace AccesoDatos
 
 
         }
+
 
         //Este método busca un restaurante en una lista de restaurantes según su identificador.Si lo encuentra, lo devuelve.Si no lo encuentra, devuelve null.
         public static Restaurante ObtenerRestaurante(int idRestaurante)

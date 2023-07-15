@@ -3,6 +3,7 @@ using Entidades;
 using AccesoDatos;
 using System.Linq;
 using System.Text;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using static LogicaNegocio.PlatoRestauranteLN;
@@ -47,9 +48,11 @@ namespace LogicaNegocio
 
                 throw ex;
             }
-
         }
 
+        //Este método devuelve un arreglo de objetos de tipo CategoriaPlato que representan las categorías de platos disponibles en un menú.
+        //Para hacerlo, llama a otro método de la clase CategoriaPlatoAD que consulta la base de datos y filtra los resultados por el estado
+        //de cada categoría. Si ocurre algún error durante el proceso, el método lanza una excepción con el mensaje correspondiente.
         public CategoriaPlato[] ListarCategoriaPlatoCombo()
         {
 

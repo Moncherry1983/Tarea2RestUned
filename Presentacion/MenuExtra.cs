@@ -5,19 +5,22 @@ using System.Linq;
 using System.Text;
 using LogicaNegocio;
 using System.Drawing;
+using System.Diagnostics;
 using System.Windows.Forms;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 
 namespace Presentacion
 {
     public partial class MenuExtra : Form
     {
+        //inicializa los arrays
         CategoriaPlatoLN categorias = new CategoriaPlatoLN();
         ExtraLN extras;
         public MenuExtra()
-        {          
+        {    //inicializa los componentes de la ventana      
             InitializeComponent();
             dgvExtra.ReadOnly = true;
             extras = new ExtraLN();
@@ -25,7 +28,7 @@ namespace Presentacion
             InitializeDataGridView();
             CargarDatos();
         }
-
+        //crear los datagrid para que se muestren los datos
         void InitializeDataGridView()
         {
             dgvExtra.ReadOnly = true;
@@ -57,18 +60,19 @@ namespace Presentacion
         }
 
 
-
+         //metodo para obtener las categorias disponibles
         private void ObtenerInformacionCategorias()
         {
             //llamar metodo listar Categorias desde la logica de negocio
 
-            //cargar combox
+            //carga el combobox con las categorías disponibles que se obtienen de una función.
+            //Establece el estilo del combobox como una lista desplegable, el campo que se muestra
+            //como la descripción de la categoría y el campo que se usa como el valor de la categoría.
+            //Asigna el resultado de la función ObtenerCategoriasDisponibles() como la fuente de datos del combobox.
             cmbCategoria.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbCategoria.DisplayMember = "Descripcion";
             cmbCategoria.ValueMember = "IdCategoria";
             cmbCategoria.DataSource = ObtenerCategoriasDisponibles();
-
-
 
         }
 
@@ -169,7 +173,10 @@ namespace Presentacion
                 }
             }
         }
-
+        //Este método se ejecuta cuando el usuario cambia el texto de un cuadro de texto que representa el identificador de una categoría de plato.
+        //El método recibe como parámetro el cuadro de texto y el evento que lo desencadena. El método obtiene el texto del cuadro de texto y lo almacena
+        //en una variable llamada texto.Luego, recorre cada carácter del texto y verifica si es un dígito o no.Si encuentra un carácter que no es un dígito,
+        //lo elimina del texto y mueve el cursor al final del texto. De esta forma, el método asegura que el texto solo contenga números.
         private void txtIdcategoriaPlato_TextChanged(object sender, EventArgs e)
         {
             System.Windows.Forms.TextBox textBox = (System.Windows.Forms.TextBox)sender;
@@ -186,7 +193,10 @@ namespace Presentacion
                 }
             }
         }
-
+        //Este método se llama cuando el usuario cambia el texto del campo de precio extra.
+        //Recibe como parámetro el objeto que representa el campo de texto. Luego, asigna el texto del campo a una variable llamada texto.
+        //Después, recorre cada carácter del texto y verifica si es un número o no. Si no es un número, lo elimina del texto y mueve el cursor
+        //al final del texto. Así, se asegura de que el campo solo contenga números.
         private void txtPrecioExtra_TextChanged(object sender, EventArgs e)
         {
             System.Windows.Forms.TextBox textBox = (System.Windows.Forms.TextBox)sender;
@@ -203,7 +213,7 @@ namespace Presentacion
                 }
             }
         }
-
+        //validacion por si el usuario no escoje en el combo box
         private void cmbEstado_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cmbEstado.SelectedIndex != -1)
@@ -216,7 +226,11 @@ namespace Presentacion
             }
         }
 
-
+        //Este método se encarga de dar formato a las celdas de una tabla que muestra información sobre categorías extras.
+        //Para cada celda, verifica el nombre de la columna y el valor que contiene. Si la columna es "IdCategoriaExtra",
+        //busca la descripción de la categoría correspondiente en una lista de categorías disponibles y la muestra en la celda.
+        //Si la columna es "Estado", convierte el valor a un texto que indica si la categoría está activa o inactiva. Si ocurre algún error,
+        //muestra un mensaje de "DESCONOCIDO" en la celda.
         private void dgvExtra_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
             DataGridViewColumn col = dgvExtra.Columns[e.ColumnIndex];
@@ -248,7 +262,7 @@ namespace Presentacion
                 e.Value = "DESCONOCIDO";
             }
         }
-
+        //llama a la array de categorias disponibles y la muestra en el combo box de categorias 
         private CategoriaPlato[] ObtenerCategoriasDisponibles()
         {
             return categorias.ListarCategoriaPlatoCombo();

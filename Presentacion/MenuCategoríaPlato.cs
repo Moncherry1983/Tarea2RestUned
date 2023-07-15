@@ -7,9 +7,11 @@ namespace Presentacion
 {
     public partial class MenuCategoríaPlato : Form
     {
+        //inicializacion de arrays que se van a utilizar en la ventana
         CategoriaPlatoLN categoria;
         public MenuCategoríaPlato()
         {
+            //inicializacion de componentes de la ventana
             InitializeComponent();
             dgvCategoriaPlato.ReadOnly = true;
             categoria = new CategoriaPlatoLN();
@@ -17,6 +19,7 @@ namespace Presentacion
             CargarDatos();
 
         }
+        //metodo para inicializar el datagridview
         void InitializeDataGridView()
         {
             dgvCategoriaPlato.ReadOnly = true;
@@ -41,7 +44,7 @@ namespace Presentacion
 
 
         }
-
+        //metodo para cargar los datos en el datagridview
         private void CargarDatos()
         {
             dgvCategoriaPlato.DataSource = categoria.ListarCategoriaPlato();
@@ -55,7 +58,8 @@ namespace Presentacion
                 int idCategoria = int.Parse(txtidCategoria.Text);
                 string descripcion = txtdescripcion.Text;
                 bool estado = cmbEstado.SelectedIndex == 0;
- 
+                
+                //validaciones para que el usuario no deje campos vacios
                 if (String.IsNullOrEmpty(txtidCategoria.Text) || String.IsNullOrEmpty(txtdescripcion.Text))
                 {
                     MessageBox.Show("No deje campos vacios por favor...");
@@ -126,7 +130,10 @@ namespace Presentacion
                 // El usuario no ha seleccionado ningún elemento del combobox
             }
         }
-
+        //Este método se llama cuando se formatea una celda del DataGridView que muestra las categorías de platos.
+        //Se obtiene la columna que corresponde a la celda y se verifica si su nombre es "Estado". Si es así, se convierte
+        //el valor de la celda a un valor booleano y se muestra "Activo" o "Inactivo" según sea verdadero o falso. Si ocurre
+        //algún error en el proceso, se muestra "Desconocido".
         private void dgvCategoriaPlato_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
             DataGridViewColumn col = dgvCategoriaPlato.Columns[e.ColumnIndex];
@@ -141,7 +148,7 @@ namespace Presentacion
             }
             catch (Exception ex)
             {
-                e.Value = "Unknown";
+                e.Value = "Desconocido";
             }
         }
     }

@@ -15,6 +15,7 @@ namespace Presentacion
 {
     public partial class ListaPlatos : Form
     {
+        //inicializacion de arrays a utilizar
         private PlatoLN platoLn = new PlatoLN();
         PlatoLN plato;
         private readonly Plato[] platos = new Plato[10];
@@ -22,18 +23,20 @@ namespace Presentacion
 
         public ListaPlatos()
         {
+            //inicializacion de componentes
             InitializeComponent();
             dgvPlatosDisponibles.ReadOnly = true;
             plato = new PlatoLN();
             InitializeDataGridView();
             CargarDatos();
         }
-
+        //Este código corresponde a una clase llamada ListaPlatos que hereda de la clase Form y sirve para mostrar una lista de platos disponible
         private void button2_Click(object sender, EventArgs e)
         {
             new MenuPlatoRestaurante().Show();
             this.Hide();
         }
+        //Este código corresponde a una clase llamada ListaPlatos que hereda de la clase Form y sirve para mostrar una lista de platos disponible
         void InitializeDataGridView()
         {
             dgvPlatosDisponibles.ReadOnly = true;
@@ -62,7 +65,7 @@ namespace Presentacion
 
             CargarDatos();
         }
-
+        //Carga los datos de los platos al data grid view
         void CargarDatos()
         {
 
@@ -71,29 +74,43 @@ namespace Presentacion
         }
 
 
-        //Este código corresponde a una clase llamada ListaPlatos que hereda de la clase Form y sirve para mostrar una lista de platos disponible
-        //    y seleccionar los platos del usuario.El código seleccionado hace referencia a la implementación del evento button1_Click, que se dispara
-        //    al hacer clic en el botón "Agregar plato" y agrega los platos seleccionados a una lista idPlatosSeleccionados.Luego muestra una ventana
-        //    emergente(MessageBox) preguntando si el usuario desea seguir agregando más platos, si el usuario dice que no se muestra una nueva ventana
-        //    de la clase MenuPlatoRestaurante y se oculta la ventana actual.
+        //Este método se ejecuta cuando se hace clic en el botón 1.
+        //Obtiene las filas seleccionadas de la tabla de platos disponibles y las guarda en un arreglo.
+        //Luego verifica si hay al menos una fila seleccionada y si tiene un valor en la primera celda,
+        //que es el id del plato. Agrega los ids de los platos seleccionados a una lista. Después pregunta
+        //al usuario si quiere seguir agregando más platos o terminar. Si el usuario dice que no, cierra la ventana.
+        //Si no hay ninguna fila seleccionada, muestra un mensaje de error.
         private void button1_Click(object sender, EventArgs e)
         {
+
             DataGridViewRow[] selectedRows = dgvPlatosDisponibles.SelectedRows
-           .OfType<DataGridViewRow>()
-           .Where(row => !row.IsNewRow)
-           .ToArray();
-
-            foreach (var lista in selectedRows)
-                idPlatosSeleccionados.Add(int.Parse(lista.Cells[0].Value.ToString()));
-
-            string msg = "Desea seguir agredando mas platos?";
-            var pregunta = MessageBox.Show(msg, "Guardar Platos", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
-
-            if (pregunta == DialogResult.No)
+            .OfType<DataGridViewRow>()
+            .Where(row => !row.IsNewRow)
+            .ToArray();
+            // se crea este if para evitar que si no se seleccionada no se caiga el programa
+            if (selectedRows.Length > 0)
             {
-                this.Hide();
-            }
+                foreach (var row in selectedRows)
+                {
+                    if (row.Cells[0].Value != null) // Verificar si la celda no es nula
+                    {
+                        idPlatosSeleccionados.Add(int.Parse(row.Cells[0].Value.ToString()));
+                    }
+                }
 
+                string msg = "¿Desea seguir agregando más platos?";
+                var pregunta = MessageBox.Show(msg, "Guardar Platos", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+
+                if (pregunta == DialogResult.No)
+                {
+                    this.Hide();
+                }
+            }
+            else
+            {
+                // No se han seleccionado filas, mostrar un mensaje de error o realizar alguna acción adicional
+                MessageBox.Show("No se ha seleccionado ningún plato.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
 
         }
 

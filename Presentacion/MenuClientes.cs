@@ -9,11 +9,13 @@ namespace Presentacion
 {
     public partial class MenuClientes : Form
     {
+        //inicializan los objetos de la capa de negocio
         ClienteLN ingresarClientes = new ClienteLN();
         ClienteLN cliente;
         private readonly IDictionary<char, string> generos = new Dictionary<char, string>();
         public MenuClientes()
         {
+            //inicializa los componentes del formulario
             InitializeComponent();
             dgvCliente.ReadOnly = true;
             cliente = new ClienteLN();
@@ -25,7 +27,7 @@ namespace Presentacion
 
 
         }
-
+        //metodo para inicializar el datagridview
         void InitializeDataGridView()
         {
             dgvCliente.ReadOnly = true;
@@ -60,7 +62,10 @@ namespace Presentacion
 
         }
 
-
+        //Este método carga los géneros de una lista en un cuadro combinado.
+        //Primero llama a otro método que obtiene los géneros desde la lógica de negocio.
+        //Luego configura el cuadro combinado para que solo se pueda seleccionar una opción y se muestre el valor de cada género.
+        //Finalmente asigna la lista de géneros como fuente de datos del cuadro combinado.
         private void CargarGeneros()
         {
             //llamar metodo listar Categorias desde la logica de negocio
@@ -80,6 +85,7 @@ namespace Presentacion
 
         }
 
+        //Este método carga los datos de los clientes en el datagridview.
         void CargarDatos()
         {
             dgvCliente.DataSource = cliente.ListarCliente();
@@ -108,6 +114,7 @@ namespace Presentacion
                 }
                 else
                 {
+                    //validaciones para que no se dejen campos vacios
                     if (String.IsNullOrEmpty(txtIdPersona.Text) || String.IsNullOrEmpty(txtNombrePersona.Text) || String.IsNullOrEmpty(txtPrimerApellido.Text) || String.IsNullOrEmpty(txtSegundoApellido.Text))
                     {
 
@@ -170,7 +177,11 @@ namespace Presentacion
             new MenuPrincipal().Show();
             this.Hide();
         }
-
+        //Este código define un método que se ejecuta cuando se formatea una celda del control DataGridView llamado dgvCliente.
+        //El método recibe dos parámetros: el objeto que disparó el evento y los argumentos del evento. El método verifica si la columna
+        //de la celda es la que tiene el nombre "FNacimiento", que almacena la fecha de nacimiento de los clientes. Si es así, intenta convertir
+        //el valor de la celda a un tipo DateTime y lo muestra en un formato específico. Si el valor no es válido o nulo, muestra un mensaje de error.
+        //Si ocurre alguna excepción durante el proceso, muestra otro mensaje de error.
         private void dgvCliente_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
             DataGridViewColumn col = dgvCliente.Columns[e.ColumnIndex];
@@ -200,6 +211,10 @@ namespace Presentacion
             }
         }
 
+        //Este código es una función que se ejecuta cuando el usuario cambia el texto de un cuadro de texto llamado txtCedula.
+        //El propósito de esta función es validar que el texto solo contenga números y que no tenga más de 9 caracteres.
+        //Para hacer esto, el código recorre cada carácter del texto y lo elimina si no es un número. Luego, verifica si el texto
+        //tiene más de 9 caracteres y lo recorta si es así. Finalmente, ajusta la posición del cursor al final del texto.
         private void txtCedula_TextChanged(object sender, EventArgs e)
         {
             System.Windows.Forms.TextBox textBox = (System.Windows.Forms.TextBox)sender;
@@ -223,7 +238,7 @@ namespace Presentacion
             }
 
         }
-
+        //
         private void cmbGenero_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cmbGenero.SelectedIndex != -1)

@@ -27,7 +27,7 @@ namespace Presentacion
             //se bloquea para no se pueda manipular permite columnas personalizadas
             dgvRestaurantes.ReadOnly = true;
             dgvRestaurantes.AutoGenerateColumns = false;
-
+            // se crean los cascarones para rellenar el grid
             dgvRestaurantes.Columns.Add("IdRestaurante", "IdRestaurante");
             dgvRestaurantes.Columns.Add("NombreRestaurante", "NombreRestaurante");
             dgvRestaurantes.Columns.Add("Direccion", "Direccion");
@@ -82,7 +82,7 @@ namespace Presentacion
         {
 
         }
-        //VA ACTUALIZAR EL GRID Y VA APLICr un refresh
+        //actualiza el datagrid y hace un un refresh de la lista.
         void CargarDatos()
         {
             dgvRestaurantes.DataSource = restaLN.ListarRestaurantes();
@@ -127,7 +127,7 @@ namespace Presentacion
         {
             try
             {
-
+                //inicializa las variables
                 int idRestaurante = int.Parse(txtidRestaurante.Text);
                 string nombreRestaurante = txtNombre.Text;
                 String direccion = txtDireccion.Text;
@@ -209,7 +209,7 @@ namespace Presentacion
             }
         }
 
- 
+       //permite solo numero a agregar al telefono y no se puede pasar de 8 digitos
         private void txtTelefono_TextChanged(object sender, EventArgs e)
         {
             if (txtTelefono.Text.Length > 8)
@@ -235,7 +235,7 @@ namespace Presentacion
 
 
         }
-        // metod para cambiar 
+        // metod para cambiar true y el false por activo y inactivo
         private void dgvRestaurantes_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
             DataGridViewColumn col = dgvRestaurantes.Columns[e.ColumnIndex];

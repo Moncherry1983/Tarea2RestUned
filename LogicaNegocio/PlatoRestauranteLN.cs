@@ -45,6 +45,10 @@ namespace LogicaNegocio
 
         }
 
+
+
+        //Este método devuelve el primer plato de un restaurante dado su identificador.Para ello, llama a otro método que lista todos los platos de todos los restaurantes
+        //y luego filtra los que pertenecen al restaurante buscado. Si ocurre algún error, lo lanza como una excepción.
         public PlatoRestaurante ObtenerPlatosRestaurante(int id)
         {
 
@@ -57,11 +61,6 @@ namespace LogicaNegocio
 
                 throw ex;
             }
-
         }
-
-
-
-
     }
 }

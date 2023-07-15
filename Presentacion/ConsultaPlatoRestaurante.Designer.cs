@@ -59,16 +59,17 @@
             // dgvConsultaRestaurante
             // 
             this.dgvConsultaRestaurante.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvConsultaRestaurante.Location = new System.Drawing.Point(12, 45);
+            this.dgvConsultaRestaurante.Location = new System.Drawing.Point(12, 33);
             this.dgvConsultaRestaurante.Name = "dgvConsultaRestaurante";
-            this.dgvConsultaRestaurante.Size = new System.Drawing.Size(615, 185);
+            this.dgvConsultaRestaurante.Size = new System.Drawing.Size(602, 185);
             this.dgvConsultaRestaurante.TabIndex = 9;
             this.dgvConsultaRestaurante.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvConsultaRestaurante_CellFormatting);
+            this.dgvConsultaRestaurante.SelectionChanged += new System.EventHandler(this.dgvConsultaRestaurante_SelectionChanged);
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(123, 247);
+            this.label2.Location = new System.Drawing.Point(194, 247);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(165, 13);
             this.label2.TabIndex = 10;
@@ -77,9 +78,9 @@
             // dgvConsultaPlatos
             // 
             this.dgvConsultaPlatos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvConsultaPlatos.Location = new System.Drawing.Point(45, 263);
+            this.dgvConsultaPlatos.Location = new System.Drawing.Point(139, 263);
             this.dgvConsultaPlatos.Name = "dgvConsultaPlatos";
-            this.dgvConsultaPlatos.Size = new System.Drawing.Size(406, 185);
+            this.dgvConsultaPlatos.Size = new System.Drawing.Size(304, 185);
             this.dgvConsultaPlatos.TabIndex = 11;
             // 
             // ConsultaPlatoRestaurante

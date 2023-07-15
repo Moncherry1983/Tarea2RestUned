@@ -106,9 +106,9 @@
             // 
             // button7
             // 
-            this.button7.Location = new System.Drawing.Point(3, 280);
+            this.button7.Location = new System.Drawing.Point(3, 347);
             this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(138, 35);
+            this.button7.Size = new System.Drawing.Size(138, 37);
             this.button7.TabIndex = 6;
             this.button7.Text = "Consultar Restaurante";
             this.button7.UseVisualStyleBackColor = true;
@@ -116,9 +116,9 @@
             // 
             // button8
             // 
-            this.button8.Location = new System.Drawing.Point(3, 321);
+            this.button8.Location = new System.Drawing.Point(164, 347);
             this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(138, 34);
+            this.button8.Size = new System.Drawing.Size(140, 37);
             this.button8.TabIndex = 7;
             this.button8.Text = "Consultar Categoría Plato";
             this.button8.UseVisualStyleBackColor = true;
@@ -126,9 +126,9 @@
             // 
             // button9
             // 
-            this.button9.Location = new System.Drawing.Point(3, 361);
+            this.button9.Location = new System.Drawing.Point(327, 347);
             this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(138, 31);
+            this.button9.Size = new System.Drawing.Size(138, 37);
             this.button9.TabIndex = 8;
             this.button9.Text = "Consultar Plato";
             this.button9.UseVisualStyleBackColor = true;
@@ -138,7 +138,7 @@
             // 
             this.button10.Location = new System.Drawing.Point(3, 398);
             this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(138, 31);
+            this.button10.Size = new System.Drawing.Size(138, 38);
             this.button10.TabIndex = 9;
             this.button10.Text = "Consultar Clientes";
             this.button10.UseVisualStyleBackColor = true;
@@ -146,7 +146,7 @@
             // 
             // button11
             // 
-            this.button11.Location = new System.Drawing.Point(166, 321);
+            this.button11.Location = new System.Drawing.Point(164, 398);
             this.button11.Name = "button11";
             this.button11.Size = new System.Drawing.Size(140, 38);
             this.button11.TabIndex = 10;
@@ -156,9 +156,10 @@
             // 
             // button12
             // 
-            this.button12.Location = new System.Drawing.Point(765, 398);
+            this.button12.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button12.Location = new System.Drawing.Point(691, 350);
             this.button12.Name = "button12";
-            this.button12.Size = new System.Drawing.Size(79, 40);
+            this.button12.Size = new System.Drawing.Size(153, 88);
             this.button12.TabIndex = 11;
             this.button12.Text = "SALIR";
             this.button12.UseVisualStyleBackColor = true;
@@ -180,9 +181,9 @@
             // 
             // button13
             // 
-            this.button13.Location = new System.Drawing.Point(168, 280);
+            this.button13.Location = new System.Drawing.Point(327, 394);
             this.button13.Name = "button13";
-            this.button13.Size = new System.Drawing.Size(138, 35);
+            this.button13.Size = new System.Drawing.Size(138, 42);
             this.button13.TabIndex = 13;
             this.button13.Text = "Consultar extras";
             this.button13.UseVisualStyleBackColor = true;

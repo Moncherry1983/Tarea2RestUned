@@ -70,14 +70,13 @@
             this.cmbRestaurantesDisponibles.Name = "cmbRestaurantesDisponibles";
             this.cmbRestaurantesDisponibles.Size = new System.Drawing.Size(307, 21);
             this.cmbRestaurantesDisponibles.TabIndex = 6;
-            this.cmbRestaurantesDisponibles.SelectedIndexChanged += new System.EventHandler(this.cmbRestaurantesDisponibles_SelectedIndexChanged);
             // 
             // dgvAsociacionesRestaurantes
             // 
             this.dgvAsociacionesRestaurantes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvAsociacionesRestaurantes.Location = new System.Drawing.Point(531, 41);
+            this.dgvAsociacionesRestaurantes.Location = new System.Drawing.Point(383, 41);
             this.dgvAsociacionesRestaurantes.Name = "dgvAsociacionesRestaurantes";
-            this.dgvAsociacionesRestaurantes.Size = new System.Drawing.Size(476, 296);
+            this.dgvAsociacionesRestaurantes.Size = new System.Drawing.Size(605, 296);
             this.dgvAsociacionesRestaurantes.TabIndex = 12;
             this.dgvAsociacionesRestaurantes.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvAsociacionesRestaurantes_CellFormatting);
             this.dgvAsociacionesRestaurantes.SelectionChanged += new System.EventHandler(this.dgvAsociacionesRestaurantes_SelectionChanged);
@@ -131,24 +130,24 @@
             // lbxPlatosSeleccionados
             // 
             this.lbxPlatosSeleccionados.FormattingEnabled = true;
-            this.lbxPlatosSeleccionados.Location = new System.Drawing.Point(182, 172);
+            this.lbxPlatosSeleccionados.Location = new System.Drawing.Point(182, 168);
             this.lbxPlatosSeleccionados.Name = "lbxPlatosSeleccionados";
-            this.lbxPlatosSeleccionados.Size = new System.Drawing.Size(307, 82);
+            this.lbxPlatosSeleccionados.Size = new System.Drawing.Size(163, 160);
             this.lbxPlatosSeleccionados.TabIndex = 18;
             // 
             // dgvAsociacionesPlatos
             // 
             this.dgvAsociacionesPlatos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvAsociacionesPlatos.Location = new System.Drawing.Point(641, 376);
+            this.dgvAsociacionesPlatos.Location = new System.Drawing.Point(575, 374);
             this.dgvAsociacionesPlatos.Name = "dgvAsociacionesPlatos";
-            this.dgvAsociacionesPlatos.Size = new System.Drawing.Size(289, 257);
+            this.dgvAsociacionesPlatos.Size = new System.Drawing.Size(323, 257);
             this.dgvAsociacionesPlatos.TabIndex = 19;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(695, 9);
+            this.label2.Location = new System.Drawing.Point(604, 9);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(170, 18);
             this.label2.TabIndex = 20;
@@ -158,7 +157,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(720, 353);
+            this.label3.Location = new System.Drawing.Point(672, 353);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(124, 18);
             this.label3.TabIndex = 21;

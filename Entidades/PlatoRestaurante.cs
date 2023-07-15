@@ -37,19 +37,19 @@ namespace Entidades
         }
 
 
-        public int GetNombreIdRestaurante
+        public int GetIdRestaurante
         {
             get { return restauranteAsignado.IdRestaurante; }            
 
         }
 
-        public string GetNombreNombreRestaurante
+        public string GetNombreRestaurante
         {
             get { return restauranteAsignado.NombreRestaurante; }
 
         }
 
-        public string GetNombreDireccionRestaurante
+        public string GetDireccionRestaurante
         {
             get { return restauranteAsignado.Direccion; }
 
