@@ -79,8 +79,7 @@
             this.dgvAsociacionesRestaurantes.Name = "dgvAsociacionesRestaurantes";
             this.dgvAsociacionesRestaurantes.Size = new System.Drawing.Size(476, 296);
             this.dgvAsociacionesRestaurantes.TabIndex = 12;
-            this.dgvAsociacionesRestaurantes.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvAsociacionesRestaurantes_CellContentClick);
-            this.dgvAsociacionesRestaurantes.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvAsociacionesCompletadas_CellFormatting);
+            this.dgvAsociacionesRestaurantes.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvAsociacionesRestaurantes_CellFormatting);
             this.dgvAsociacionesRestaurantes.SelectionChanged += new System.EventHandler(this.dgvAsociacionesRestaurantes_SelectionChanged);
             // 
             // dtpFechaAfiliacion

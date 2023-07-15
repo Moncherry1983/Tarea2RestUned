@@ -70,18 +70,12 @@ namespace Presentacion
             this.Hide();
         }
 
-        private void button2_Click(object sender, EventArgs e)
-        {
+        //private void button2_Click(object sender, EventArgs e)
+        //{
 
-            dgvConsultaPlatos.DataSource = plato.ListarPlato();
-            dgvConsultaPlatos.Refresh();
-        }
-
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
+        //    dgvConsultaPlatos.DataSource = plato.ListarPlato();
+        //    dgvConsultaPlatos.Refresh();
+        //}
 
         private CategoriaPlato[] ObtenerCategoriasDisponibles()
         {
@@ -92,6 +86,9 @@ namespace Presentacion
 
         private void dgvConsultaPlatos_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
+            if (dgvConsultaPlatos == null || dgvConsultaPlatos.Columns.Count <= e.ColumnIndex)
+                return;
+
             DataGridViewColumn col = dgvConsultaPlatos.Columns[e.ColumnIndex];
 
             try
@@ -99,13 +96,22 @@ namespace Presentacion
                 if (col.Name == "IdCategoria")
                 {
                     if (e.Value != null)
-                        e.Value = ObtenerCategoriasDisponibles()
-                            .Where(cp => cp.IdCategoria == (int)e.Value).FirstOrDefault().Descripcion;
+                    {
+                        int idCategoria;
+                        if (int.TryParse(e.Value.ToString(), out idCategoria))
+                        {
+                            var categoria = ObtenerCategoriasDisponibles()
+                                .FirstOrDefault(cp => cp.IdCategoria == idCategoria);
+
+                            if (categoria != null)
+                                e.Value = categoria.Descripcion;
+                        }
+                    }
                 }
             }
             catch (Exception ex)
             {
-
+               
             }
         }
     }

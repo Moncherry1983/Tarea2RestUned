@@ -28,21 +28,21 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnRegresar = new System.Windows.Forms.Button();
             this.dgvConsultaPlatos = new System.Windows.Forms.DataGridView();
             this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvConsultaPlatos)).BeginInit();
             this.SuspendLayout();
             // 
-            // button1
+            // btnRegresar
             // 
-            this.button1.Location = new System.Drawing.Point(628, 27);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(90, 34);
-            this.button1.TabIndex = 5;
-            this.button1.Text = "Regresar";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.btnRegresar.Location = new System.Drawing.Point(628, 27);
+            this.btnRegresar.Name = "btnRegresar";
+            this.btnRegresar.Size = new System.Drawing.Size(90, 34);
+            this.btnRegresar.TabIndex = 5;
+            this.btnRegresar.Text = "Regresar";
+            this.btnRegresar.UseVisualStyleBackColor = true;
+            this.btnRegresar.Click += new System.EventHandler(this.button1_Click);
             // 
             // dgvConsultaPlatos
             // 
@@ -51,7 +51,6 @@
             this.dgvConsultaPlatos.Name = "dgvConsultaPlatos";
             this.dgvConsultaPlatos.Size = new System.Drawing.Size(394, 357);
             this.dgvConsultaPlatos.TabIndex = 4;
-            this.dgvConsultaPlatos.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             this.dgvConsultaPlatos.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvConsultaPlatos_CellFormatting);
             // 
             // label1
@@ -68,7 +67,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnRegresar);
             this.Controls.Add(this.dgvConsultaPlatos);
             this.Controls.Add(this.label1);
             this.Name = "ConsultaPlato";
@@ -81,7 +80,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnRegresar;
         private System.Windows.Forms.DataGridView dgvConsultaPlatos;
         private System.Windows.Forms.Label label1;
     }

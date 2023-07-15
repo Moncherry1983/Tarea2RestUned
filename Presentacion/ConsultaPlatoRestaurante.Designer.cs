@@ -28,61 +28,74 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.button1 = new System.Windows.Forms.Button();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.label1 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.label1 = new System.Windows.Forms.Label();
+            this.dgvConsultaRestaurante = new System.Windows.Forms.DataGridView();
+            this.label2 = new System.Windows.Forms.Label();
+            this.dgvConsultaPlatos = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvConsultaRestaurante)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvConsultaPlatos)).BeginInit();
             this.SuspendLayout();
             // 
-            // button1
+            // button2
             // 
-            this.button1.Location = new System.Drawing.Point(628, 27);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(90, 34);
-            this.button1.TabIndex = 5;
-            this.button1.Text = "Regresar";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // dataGridView1
-            // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(82, 67);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(636, 357);
-            this.dataGridView1.TabIndex = 4;
+            this.button2.Location = new System.Drawing.Point(680, 17);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(90, 34);
+            this.button2.TabIndex = 8;
+            this.button2.Text = "Regresar";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(300, 48);
+            this.label1.Location = new System.Drawing.Point(123, 17);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(223, 13);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "Consulta de Plato por Restaurante ingresados";
+            this.label1.Size = new System.Drawing.Size(129, 13);
+            this.label1.TabIndex = 6;
+            this.label1.Text = "Consulta de Restaurantes";
             // 
-            // button2
+            // dgvConsultaRestaurante
             // 
-            this.button2.Location = new System.Drawing.Point(82, 27);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(90, 34);
-            this.button2.TabIndex = 6;
-            this.button2.Text = "Ver";
-            this.button2.UseVisualStyleBackColor = true;
+            this.dgvConsultaRestaurante.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvConsultaRestaurante.Location = new System.Drawing.Point(12, 45);
+            this.dgvConsultaRestaurante.Name = "dgvConsultaRestaurante";
+            this.dgvConsultaRestaurante.Size = new System.Drawing.Size(615, 185);
+            this.dgvConsultaRestaurante.TabIndex = 9;
+            this.dgvConsultaRestaurante.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvConsultaRestaurante_CellFormatting);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(123, 247);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(165, 13);
+            this.label2.TabIndex = 10;
+            this.label2.Text = "Consulta de platos seleccionados";
+            // 
+            // dgvConsultaPlatos
+            // 
+            this.dgvConsultaPlatos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvConsultaPlatos.Location = new System.Drawing.Point(45, 263);
+            this.dgvConsultaPlatos.Name = "dgvConsultaPlatos";
+            this.dgvConsultaPlatos.Size = new System.Drawing.Size(406, 185);
+            this.dgvConsultaPlatos.TabIndex = 11;
             // 
             // ConsultaPlatoRestaurante
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.dgvConsultaPlatos);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.dgvConsultaRestaurante);
             this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.label1);
             this.Name = "ConsultaPlatoRestaurante";
             this.Text = "ConsultaPlatoRestaurante";
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvConsultaRestaurante)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvConsultaPlatos)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -90,9 +103,10 @@
 
         #endregion
 
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.DataGridView dgvConsultaRestaurante;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.DataGridView dgvConsultaPlatos;
     }
 }

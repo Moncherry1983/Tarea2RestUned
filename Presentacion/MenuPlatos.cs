@@ -193,11 +193,19 @@ namespace Presentacion
 
             try
             {
-                if (col.Name == "IdCategoria")
+                //if (col.Name == "IdCategoria")
+                //{
+                //    if (e.Value != null)
+                //        e.Value = ObtenerCategoriasDisponibles()
+                //            .Where( cp =>cp.IdCategoria == (int)e.Value).FirstOrDefault().Descripcion;
+                //}
+                if (col != null && col.Name == "IdCategoria" && e.Value != null)
                 {
-                    if (e.Value != null)
-                        e.Value = ObtenerCategoriasDisponibles()
-                            .Where(cp => cp.IdCategoria == (int)e.Value).FirstOrDefault().Descripcion;
+                    var categoria = ObtenerCategoriasDisponibles()
+                        .FirstOrDefault(cp => cp.IdCategoria == (int)e.Value);
+
+                    if (categoria != null)
+                        e.Value = categoria.Descripcion;
                 }
             }
             catch (Exception ex)

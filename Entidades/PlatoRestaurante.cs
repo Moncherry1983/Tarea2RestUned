@@ -23,7 +23,7 @@ namespace Entidades
 
         }
 
-        public DateTime FechaAfilicion
+        public DateTime FechaAfiliacion
         {
             get { return fechaAfiliacion; }
             set { fechaAfiliacion = value; }
@@ -55,9 +55,6 @@ namespace Entidades
 
         }
 
-
-
-
         public Plato[] Platos
         {
             get { return platos; }
@@ -65,9 +62,6 @@ namespace Entidades
 
         }
 
-
         #endregion
-
-
     }
 }

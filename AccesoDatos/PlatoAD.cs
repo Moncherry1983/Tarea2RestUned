@@ -71,7 +71,7 @@ namespace AccesoDatos
                 ingresarPlatos[7] = new Plato(8, "Albondigas", 60000, 12);
                 ingresarPlatos[8] = new Plato(9, "sopas De Moluscos", 2000, 10);
                 ingresarPlatos[9] = new Plato(10, "carme en salsa", 19000, 15);
-                
+
                 return ingresarPlatos;
             }
             catch (Exception ex)
