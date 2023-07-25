@@ -70,7 +70,7 @@ namespace Presentacion
             this.Hide();
         }
 
-        //private void button2_Click(object sender, EventArgs e)
+        //private void Conectar_Click(object sender, EventArgs e)
         //{
 
         //    dgvConsultaPlatos.DataSource = plato.ListarPlato();

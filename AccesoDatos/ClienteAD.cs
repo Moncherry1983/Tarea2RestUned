@@ -2,69 +2,64 @@
 using Entidades;
 using System.Linq;
 using System.Text;
+using System.Data.SqlClient;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 
 namespace AccesoDatos
 {
-    public static class ClienteAD
+    public  class ClienteAD
     {
 
-        private static Cliente[] ingresarCliente = new Cliente[20];
-
-
-        public static void AgregarCliente(Cliente ingresarClientes)
+        public Cliente ObtenerClientePorId(string id)
         {
+            Cliente cliente = null;
+            string query = $"SELECT IdCliente, Nombre, PrimerApellido, SegundoApellido, FechaNacimiento, Genero FROM Cliente WHERE IdCliente ={id}";
 
-            int contador = 0;
-            bool revision = true;
-
-            for (int i = 0; i < ingresarCliente.Count(); i++)
-            {
-
-                if (ingresarCliente[i] == null)
-                {
-                    contador = i;
-                    revision = false;
-                    break;
-                }
-            }
-
-            if (!revision)
-            {
-                ingresarCliente[contador] = ingresarClientes;
-            }
-            else
-            {
-                throw new Exception("La lista se encuentra llena.");
-            }
-
-
-        }
-
-        public static Cliente[] ListarCliente()
-        {
+            SqlDataReader reader = null;
             try
             {
-                return ingresarCliente;
+                if (ConexionDB.Conectar())
+                {
+                    SqlCommand comand = new SqlCommand(query, ConexionDB.ObtenerConexión());
+                    reader = comand.ExecuteReader();
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
 
+                            cliente = new Cliente(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetDateTime(4), reader.GetString(5).ToCharArray()[0]);
+                         
+
+                            return cliente;
+                        }
+                    }
+                }
             }
             catch (Exception ex)
             {
-
-                throw ex;
+                throw new Exception("Error:\n No se puede acceder a la base de datos.\n" + ex.Message);
+            }
+            finally
+            {
+                try
+                {
+                    if (reader != null && !reader.IsClosed)
+                    {
+                        reader.Close();
+                        ConexionDB.CerrarConeccion();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
             }
 
-
+            return cliente;
         }
-
-        public static Cliente ObtenerRestaurante(string idCliente)
-        {
-
-            return ingresarCliente.Where(x => x.IdPersona == idCliente).FirstOrDefault();
-
-        }
-
-
     }
+
+
 }
+

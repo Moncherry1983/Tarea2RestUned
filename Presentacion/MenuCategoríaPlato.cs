@@ -57,7 +57,7 @@ namespace Presentacion
             {
                 int idCategoria = int.Parse(txtidCategoria.Text);
                 string descripcion = txtdescripcion.Text;
-                bool estado = cmbEstado.SelectedIndex == 0;
+                
                 
                 //validaciones para que el usuario no deje campos vacios
                 if (String.IsNullOrEmpty(txtidCategoria.Text) || String.IsNullOrEmpty(txtdescripcion.Text))
@@ -72,6 +72,7 @@ namespace Presentacion
                 }
                 else
                 {
+                    bool estado = cmbEstado.SelectedIndex == 0;
                     CategoriaPlatoLN categoriaLN = new CategoriaPlatoLN();
                     CategoriaPlato categoriaPlato = new CategoriaPlato(int.Parse(txtidCategoria.Text), txtdescripcion.Text, cmbEstado.SelectedIndex == 0);
                     categoriaLN.AgregarCategoriaPlato(categoriaPlato);

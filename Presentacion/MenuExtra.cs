@@ -110,7 +110,6 @@ namespace Presentacion
 
                 int idExtra = int.Parse(txtIdextra.Text);
                 string descripcion = txtDescripcion.Text;
-                bool estado = cmbEstado.SelectedIndex == 0;
                 int idCategoriaExtra = (int)cmbCategoria.SelectedValue;
                 int precio = int.Parse(txtPrecio.Text);
 
@@ -130,7 +129,7 @@ namespace Presentacion
                 }
                 else
                 {
-
+                    bool estado = cmbEstado.SelectedIndex == 0;
                     ExtraLN extraLN = new ExtraLN();
                     Extra registrarExtra = new Extra(int.Parse(txtIdextra.Text), txtDescripcion.Text, cmbEstado.SelectedIndex == 0, int.Parse(txtPrecio.Text), (int)cmbCategoria.SelectedValue);
                     extraLN.AgregarExtra(registrarExtra);
@@ -152,7 +151,7 @@ namespace Presentacion
             catch (Exception ex)
             {
 
-                MessageBox.Show(ex.Message, "\n\tHa sucedido un error y no podido registrar el restaurante\n", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "\n\tHa sucedido un error y no podido registrar el extra \n", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
         }

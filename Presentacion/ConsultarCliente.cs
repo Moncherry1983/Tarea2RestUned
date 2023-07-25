@@ -30,15 +30,15 @@ namespace Presentacion
             dgvConsultaCliente.ReadOnly = true;
             dgvConsultaCliente.AutoGenerateColumns = false;
 
-            dgvConsultaCliente.Columns.Add("IdPersona", "Cedula");
+            dgvConsultaCliente.Columns.Add("IdCedula", "Cedula");
             dgvConsultaCliente.Columns.Add("Nombre", "Nombre");
             dgvConsultaCliente.Columns.Add("PApellido", "Primer apellido");
             dgvConsultaCliente.Columns.Add("SApellido", "Segundo apellido");
             dgvConsultaCliente.Columns.Add("FNacimiento", "Fecha nacimiento");
             dgvConsultaCliente.Columns.Add("Genero", "Genero");
 
-            dgvConsultaCliente.Columns["IdPersona"].DataPropertyName = "IdPersona";
-            dgvConsultaCliente.Columns["IdPersona"].Width = 80;
+            dgvConsultaCliente.Columns["IdCedula"].DataPropertyName = "IdCedula";
+            dgvConsultaCliente.Columns["IdCedula"].Width = 80;
 
             dgvConsultaCliente.Columns["Nombre"].DataPropertyName = "Nombre";
             dgvConsultaCliente.Columns["Nombre"].Width = 120;

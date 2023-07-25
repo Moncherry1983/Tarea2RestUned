@@ -1,6 +1,5 @@
 ﻿using System;
 using Entidades;
-using AccesoDatos;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,11 +15,11 @@ namespace LogicaNegocio
 
             try
             {
-                var ExtraActuales = ExtraAD.ListarExtra();
-                if (ExtraActuales.Where(ext => ext != null && ext.IdExtra == ingresarExtra.IdExtra).Count() == 0)
-                    ExtraAD.AgregarExtra(ingresarExtra);
-                else
-                    throw new Exception("Ya existe el id extra que quieres agregar");
+            //    var ExtraActuales = ExtraAD.ListarExtra();
+            //    if (ExtraActuales.Where(ext => ext != null && ext.IdExtra == ingresarExtra.IdExtra).Count() == 0)
+            //        ExtraAD.AgregarExtra(ingresarExtra);
+            //    else
+            //        throw new Exception("Ya existe el id extra que quieres agregar");
                 
             }
             catch (Exception ex)
@@ -35,7 +34,8 @@ namespace LogicaNegocio
 
             try
             {
-                return ExtraAD.ListarExtra();
+                //return ExtraAD.ListarExtra();
+                return new Extra[0];
             }
             catch (Exception ex)
             {

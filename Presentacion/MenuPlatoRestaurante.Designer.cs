@@ -70,6 +70,7 @@
             this.cmbRestaurantesDisponibles.Name = "cmbRestaurantesDisponibles";
             this.cmbRestaurantesDisponibles.Size = new System.Drawing.Size(307, 21);
             this.cmbRestaurantesDisponibles.TabIndex = 6;
+            this.cmbRestaurantesDisponibles.SelectedIndexChanged += new System.EventHandler(this.cmbRestaurantesDisponibles_SelectedIndexChanged);
             // 
             // dgvAsociacionesRestaurantes
             // 

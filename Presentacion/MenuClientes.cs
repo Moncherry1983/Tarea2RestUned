@@ -33,15 +33,15 @@ namespace Presentacion
             dgvCliente.ReadOnly = true;
             dgvCliente.AutoGenerateColumns = false;
 
-            dgvCliente.Columns.Add("IdPersona", "Cedula");
+            dgvCliente.Columns.Add("IdCedula", "Cedula");
             dgvCliente.Columns.Add("Nombre", "Nombre");
             dgvCliente.Columns.Add("PApellido", "Primer apellido");
             dgvCliente.Columns.Add("SApellido", "Segundo apellido");
             dgvCliente.Columns.Add("FNacimiento", "Fecha nacimiento");
             dgvCliente.Columns.Add("Genero", "Genero");
 
-            dgvCliente.Columns["IdPersona"].DataPropertyName = "IdPersona";
-            dgvCliente.Columns["IdPersona"].Width = 80;
+            dgvCliente.Columns["IdCedula"].DataPropertyName = "IdCedula";
+            dgvCliente.Columns["IdCedula"].Width = 80;
 
             dgvCliente.Columns["Nombre"].DataPropertyName = "Nombre";
             dgvCliente.Columns["Nombre"].Width = 120;
@@ -102,7 +102,6 @@ namespace Presentacion
                 String pApellido = txtPrimerApellido.Text;
                 String sApellido = txtSegundoApellido.Text;
                 DateTime fNacimiento = dtpFNacimiento.Value;
-                char genero = char.Parse(cmbGenero.SelectedValue.ToString());
 
 
                 DateTime fechaActual = DateTime.Now;
@@ -130,7 +129,8 @@ namespace Presentacion
                     }
                     else
                     {
-
+                        
+                        char genero = char.Parse(cmbGenero.SelectedValue.ToString());
                         ClienteLN clienteLN = new ClienteLN();
                         Cliente cliente = new Cliente(txtIdPersona.Text, txtNombrePersona.Text, txtPrimerApellido.Text, txtSegundoApellido.Text, dtpFNacimiento.Value, char.Parse(cmbGenero.SelectedValue.ToString()));
                         clienteLN.AgregarCliente(cliente);
@@ -152,7 +152,7 @@ namespace Presentacion
             catch (Exception ex)
             {
 
-                MessageBox.Show(ex.Message + "\n\tHa sucedido un error y no podido registrar el restaurante\n");
+                MessageBox.Show(ex.Message + "\n\tHa sucedido un error y no podido registrar el cliente\n");
             }
 
         }

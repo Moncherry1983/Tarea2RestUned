@@ -3,6 +3,7 @@ using Entidades;
 using System.Linq;
 using LogicaNegocio;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Presentacion
 {
@@ -78,19 +79,19 @@ namespace Presentacion
             {
                 int idPlato = int.Parse(txtIdPlato.Text);
                 string nombrePlato = txtNombrePlato.Text;
-                
                 int precio = int.Parse(txtPrecioPlato.Text);
 
+             
                 if (String.IsNullOrEmpty(txtIdPlato.Text) || String.IsNullOrEmpty(txtNombrePlato.Text) || String.IsNullOrEmpty(txtPrecioPlato.Text))
                 {
 
-                    MessageBox.Show("No deje campos vacios por favor...");
+                    MessageBox.Show("No se permite dejar campos vacios ...");
 
                 }
                 else if (cmbPlatos.SelectedIndex == -1)
                 {
 
-                    MessageBox.Show("No deje campos vacios por favor...");
+                    MessageBox.Show("No se permite dejar campos vacios al escojer la categoria...");
 
 
                 }
@@ -135,7 +136,7 @@ namespace Presentacion
                 if (!char.IsDigit(c))
                 {
                     textBox.Text = texto.Remove(texto.IndexOf(c), 1);
-                    textBox.Select(texto.Length, 0);
+                    textBox.Select(texto.Length, 0);                   
                     break;
                 }
             }
@@ -185,6 +186,7 @@ namespace Presentacion
             {
                 // El usuario no ha seleccionado ningún elemento del combobox
             }
+           
         }
 
         private void dgvPlato_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)

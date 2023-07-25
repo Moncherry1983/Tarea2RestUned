@@ -1,6 +1,5 @@
 ﻿using System;
 using Entidades;
-using AccesoDatos;
 using System.Linq;
 using System.Text;
 using System.Collections;
@@ -19,11 +18,11 @@ namespace LogicaNegocio
 
             try
             {
-                var PlatoActuales = PlatoAD.ListarPlatos();
-                if (PlatoActuales.Where(plato => plato != null && plato.IdPlato == ingresarPlato.IdPlato).Count() == 0)
-                    PlatoAD.AgregarPlato(ingresarPlato);
-                else
-                    throw new Exception("Ya existe el id de plato");
+                //var PlatoActuales = PlatoAD.ListarPlatos();
+                //if (PlatoActuales.Where(plato => plato != null && plato.IdPlato == ingresarPlato.IdPlato).Count() == 0)
+                //    PlatoAD.AgregarPlato(ingresarPlato);
+                //else
+                //    throw new Exception("Ya existe el id de plato");
             }
             catch (Exception ex)
             {
@@ -37,7 +36,8 @@ namespace LogicaNegocio
 
             try
             {
-                return PlatoAD.ListarPlatos();
+                //return PlatoAD.ListarPlatos();
+                return new Plato[0];
             }
             catch (Exception ex)
             {
@@ -54,20 +54,21 @@ namespace LogicaNegocio
         //una lista vacía. De lo contrario, devuelve el resultado convertido a una lista.
         public List<Plato> ListarPlatosSeleccionados(List<int> listaIdsPlatosSeleccionados)
         {
-            var allPlatos = PlatoAD.ListarPlatos();
-            if (allPlatos == null || listaIdsPlatosSeleccionados == null)
-            {
-                return new List<Plato>();
-            }
+            //var allPlatos = PlatoAD.ListarPlatos();
+            //if (allPlatos == null || listaIdsPlatosSeleccionados == null)
+            //{
+            //    return new List<Plato>();
+            //}
 
-            var resultado = allPlatos.Where(plat => plat != null && listaIdsPlatosSeleccionados.Contains(plat.IdPlato));
+            //var resultado = allPlatos.Where(plat => plat != null && listaIdsPlatosSeleccionados.Contains(plat.IdPlato));
 
-            if (resultado == null || resultado.Count() < 1)
-            {
-                return new List<Plato>();
-            }
+            //if (resultado == null || resultado.Count() < 1)
+            //{
+            //    return new List<Plato>();
+            //}
 
-            return resultado.ToList();
+            //return resultado.ToList();
+            return new List<Plato>();
         }
 
     }

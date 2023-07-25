@@ -10,7 +10,7 @@ namespace Entidades
     {
         #region "Atributos"
         // Atributos de la clase
-        private string idPersona;
+        private string idCedula;
         private string nombre;
         private string pApellido;
         private string sApellido;
@@ -18,9 +18,9 @@ namespace Entidades
         private char genero;
 
         // Constructor de la clase
-        public Cliente(string idPersona, string nombre, string pApellido, string sApellido, DateTime fNacimiento, char genero)
+        public Cliente(string idCedula, string nombre, string pApellido, string sApellido, DateTime fNacimiento, char genero)
         {
-            this.idPersona = idPersona;
+            this.idCedula = idCedula;
             this.nombre = nombre;
             this.pApellido = pApellido;
             this.sApellido = sApellido;
@@ -29,10 +29,10 @@ namespace Entidades
         }
 
         // Métodos de acceso (getters y setters) de los atributos
-        public string IdPersona
+        public string IdCedula
         {
-            get { return idPersona; }
-            set { idPersona = value; }
+            get { return idCedula; }
+            set { idCedula = value; }
         }
         public string Nombre
         {

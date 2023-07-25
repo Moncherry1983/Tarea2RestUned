@@ -1,6 +1,5 @@
 ﻿using System;
 using Entidades;
-using AccesoDatos;
 using System.Linq;
 using System.Text;
 using System.Diagnostics;
@@ -17,14 +16,14 @@ namespace LogicaNegocio
 
         public void AgregarCategoriaPlato(CategoriaPlato categoria)
         {
-          
-            try
-            {
-                var categoriaPlatoActuales = CategoriaPlatoAD.ListarCategoriaPlato();
-                if (categoriaPlatoActuales.Where(categoPlato => categoPlato != null && categoPlato.IdCategoria == categoria.IdCategoria).Count()==0)
-                    CategoriaPlatoAD.AgregarCategoria(categoria);
-                else
-                    throw new Exception("Ya el id de la categoria existe ");
+
+            try { 
+            //{
+            //    var categoriaPlatoActuales = CategoriaPlatoAD.ListarCategoriaPlato();
+            //    if (categoriaPlatoActuales.Where(categoPlato => categoPlato != null && categoPlato.IdCategoria == categoria.IdCategoria).Count()==0)
+            //        CategoriaPlatoAD.AgregarCategoria(categoria);
+            //    else
+            //        throw new Exception("Ya el id de la categoria existe ");
 
             }
             catch (Exception ex)
@@ -41,7 +40,8 @@ namespace LogicaNegocio
 
             try
             {
-                return CategoriaPlatoAD.ListarCategoriaPlato();
+                //return CategoriaPlatoAD.ListarCategoriaPlato();
+                return new CategoriaPlato[0];
             }
             catch (Exception ex)
             {
@@ -58,7 +58,8 @@ namespace LogicaNegocio
 
             try
             {
-                return CategoriaPlatoAD.ListarCategoriaPlato().Where( cat => cat != null && cat.Estado == true).ToArray();
+                //return CategoriaPlatoAD.ListarCategoriaPlato().Where( cat => cat != null && cat.Estado == true).ToArray();
+                return new CategoriaPlato[0];
             }
             catch (Exception ex)
             {

@@ -1,6 +1,5 @@
 ﻿using System;
 using Entidades;
-using AccesoDatos;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,7 +16,7 @@ namespace LogicaNegocio
         {
             try
             {
-                PlatosRestauranteAD.AgregarPlatoRestaurante(plato);
+                //PlatosRestauranteAD.AgregarPlatoRestaurante(plato);
 
             }
             catch (Exception ex)
@@ -35,7 +34,8 @@ namespace LogicaNegocio
 
             try
             {
-                return PlatosRestauranteAD.ListarPlatoRestaurante();
+                //return PlatosRestauranteAD.ListarPlatoRestaurante();
+                return new PlatoRestaurante[0];
             }
             catch (Exception ex)
             {
@@ -54,7 +54,8 @@ namespace LogicaNegocio
 
             try
             {                
-                return PlatosRestauranteAD.ListarPlatoRestaurante().Where(rest => rest!= null && rest.RestauranteAsignado.IdRestaurante == id).FirstOrDefault();
+                //return PlatosRestauranteAD.ListarPlatoRestaurante().Where(rest => rest!= null && rest.RestauranteAsignado.IdRestaurante == id).FirstOrDefault();
+                return new PlatoRestaurante[0].FirstOrDefault();
             }
             catch (Exception ex)
             {

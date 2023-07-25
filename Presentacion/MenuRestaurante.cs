@@ -131,7 +131,6 @@ namespace Presentacion
                 int idRestaurante = int.Parse(txtidRestaurante.Text);
                 string nombreRestaurante = txtNombre.Text;
                 String direccion = txtDireccion.Text;
-                bool estado = cmbEstado.SelectedIndex == 0;
                 string telefono = txtTelefono.Text;
 
 
@@ -145,13 +144,13 @@ namespace Presentacion
                 else if (cmbEstado.SelectedIndex == -1)
                 {
 
-                    MessageBox.Show("No deje campos vacios por favor...");
+                    MessageBox.Show("Debe seleccionar el estado del restaurante...");
 
 
                 }
                 else
                 {
-                    
+                    bool estado = cmbEstado.SelectedIndex == 0;
                     RestauranteLN restauranteLn = new RestauranteLN();
                     Restaurante registrarRestaurante = new Restaurante(int.Parse(txtidRestaurante.Text), txtNombre.Text, txtDireccion.Text, cmbEstado.SelectedIndex == 0, txtTelefono.Text);
                     restauranteLn.AgregarRestaurante(registrarRestaurante);
@@ -217,6 +216,8 @@ namespace Presentacion
                 txtTelefono.Text = txtTelefono.Text.Substring(0, 8);
                 txtTelefono.SelectionStart = txtTelefono.Text.Length;
             }
+            
+
 
             System.Windows.Forms.TextBox textBox = (System.Windows.Forms.TextBox)sender;
             string texto = textBox.Text;
@@ -230,10 +231,8 @@ namespace Presentacion
                     textBox.Select(texto.Length, 0);
                     break;
                 }
+              
             }
-
-
-
         }
         // metod para cambiar true y el false por activo y inactivo
         private void dgvRestaurantes_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)

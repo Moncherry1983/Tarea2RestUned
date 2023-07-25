@@ -95,9 +95,7 @@ namespace Presentacion
             cmbRestaurantesDisponibles.ValueMember = "IdRestaurante";
             cmbRestaurantesDisponibles.DataSource = ObtenerInformacionRestaurantesDisponibles();
         }
-        private void label3_Click(object sender, EventArgs e)
-        {
-        }
+
 
         //Este método carga los datos de las asociaciones entre platos y restaurantes en dos tablas.
         //La primera tabla muestra todos los platos y restaurantes que existen en la base de datos.
@@ -106,7 +104,13 @@ namespace Presentacion
         void CargarDatos()
         {
             dgvAsociacionesRestaurantes.DataSource = platoRestauranteLN.ListarPlatoRestaurantes();
-            dgvAsociacionesRestaurantes.Refresh();
+            dgvAsociacionesRestaurantes.Refresh();          
+            object selectedValue = cmbRestaurantesDisponibles.SelectedValue;
+            if (selectedValue != null)
+            {
+                int restauranteAsignado = (int)selectedValue;
+                // rest of the code
+            }
 
             dgvAsociacionesPlatos.DataSource = platosSeleccionados;
             dgvAsociacionesRestaurantes.Refresh();
@@ -156,7 +160,6 @@ namespace Presentacion
                     //Este método toma un restaurante y una lista de platos seleccionados, y crea un objeto de tipo PlatoRestaurante que los asocia.
                     //Luego verifica si el restaurante ya tiene platos asociados en la base de datos, y si no, los agrega y actualiza la interfaz gráfica.
                     //Si el restaurante ya tiene platos asociados, lanza una excepción.
-                    int restauranteAsignado = (int)cmbRestaurantesDisponibles.SelectedValue;
                     Restaurante infoRestaurante = restauranteLn.ObtenerRestaurantePorId((int)cmbRestaurantesDisponibles.SelectedValue);
                     PlatoRestaurante platoRestaurante = new PlatoRestaurante(infoRestaurante, platosSeleccionados.ToArray(), FechaAfiliacion);
                     
@@ -280,6 +283,18 @@ namespace Presentacion
                         e.Value = "Fecha inválida";
                     }
                 }
+            }
+        }
+
+        private void cmbRestaurantesDisponibles_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cmbRestaurantesDisponibles.SelectedIndex != -1)
+            {
+                // El usuario ha seleccionado un elemento del combobox
+            }
+            else
+            {
+                // El usuario no ha seleccionado ningún elemento del combobox
             }
         }
     }

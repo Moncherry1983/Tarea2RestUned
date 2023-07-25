@@ -3,16 +3,14 @@
 //los procesos y las operaciones que lo hacen funcionar de forma eficiente y efectiva.
 using System;
 using Entidades;
-using AccesoDatos;
 using System.Linq;
 using System.Text;
-using System.Collections;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using static LogicaNegocio.PlatoRestauranteLN;
 
 namespace LogicaNegocio
-{   
+{
     public class RestauranteLN
     {
 
@@ -24,11 +22,11 @@ namespace LogicaNegocio
         {
             try
             {
-                var restaurantesActuales= RestauranteAD.ListarRestaurante();                
-                if (restaurantesActuales.Where(rest => rest != null && rest.IdRestaurante == restaurante.IdRestaurante).Count() == 0)
-                    RestauranteAD.AgregarRestaurante(restaurante);
-                else
-                    throw new Exception("Ya existe un restaurate con ese Id");
+                //var restaurantesActuales = RestauranteAD.ListarRestaurante();
+                //if (restaurantesActuales.Where(rest => rest != null && rest.IdRestaurante == restaurante.IdRestaurante).Count() == 0)
+                //    RestauranteAD.AgregarRestaurante(restaurante);
+                //else
+                //    throw new Exception("Ya existe un restaurate con ese Id");
 
             }
             catch (Exception ex)
@@ -48,7 +46,8 @@ namespace LogicaNegocio
 
             try
             {
-                return RestauranteAD.ListarRestaurante();
+                //return RestauranteAD.ListarRestaurante();
+                return new Restaurante[0];
             }
             catch (Exception ex)
             {
@@ -66,24 +65,24 @@ namespace LogicaNegocio
 
             try
             {
-                return RestauranteAD.ListarRestaurante().Where(cat => cat != null && cat.Estado == true).ToArray();
+                //return RestauranteAD.ListarRestaurante().Where(cat => cat != null && cat.Estado == true).ToArray();
+                return new Restaurante[0];
             }
             catch (Exception ex)
             {
 
                 throw ex;
             }
+
         }
 
-
-       // Este método busca un restaurante por su identificador en una lista de restaurantes que se obtiene de la capa de acceso a datos.
-       //Si encuentra un restaurante que cumpla con el criterio, lo devuelve.Si no, devuelve null. Si ocurre algún error.
         public Restaurante ObtenerRestaurantePorId(int id)
         {
 
             try
             {
-                return RestauranteAD.ListarRestaurante().Where(rest => rest != null && (rest.Estado == true && rest.IdRestaurante == id)).FirstOrDefault();
+                //return RestauranteAD.ListarRestaurante().Where(rest => rest != null && (rest.Estado == true && rest.IdRestaurante == id)).FirstOrDefault();
+                return new Restaurante(1, "", "", true, "");
             }
             catch (Exception ex)
             {
