@@ -40,17 +40,17 @@
             // 
             // txtEstado
             // 
-            this.txtEstado.Location = new System.Drawing.Point(15, 134);
+            this.txtEstado.Location = new System.Drawing.Point(6, 80);
             this.txtEstado.Multiline = true;
             this.txtEstado.Name = "txtEstado";
-            this.txtEstado.Size = new System.Drawing.Size(476, 253);
+            this.txtEstado.Size = new System.Drawing.Size(476, 323);
             this.txtEstado.TabIndex = 0;
             // 
             // btnEncender
             // 
-            this.btnEncender.Location = new System.Drawing.Point(464, 12);
+            this.btnEncender.Location = new System.Drawing.Point(465, 16);
             this.btnEncender.Name = "btnEncender";
-            this.btnEncender.Size = new System.Drawing.Size(65, 24);
+            this.btnEncender.Size = new System.Drawing.Size(79, 46);
             this.btnEncender.TabIndex = 1;
             this.btnEncender.Text = "Encender";
             this.btnEncender.UseVisualStyleBackColor = true;
@@ -58,9 +58,9 @@
             // 
             // btnDesconectar
             // 
-            this.btnDesconectar.Location = new System.Drawing.Point(552, 12);
+            this.btnDesconectar.Location = new System.Drawing.Point(566, 16);
             this.btnDesconectar.Name = "btnDesconectar";
-            this.btnDesconectar.Size = new System.Drawing.Size(75, 24);
+            this.btnDesconectar.Size = new System.Drawing.Size(79, 46);
             this.btnDesconectar.TabIndex = 2;
             this.btnDesconectar.Text = "desconectar";
             this.btnDesconectar.UseVisualStyleBackColor = true;
@@ -100,19 +100,19 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(507, 64);
+            this.button1.Location = new System.Drawing.Point(511, 80);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.Size = new System.Drawing.Size(83, 44);
             this.button1.TabIndex = 7;
             this.button1.Text = "Salir";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // Monitor
+            // MonitorRestUned
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(639, 399);
+            this.ClientSize = new System.Drawing.Size(657, 415);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.txtPuerto);
             this.Controls.Add(this.txtDireccion);
@@ -121,7 +121,7 @@
             this.Controls.Add(this.btnDesconectar);
             this.Controls.Add(this.btnEncender);
             this.Controls.Add(this.txtEstado);
-            this.Name = "Monitor";
+            this.Name = "MonitorRestUned";
             this.Text = "Monitor(Servidor)";
             this.Load += new System.EventHandler(this.Monitor_Load);
             this.ResumeLayout(false);

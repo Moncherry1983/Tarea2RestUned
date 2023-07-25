@@ -39,7 +39,7 @@
             // btnConectar
             // 
             this.btnConectar.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnConectar.Location = new System.Drawing.Point(261, 148);
+            this.btnConectar.Location = new System.Drawing.Point(197, 85);
             this.btnConectar.Name = "btnConectar";
             this.btnConectar.Size = new System.Drawing.Size(194, 81);
             this.btnConectar.TabIndex = 13;
@@ -50,7 +50,7 @@
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(261, 271);
+            this.button1.Location = new System.Drawing.Point(197, 226);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(194, 81);
             this.button1.TabIndex = 14;
@@ -62,7 +62,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(157, 22);
+            this.label1.Location = new System.Drawing.Point(68, 9);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(463, 32);
             this.label1.TabIndex = 15;
@@ -89,18 +89,19 @@
             // lblNombreMaquina
             // 
             this.lblNombreMaquina.AutoSize = true;
-            this.lblNombreMaquina.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNombreMaquina.Location = new System.Drawing.Point(8, 47);
+            this.lblNombreMaquina.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblNombreMaquina.Location = new System.Drawing.Point(12, 148);
             this.lblNombreMaquina.Name = "lblNombreMaquina";
-            this.lblNombreMaquina.Size = new System.Drawing.Size(92, 23);
+            this.lblNombreMaquina.Size = new System.Drawing.Size(117, 18);
             this.lblNombreMaquina.TabIndex = 20;
-            this.lblNombreMaquina.Text = "maquina";
+            this.lblNombreMaquina.Text = " ID Maquina :  ";
             // 
             // Login
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1200, 675);
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.ClientSize = new System.Drawing.Size(537, 384);
             this.Controls.Add(this.lblNombreMaquina);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.txtCedula);
