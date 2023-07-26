@@ -1,14 +1,10 @@
-﻿using System;
-using Entidades;
-using System.Linq;
-using System.Text;
+﻿using Entidades;
+using System;
 using System.Data.SqlClient;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 
 namespace AccesoDatos
 {
-    public  class ClienteAD
+    public class ClienteAD
     {
         //Este método busca un cliente en la base de datos usando su identificador.
         //Primero crea una variable para guardar el cliente y otra para guardar la consulta SQL.
@@ -25,15 +21,13 @@ namespace AccesoDatos
             {
                 if (ConexionDB.Conectar())
                 {
-                    SqlCommand comand = new SqlCommand(query, ConexionDB.ObtenerConexión());
+                    SqlCommand comand = new SqlCommand(query, ConexionDB.ObtenerConexion());
                     reader = comand.ExecuteReader();
                     if (reader.HasRows)
                     {
                         while (reader.Read())
                         {
-
                             cliente = new Cliente(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetDateTime(4), reader.GetString(5).ToCharArray()[0]);
-                         
 
                             return cliente;
                         }
@@ -51,7 +45,7 @@ namespace AccesoDatos
                     if (reader != null && !reader.IsClosed)
                     {
                         reader.Close();
-                        ConexionDB.CerrarConeccion();
+                        ConexionDB.CerrarConexion();
                     }
                 }
                 catch (Exception ex)
@@ -63,7 +57,4 @@ namespace AccesoDatos
             return cliente;
         }
     }
-
-
 }
-

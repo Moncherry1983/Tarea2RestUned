@@ -1,20 +1,21 @@
 ﻿using System;
 using System.Data;
-using System.Windows.Forms;
 using System.Data.SqlClient;
 
 namespace AccesoDatos
 {
     public static class ConexionDB
     {
-        //
-        static readonly string serverName = "JOSEANDRES\\SQLEXPRESS";
+        
+        //static readonly string serverName = "JOSEANDRES\\SQLEXPRESS";
         //agrega su base de datos del profesor....
         //static SqlConnection conectar = new SqlConnection($"Data Source={***Nombre servidor***};Initial Catalog=RESTUNED;Integrated Security=True");
 
         //base de datos estudiante.
-        static SqlConnection conectar = new SqlConnection($"Data Source=JOSEANDRES\\SQLEXPRESS;Initial Catalog=RESTUNED;Integrated Security=True");
+        //static SqlConnection conectar = new SqlConnection($"Data Source={serverName};Initial Catalog=RESTUNED;Integrated Security=True");
 
+        static readonly string serverName = "LUGOBO-LAPTOP";
+        static SqlConnection conectar = new SqlConnection($"Data Source={serverName};Initial Catalog=DB_RESTAURANTE;Integrated Security=True");
 
         //Este método intenta abrir una conexión con la base de datos utilizando la información de conexión predefinida.
         //Si la conexión es exitosa, devuelve true, lo que significa que la conexión se realizó correctamente.
@@ -24,7 +25,6 @@ namespace AccesoDatos
             try
             {
                 conectar.Open();
-                //MessageBox.Show("Conexion exitosa a la base de datos RESTUNED...");
                 return true;
             }
             catch (SqlException ex)
@@ -36,14 +36,14 @@ namespace AccesoDatos
             return false;
         }
 
-        // Este método se encarga de cerrar la conexión a la base de datos. 
-        public static void CerrarConeccion()
+        // Este método se encarga de cerrar la conexión a la base de datos.
+        public static void CerrarConexion()
         {
             conectar?.Close();
         }
 
         //Este método devuelve el objeto de conexión actual, que se puede utilizar para ejecutar consultas y operaciones en la base de datos.
-        public static SqlConnection ObtenerConexión()
+        public static SqlConnection ObtenerConexion()
         {
             return conectar;
         }
@@ -55,12 +55,5 @@ namespace AccesoDatos
         {
             return conectar == null || (conectar != null && conectar.State == ConnectionState.Broken || conectar.State == ConnectionState.Closed);
         }
-
-
     }
 }
-
-
-
-
-    

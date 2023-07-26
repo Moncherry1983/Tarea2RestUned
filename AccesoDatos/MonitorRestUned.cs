@@ -1,17 +1,11 @@
-﻿using System;
-using SimpleTCP;
-using Entidades;
-using System.Net;
-using System.Data;
-using System.Linq;
-using System.Text;
+﻿using Entidades;
 using LogicaNegocio;
+using SimpleTCP;
+using System;
 using System.Drawing;
-using System.Text.Json;
+using System.Net;
+using System.Text;
 using System.Windows.Forms;
-using System.ComponentModel;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 
 namespace AccesoDatos
 {
@@ -26,14 +20,12 @@ namespace AccesoDatos
             txtPuerto.Text = "14100";
         }
 
-
         //Lo que hace es mostrar un mensaje en el cuadro de texto que dice que el servidor se ha iniciado.
         //Luego, crea una variable que guarda la dirección IP que se escribió en otro cuadro de texto.
         //Finalmente, llama al método Start del objeto server, pasándole la dirección IP y el número de puerto
         //que también se escribió en otro cuadro de texto. Este método sirve para iniciar la conexión con el servidor.
         private void btnEncender_click(object sender, EventArgs e)
         {
-
             txtEstado.Text += " ...Servidor se ha iniciado..." + Environment.NewLine;
             IPAddress ipAddress = IPAddress.Parse(txtDireccion.Text);
             server.Start(ipAddress, Convert.ToInt32(txtPuerto.Text));
@@ -44,13 +36,14 @@ namespace AccesoDatos
         //  que se activa cuando recibe datos de algún cliente.
         private void Monitor_Load(object sender, EventArgs e)
         {
+            this.StartPosition = FormStartPosition.CenterScreen;            
+
             server = new SimpleTcpServer
             {
                 StringEncoder = Encoding.UTF8,
                 Delimiter = 0x13
             };
             server.DataReceived += Server_DataReceived;
-
         }
 
         //Cuando el servidor recibe datos de un cliente, este método es llamado. En primer lugar, deserializa los datos recibidos en un objeto "paqueteRecibido". Luego,
@@ -59,8 +52,8 @@ namespace AccesoDatos
         //indicando que no se encontró.
         private void Server_DataReceived(object sender, SimpleTCP.Message msg)
         {
-            var paqueteRecibido = AdmistradorPaquetes.DeserializePackage(msg.MessageString);            
-            //ResponseHandler(paqueteRecibido);            
+            var paqueteRecibido = AdmistradorPaquetes.DeserializePackage(msg.MessageString);
+            //ResponseHandler(paqueteRecibido);
 
             switch (paqueteRecibido)
             {
@@ -121,13 +114,11 @@ namespace AccesoDatos
             server.Stop();
         }
 
-
-         //Método que se llama cuando se hace clic en el botón Salir. Lo que hace es mostrar un mensaje en pantalla
+        //Método que se llama cuando se hace clic en el botón Salir. Lo que hace es mostrar un mensaje en pantalla
         private void button1_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Estas saliendo Monitor Rest-Uned...");
             Application.Exit();
         }
-
     }
 }

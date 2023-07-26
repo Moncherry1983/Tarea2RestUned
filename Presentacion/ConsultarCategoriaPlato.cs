@@ -1,19 +1,13 @@
-﻿using System;
-using System.Data;
-using System.Linq;
-using System.Text;
-using LogicaNegocio;
-using System.Drawing;
+﻿using LogicaNegocio;
+using System;
 using System.Windows.Forms;
-using System.ComponentModel;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 
 namespace Presentacion
 {
     public partial class ConsultarCategoriaPlato : Form
     {
         CategoriaPlatoLN categoria;
+
         public ConsultarCategoriaPlato()
         {
             InitializeComponent();
@@ -23,9 +17,6 @@ namespace Presentacion
             CargarDatos();
         }
 
-
-        
-     
         void InitializeDataGridView()
         {
             dvgConsultaCategoriaPlato.ReadOnly = true;
@@ -34,7 +25,6 @@ namespace Presentacion
             dvgConsultaCategoriaPlato.Columns.Add("IdCategoria", "idCategoria");
             dvgConsultaCategoriaPlato.Columns.Add("Descripcion", "descripcion");
             dvgConsultaCategoriaPlato.Columns.Add("Estado", "estado");
-
 
             dvgConsultaCategoriaPlato.Columns["IdCategoria"].DataPropertyName = "IdCategoria";
             dvgConsultaCategoriaPlato.Columns["IdCategoria"].Width = 90;
@@ -45,10 +35,7 @@ namespace Presentacion
             dvgConsultaCategoriaPlato.Columns["Estado"].DataPropertyName = "Estado";
             dvgConsultaCategoriaPlato.Columns["Estado"].Width = 120;
 
-
             CargarDatos();
-
-
         }
 
         private void CargarDatos()
@@ -56,8 +43,6 @@ namespace Presentacion
             dvgConsultaCategoriaPlato.DataSource = categoria.ListarCategoriaPlato();
             dvgConsultaCategoriaPlato.Refresh();
         }
-
-
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -67,7 +52,6 @@ namespace Presentacion
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-
         }
 
         private void dataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
