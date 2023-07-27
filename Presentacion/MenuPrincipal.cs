@@ -10,10 +10,12 @@ namespace Presentacion
     public partial class MenuPrincipal : Form
     {
        public SimpleTcpClient tcpClient;
-       
-        public MenuPrincipal(Cliente cliente)
+        readonly string nombreMaquinaCliente;
+
+        public MenuPrincipal(Cliente cliente , string nombreMaquinaCliente)
         {                   
-            InitializeComponent();            
+            InitializeComponent();
+            this.nombreMaquinaCliente = nombreMaquinaCliente;
         }
 
         public MenuPrincipal()
@@ -88,7 +90,7 @@ namespace Presentacion
 
         private void button8_Click(object sender, EventArgs e)
         {
-            new ConsultarCategoriaPlato().Show(); 
+            new ConsultarCategoriaPlato(nombreMaquinaCliente).Show(); 
             this.Hide();
         }
 

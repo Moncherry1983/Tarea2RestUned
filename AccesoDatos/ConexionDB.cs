@@ -15,7 +15,7 @@ namespace AccesoDatos
         //static SqlConnection conectar = new SqlConnection($"Data Source={serverName};Initial Catalog=RESTUNED;Integrated Security=True");
 
         static readonly string serverName = "LUGOBO-LAPTOP";
-        static SqlConnection conectar = new SqlConnection($"Data Source={serverName};Initial Catalog=DB_RESTAURANTE;Integrated Security=True");
+        static SqlConnection conectar = new SqlConnection($"Data Source={serverName};Initial Catalog=RESTUNED;Integrated Security=True");
 
         //Este método intenta abrir una conexión con la base de datos utilizando la información de conexión predefinida.
         //Si la conexión es exitosa, devuelve true, lo que significa que la conexión se realizó correctamente.

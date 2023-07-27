@@ -81,6 +81,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdministradorTCP.cs" />
     <Compile Include="Login.cs">
       <SubType>Form</SubType>
     </Compile>

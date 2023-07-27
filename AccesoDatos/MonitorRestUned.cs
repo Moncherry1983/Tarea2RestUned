@@ -2,7 +2,7 @@
 using LogicaNegocio;
 using SimpleTCP;
 using System;
-using System.Drawing;
+using System.Collections.Generic;
 using System.Net;
 using System.Text;
 using System.Windows.Forms;
@@ -36,7 +36,7 @@ namespace AccesoDatos
         //  que se activa cuando recibe datos de algún cliente.
         private void Monitor_Load(object sender, EventArgs e)
         {
-            this.StartPosition = FormStartPosition.CenterScreen;            
+            this.StartPosition = FormStartPosition.CenterScreen;
 
             server = new SimpleTcpServer
             {
@@ -57,6 +57,74 @@ namespace AccesoDatos
 
             switch (paqueteRecibido)
             {
+                case Paquete<CategoriaPlato> paqueteCategoriaPlato:
+                    switch (paqueteCategoriaPlato.TiposAccion)
+                    {
+                        case TiposAccion.Agregar:
+                            break;
+
+                        case TiposAccion.Listar:
+                            txtEstado.Invoke((MethodInvoker)delegate
+                            {
+                                txtEstado.Text += $"Solicitud del cliente Recibida, tramitando la solicitud...{Environment.NewLine}";
+                                string respuesta = string.Empty;
+
+                                var categoriasPlatos = CategoriaPlatoAD.ListarCategoriaPlato();
+
+                                if (categoriasPlatos != null)
+                                {
+                                    Paquete<List<CategoriaPlato>> paqueteLista = new Paquete<List<CategoriaPlato>>();
+                                    paqueteLista.ClienteId = paqueteCategoriaPlato.ClienteId;
+                                    paqueteLista.TiposAccion = paqueteCategoriaPlato.TiposAccion;
+                                    paqueteLista.InstaciaGenerica = categoriasPlatos;
+                                    //Serialize and package Object gotten
+                                    string serializedResult = AdmistradorPaquetes.SerializePackage(paqueteLista);
+                                    msg.ReplyLine(serializedResult);
+                                    respuesta = $"Respuesta enviada...{Environment.NewLine}";
+                                }
+                                else
+                                {
+                                    respuesta = $"Cliente no existe... {Environment.NewLine}";
+                                }
+
+                                txtEstado.Text += respuesta;
+                            });
+                            break;
+
+                        case TiposAccion.ObtenerObjetoEspecifico:
+
+                            //txtEstado.Invoke((MethodInvoker)delegate
+                            //{
+                            //    txtEstado.Text += $"Solicitud del cliente Recibida, tramitando la solicitud...{Environment.NewLine}";
+                            //    string respuesta = string.Empty;
+
+                            //    var clienteAD = new ClienteAD();
+                            //    var cliente = clienteAD.ObtenerClientePorId(paqueteCategoriaPlato.InstaciaGenerica.IdCedula);
+
+                            //    if (cliente != null)
+                            //    {
+                            //        paqueteCategoriaPlato.InstaciaGenerica = cliente;
+                            //        //Serialize and package Object gotten
+                            //        string serializedResult = AdmistradorPaquetes.SerializePackage(paqueteCategoriaPlato);
+                            //        msg.ReplyLine(serializedResult);
+                            //        respuesta = $"Respuesta enviada...{Environment.NewLine}";
+                            //    }
+                            //    else
+                            //    {
+                            //        respuesta = $"Cliente no existe... {Environment.NewLine}";
+                            //    }
+
+                            //    txtEstado.Text += respuesta;
+                            //});
+
+                            break;
+
+                        default:
+                            break;
+                    }
+
+                    break;
+
                 case Paquete<Cliente> paquete:
                     switch (paquete.TiposAccion)
                     {

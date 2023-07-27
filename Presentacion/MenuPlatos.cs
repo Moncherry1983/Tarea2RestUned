@@ -99,7 +99,8 @@ namespace Presentacion
                 {
                     int idCategoria = (int)cmbPlatos.SelectedValue;
                     PlatoLN platoLn = new PlatoLN();
-                    Plato registrarPlato = new Plato(int.Parse(txtIdPlato.Text), txtNombrePlato.Text, int.Parse(txtPrecioPlato.Text), (int)cmbPlatos.SelectedValue);
+                    CategoriaPlato categoriaPlato = new CategoriaPlato((int)cmbPlatos.SelectedValue, cmbPlatos.DisplayMember, true);
+                    Plato registrarPlato = new Plato(int.Parse(txtIdPlato.Text), txtNombrePlato.Text, int.Parse(txtPrecioPlato.Text), categoriaPlato);
                     platoLn.AgregarPlato(registrarPlato);
                     dgvPlato.DataSource = plato.ListarPlato();
                     dgvPlato.Refresh();

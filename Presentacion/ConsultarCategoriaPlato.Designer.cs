@@ -75,6 +75,7 @@ namespace Presentacion
             this.Controls.Add(this.label1);
             this.Name = "ConsultarCategoriaPlato";
             this.Text = "ConsultarCategoriaPlato";
+            this.Load += new System.EventHandler(this.ConsultarCategoriaPlato_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dvgConsultaCategoriaPlato)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
