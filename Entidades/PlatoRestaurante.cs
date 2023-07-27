@@ -12,15 +12,24 @@ namespace Entidades
         #region "Atributos"
         private DateTime fechaAfiliacion;
         private Restaurante restauranteAsignado;
-        private Plato[] platos = new Plato[10];
+        private int idAsignacion;
+        private Plato platos;
 
-        public PlatoRestaurante(Restaurante restauranteAsignado, Plato[] platos, DateTime fechaAfiliacion)
+
+        public PlatoRestaurante( int idAsignacion, Restaurante restauranteAsignado, Plato platos, DateTime fechaAfiliacion)
         {
             this.restauranteAsignado = restauranteAsignado;
             this.fechaAfiliacion = fechaAfiliacion;
-            this.platos = platos;
 
 
+        }
+
+      
+
+        public int IdAsignacion
+        {
+            get { return idAsignacion; }
+            set { idAsignacion = value; }
         }
 
         public DateTime FechaAfiliacion
@@ -33,6 +42,13 @@ namespace Entidades
         {
             get { return restauranteAsignado; }
             set { restauranteAsignado = value; }
+
+        }
+
+        public Plato Platos
+        {
+            get { return platos; }
+            set { platos = value; }
 
         }
 
@@ -55,12 +71,7 @@ namespace Entidades
 
         }
 
-        public Plato[] Platos
-        {
-            get { return platos; }
-            set { platos = value; }
-
-        }
+    
 
         #endregion
     }

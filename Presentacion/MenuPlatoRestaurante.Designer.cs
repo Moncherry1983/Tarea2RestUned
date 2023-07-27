@@ -41,6 +41,7 @@
             this.dgvAsociacionesPlatos = new System.Windows.Forms.DataGridView();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.lbAsignacion = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAsociacionesRestaurantes)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAsociacionesPlatos)).BeginInit();
             this.SuspendLayout();
@@ -165,11 +166,21 @@
             this.label3.Text = "Platos Asociados";
             this.label3.Click += new System.EventHandler(this.label3_Click_1);
             // 
+            // lbAsignacion
+            // 
+            this.lbAsignacion.AutoSize = true;
+            this.lbAsignacion.Location = new System.Drawing.Point(261, 13);
+            this.lbAsignacion.Name = "lbAsignacion";
+            this.lbAsignacion.Size = new System.Drawing.Size(24, 13);
+            this.lbAsignacion.TabIndex = 22;
+            this.lbAsignacion.Text = "ID: ";
+            // 
             // MenuPlatoRestaurante
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1019, 659);
+            this.Controls.Add(this.lbAsignacion);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.dgvAsociacionesPlatos);
@@ -207,5 +218,6 @@
         private System.Windows.Forms.DataGridView dgvAsociacionesPlatos;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label lbAsignacion;
     }
 }

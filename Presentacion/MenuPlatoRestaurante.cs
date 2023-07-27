@@ -2,18 +2,9 @@
 using Entidades;
 using System.Data;
 using System.Linq;
-using System.Text;
 using LogicaNegocio;
-using System.Drawing;
-using System.Collections;
 using System.Windows.Forms;
-using System.ComponentModel;
-using System.Threading.Tasks;
 using System.Collections.Generic;
-using System.Security.Cryptography;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
 
 namespace Presentacion
 {
@@ -31,12 +22,12 @@ namespace Presentacion
             InitializeComponent();
             dgvAsociacionesRestaurantes.ReadOnly = true;
             dgvAsociacionesPlatos.ReadOnly = true;
-            //platoLn = new PlatoLN();
-            //platoRestauranteLN = new PlatoRestauranteLN();
-            //platosSeleccionados = new List<Plato>();
+            platoLn = new PlatoLN();
+            platoRestauranteLN = new PlatoRestauranteLN();
+            platosSeleccionados = new List<Plato>();
             ObtenerInformacionRestaurantes();
             InitializeDataGridView();
-           
+
         }
         // se inicializa el gridview
         void InitializeDataGridView()
@@ -88,7 +79,7 @@ namespace Presentacion
         //Este método obtiene la información de los restaurantes disponibles y la muestra en un combo box.
         //Primero llama a otro método que lista las categorías de los restaurantes desde la lógica de negocio
         private void ObtenerInformacionRestaurantes()
-        {         
+        {
             //cargar combox
             cmbRestaurantesDisponibles.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbRestaurantesDisponibles.DisplayMember = "NombreRestaurante";
@@ -104,7 +95,7 @@ namespace Presentacion
         void CargarDatos()
         {
             dgvAsociacionesRestaurantes.DataSource = platoRestauranteLN.ListarPlatoRestaurantes();
-            dgvAsociacionesRestaurantes.Refresh();          
+            dgvAsociacionesRestaurantes.Refresh();
             object selectedValue = cmbRestaurantesDisponibles.SelectedValue;
             if (selectedValue != null)
             {
@@ -127,9 +118,9 @@ namespace Presentacion
 
             try
             {
-
+                int idAsignacion = int.Parse(lbAsignacion.Text);
                 DateTime FechaAfiliacion = dtpFechaAfiliacion.Value;
-                
+
                 DateTime fechaActual = DateTime.Now;
                 if (FechaAfiliacion > fechaActual)
                 {
@@ -160,8 +151,8 @@ namespace Presentacion
                     //Este método toma un restaurante y una lista de platos seleccionados, y crea un objeto de tipo PlatoRestaurante que los asocia.
                     //Luego verifica si el restaurante ya tiene platos asociados en la base de datos, y si no, los agrega y actualiza la interfaz gráfica.
                     //Si el restaurante ya tiene platos asociados, lanza una excepción.
-                    Restaurante infoRestaurante = restauranteLn.ObtenerRestaurantePorId((int)cmbRestaurantesDisponibles.SelectedValue);
-                    PlatoRestaurante platoRestaurante = new PlatoRestaurante(infoRestaurante, platosSeleccionados.ToArray(), FechaAfiliacion);
+                    Restaurante infoRestaurante = restauranteLn.ObtenerRestaurantePorId((int)cmbRestaurantesDisponibles.SelectedValue);                  
+                    PlatoRestaurante platoRestaurante = new PlatoRestaurante(int.Parse(lbAsignacion.Text), infoRestaurante, platosSeleccionados.ToArray(), dtpFechaAfiliacion.Value);
                     
 
                     if (platoRestauranteLN.ListarPlatoRestaurantes().Where(rest => rest != null && rest.RestauranteAsignado.IdRestaurante == infoRestaurante.IdRestaurante).Count() == 0)
@@ -183,7 +174,7 @@ namespace Presentacion
                 //terminar se vuelven a poner los valores por defecto
                 cmbRestaurantesDisponibles.SelectedIndex = -1;
                 dtpFechaAfiliacion.ResetText();
-                
+
             }
             catch (Exception ex)
             {
@@ -244,8 +235,9 @@ namespace Presentacion
         //de 10 elementos.Finalmente, refresca el control para que se vean los cambios.
         private void ActualizarListaPlatos(int idRestaurante)
         {
-            PlatoRestaurante platoRest = platoRestauranteLN.ObtenerPlatosRestaurante(idRestaurante);
-            dgvAsociacionesPlatos.DataSource = platoRest != null ? platoRest.Platos : new Plato[10];
+            PlatoRestaurante platosRes = platoRestauranteLN.ObtenerPlatosRestaurante(idRestaurante);
+            dgvAsociacionesPlatos.DataSource = platosRes != null ? new List<Plato>() { platosRes.Platos }.ToList() : new List<Plato>();
+            dgvAsociacionesPlatos.Refresh();
             dgvAsociacionesPlatos.Refresh();
         }
 
