@@ -8,7 +8,7 @@ namespace AccesoDatos
 {
     public class ClienteAD
     {
-        public static void AgregarRestaurante(Cliente ingresoCliente )
+        public static bool AgregarCliente(Cliente ingresoCliente )
         {
             string query = $"INSERT INTO Cliente(IdCliente, Nombre, PrimerApellido, SegundoApellido, FechaNacimiento, Genero) VALUES(@IdCliente, @Nombre, @PrimerApellido, @SegundoApellido, @FechaNacimiento, @Genero)";
             try
@@ -44,9 +44,11 @@ namespace AccesoDatos
                     throw ex;
                 }
             }
+
+            return true;
         }
 
-        public static List<Cliente> ListarCliente()
+        public static List<Cliente> ListarClientes()
         {
             List<Cliente> ListaCliente = new List<Cliente>();
             string query = $"SELECT IdCliente, Nombre, PrimerApellido, SegundoApellido, FechaNacimiento, Genero FROM Cliente ";
