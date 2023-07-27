@@ -1,20 +1,23 @@
-﻿using LogicaNegocio;
+﻿using Entidades;
+using LogicaNegocio;
+using SimpleTCP;
 using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace Presentacion
 {
     public partial class ConsultarCategoriaPlato : Form
-    {
-        CategoriaPlatoLN categoria;
+    {        
+        readonly string nombreMaquinaCliente;        
+        AdministradorTCP tcpClient;
 
-        public ConsultarCategoriaPlato()
+        public ConsultarCategoriaPlato(string nombreMaquinaCliente)
         {
             InitializeComponent();
-            dvgConsultaCategoriaPlato.ReadOnly = true;
-            categoria = new CategoriaPlatoLN();
-            InitializeDataGridView();
-            CargarDatos();
+            this.nombreMaquinaCliente= nombreMaquinaCliente;
+            dvgConsultaCategoriaPlato.ReadOnly = true;            
+            InitializeDataGridView();            
         }
 
         void InitializeDataGridView()
@@ -33,26 +36,20 @@ namespace Presentacion
             dvgConsultaCategoriaPlato.Columns["Descripcion"].Width = 120;
 
             dvgConsultaCategoriaPlato.Columns["Estado"].DataPropertyName = "Estado";
-            dvgConsultaCategoriaPlato.Columns["Estado"].Width = 120;
-
-            CargarDatos();
+            dvgConsultaCategoriaPlato.Columns["Estado"].Width = 120;            
         }
-
-        private void CargarDatos()
+        private void ConsultarCategoriaPlato_Load(object sender, EventArgs e)
         {
-            dvgConsultaCategoriaPlato.DataSource = categoria.ListarCategoriaPlato();
-            dvgConsultaCategoriaPlato.Refresh();
+            tcpClient = new AdministradorTCP();
+            tcpClient.TcpClient.DataReceived += Client_DataReceived;
+            SolicitarDatosAlServidor();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             new MenuPrincipal().Show();
             this.Hide();
-        }
-
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-        }
+        }        
 
         private void dataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
@@ -66,10 +63,59 @@ namespace Presentacion
                         e.Value = Convert.ToBoolean(e.Value) ? "Activo" : "Inactivo";
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 e.Value = "Unknown";
             }
         }
+
+        private void Client_DataReceived(object sender, SimpleTCP.Message e)
+        {
+            string valorRecibido = e.MessageString.TrimEnd('\u0013');
+            Paquete<List<CategoriaPlato>> informacionCategoriaPlatos = AdmistradorPaquetes.DeserializePackage(valorRecibido);
+
+            if (informacionCategoriaPlatos != null)
+            {
+                List<CategoriaPlato> listaCategoriaPlatos = informacionCategoriaPlatos.InstaciaGenerica;
+                CargarDatos(listaCategoriaPlatos);
+            }
+            else
+            {
+               MessageBox.Show("La categoría de plato no existe");
+            }
+        }
+        
+        private void SolicitarDatosAlServidor()
+            {
+                try
+                {
+                    if (tcpClient.ConectarTCP())
+                    {
+                        CategoriaPlato categoriaPlato = new CategoriaPlato(0, "", true);
+                        var paquete = new Paquete<CategoriaPlato>()
+                        {
+                            ClienteId = nombreMaquinaCliente,
+                            TiposAccion = TiposAccion.Listar,
+                            InstaciaGenerica = categoriaPlato
+                        };
+
+                        string CategoriaPlatoSerializada = AdmistradorPaquetes.SerializePackage(paquete);                    
+                        tcpClient.TcpClient.WriteLineAndGetReply(CategoriaPlatoSerializada, TimeSpan.FromSeconds(3));
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error al conectar con el servidor: " + ex.Message);
+                }
+            }
+        private void CargarDatos(List<CategoriaPlato> lista)
+        {
+            dvgConsultaCategoriaPlato.Invoke((MethodInvoker)delegate () 
+            {
+                dvgConsultaCategoriaPlato.DataSource = lista;
+                dvgConsultaCategoriaPlato.Refresh();                
+            });
+        }
+    
     }
 }

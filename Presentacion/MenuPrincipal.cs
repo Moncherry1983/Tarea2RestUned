@@ -1,26 +1,25 @@
-﻿using System;
-using Entidades;
+﻿using Entidades;
 using SimpleTCP;
+using System;
 using System.Windows.Forms;
-using System.Data.SqlClient;
-using Microsoft.Build.Framework.XamlTypes;
 
 namespace Presentacion
 {
     public partial class MenuPrincipal : Form
     {
-       public SimpleTcpClient tcpClient;
-       
-        public MenuPrincipal(Cliente cliente)
-        {                   
-            InitializeComponent();            
+        public SimpleTcpClient tcpClient;
+        readonly string nombreMaquinaCliente;
+
+        public MenuPrincipal(Cliente cliente, string nombreMaquinaCliente)
+        {
+            InitializeComponent();
+            this.nombreMaquinaCliente = nombreMaquinaCliente;
         }
 
         public MenuPrincipal()
         {
             InitializeComponent();
         }
-
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -40,19 +39,17 @@ namespace Presentacion
             new Login().Show();
             this.Hide();
         }
-       
+
         private void button2_Click(object sender, EventArgs e)
         {
-
-            new MenuCategoríaPlato().Show();
+            new MenuCategoríaPlato(nombreMaquinaCliente).Show();
             this.Hide();
         }
 
-       
         private void button3_Click(object sender, EventArgs e)
-        {            
-                new MenuPlatos().Show();
-                this.Hide();                      
+        {
+            new MenuPlatos().Show();
+            this.Hide();
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -69,7 +66,7 @@ namespace Presentacion
 
         private void button10_Click(object sender, EventArgs e)
         {
-            new ConsultarCliente().Show(); 
+            new ConsultarCliente().Show();
             this.Hide();
         }
 
@@ -83,18 +80,17 @@ namespace Presentacion
         {
             new ConsultarRestaurante().Show();
             this.Hide();
-
         }
 
         private void button8_Click(object sender, EventArgs e)
         {
-            new ConsultarCategoriaPlato().Show(); 
+            new ConsultarCategoriaPlato(nombreMaquinaCliente).Show();
             this.Hide();
         }
 
         private void button9_Click(object sender, EventArgs e)
         {
-            new ConsultaPlato().Show(); 
+            new ConsultaPlato().Show();
             this.Hide();
         }
 
@@ -102,15 +98,12 @@ namespace Presentacion
         {
             new ConsultarExtra().Show();
             this.Hide();
-
         }
 
         private void button1_Click_1(object sender, EventArgs e)
-        {         
+        {
             new Login().Show();
             this.Hide();
         }
-
-        
     }
 }

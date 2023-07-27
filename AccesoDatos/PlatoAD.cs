@@ -27,7 +27,7 @@ namespace AccesoDatos
                     };
                     command.Parameters.AddWithValue("@IdPlato", ingresarPlatos.IdPlato);
                     command.Parameters.AddWithValue("@NombrePlato", ingresarPlatos.NombrePlato);                 
-                    command.Parameters.AddWithValue("@IdCategoria", ingresarPlatos.IdCategoria);
+                    command.Parameters.AddWithValue("@IdCategoria", ingresarPlatos.CategoriaPlato.IdCategoria);
                     command.Parameters.AddWithValue("@Precio", ingresarPlatos.Precio);
                     command.ExecuteNonQuery();
 

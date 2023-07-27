@@ -99,7 +99,8 @@ namespace Presentacion
                 {
                     int idCategoria = (int)cmbPlatos.SelectedValue;
                     PlatoLN platoLn = new PlatoLN();
-                    Plato registrarPlato = new Plato(int.Parse(txtIdPlato.Text), txtNombrePlato.Text, int.Parse(txtPrecioPlato.Text), ObtenerCategoriaSeleccionada());
+                    CategoriaPlato categoriaPlato = new CategoriaPlato((int)cmbPlatos.SelectedValue, cmbPlatos.DisplayMember, true);
+                    Plato registrarPlato = new Plato(int.Parse(txtIdPlato.Text), txtNombrePlato.Text, int.Parse(txtPrecioPlato.Text), categoriaPlato);
                     platoLn.AgregarPlato(registrarPlato);
                     dgvPlato.DataSource = plato.ListarPlato();
                     dgvPlato.Refresh();
@@ -117,10 +118,6 @@ namespace Presentacion
 
                 MessageBox.Show(ex.Message, "\n\tHa sucedido un error y no se registrar el plato\n", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }
-        private CategoriaPlato ObtenerCategoriaSeleccionada()
-        {
-            return (CategoriaPlato)cmbPlatos.SelectedValue;
         }
 
         private void button2_Click(object sender, EventArgs e)

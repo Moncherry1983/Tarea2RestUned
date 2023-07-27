@@ -8,9 +8,9 @@ namespace AccesoDatos
 {
     public static class CategoriaPlatoAD
     {
-        public static void AgregarCategoria(CategoriaPlato categoria)
+        public static bool AgregarCategoria(CategoriaPlato categoria)
         {
-            string query = $"INSERT INTO Categoria(IdCategoria, Descripcion, Estado) VALUES(@IdCategoria, @Descripcion, @Estado)";
+            string query = $"INSERT INTO CategoriaPlato(IdCategoria, Descripcion, Estado) VALUES(@IdCategoria, @Descripcion, @Estado)";
             try
             {
                 if (ConexionDB.Conectar())
@@ -22,7 +22,7 @@ namespace AccesoDatos
                     command.Parameters.AddWithValue("@IdCategoria", categoria.IdCategoria);
                     command.Parameters.AddWithValue("@Descripcion", categoria.Descripcion);
                     command.Parameters.AddWithValue("@Estado", categoria.Estado);
-                    command.ExecuteNonQuery();
+                    command.ExecuteNonQuery();                    
                 }
             }
             catch (Exception ex)
@@ -40,6 +40,8 @@ namespace AccesoDatos
                     throw ex;
                 }
             }
+
+            return true;
         }
 
         public static List<CategoriaPlato> ListarCategoriaPlato()

@@ -47,11 +47,13 @@ namespace Entidades
             get { return precio; }
             set { precio = value; }
         }
-        public CategoriaPlato IdCategoria
+        public CategoriaPlato CategoriaPlato
         {
             get { return categoriaPlato; }
             set { categoriaPlato = value; }
         }
+
+
         #endregion
     }
 }

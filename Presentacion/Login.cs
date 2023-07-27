@@ -1,32 +1,15 @@
-﻿using System;
-using SimpleTCP;
-using Entidades;
-using System.Net;
-using System.Data;
-using System.Linq;
-using System.Text;
+﻿using Entidades;
 using LogicaNegocio;
-using System.Drawing;
-using System.Threading;
-using System.Text.Json;
+using System;
 using System.Net.Sockets;
 using System.Windows.Forms;
-using System.ComponentModel;
-using System.Data.SqlClient;
-using System.Threading.Tasks;
-using System.Security.Policy;
-using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 
 namespace Presentacion
 {
     public partial class Login : Form
     {
-        String direccion = "127.0.0.1";
-        String puerto = "14100";
-        SimpleTcpClient tcpClient;
         String nombreMaquinaCliente = String.Empty;
-
+        readonly AdministradorTCP administradorTCP = new AdministradorTCP();
 
         public Login()
         {
@@ -39,14 +22,9 @@ namespace Presentacion
         //para la máquina del cliente y lo muestra en una etiqueta.
         private void Login_Load(object sender, EventArgs e)
         {
-            tcpClient = new SimpleTcpClient
-            {
-                StringEncoder = System.Text.Encoding.UTF8,
-                Delimiter = 0x13
-            };
-            tcpClient.DataReceived += Client_DataReceived;
+            administradorTCP.TcpClient.DataReceived += Client_DataReceived;
             Random valorAleatorio = new Random();
-            nombreMaquinaCliente = "Cliente" + valorAleatorio.Next(1,10);
+            nombreMaquinaCliente = "Cliente" + valorAleatorio.Next(1, 10);
             lblNombreMaquina.Text = nombreMaquinaCliente;
         }
 
@@ -58,12 +36,12 @@ namespace Presentacion
 
         private void Client_DataReceived(object sender, SimpleTCP.Message e)
         {
-            string valorRecibido = e.MessageString.TrimEnd('\u0013');
-            Paquete<Cliente> informacionCliente = LogicaNegocio.AdmistradorPaquetes.DeserializePackage(valorRecibido);
+            string trimCharacter = e.MessageString.TrimEnd('\u0013');
+            Paquete<Cliente> informacionCliente = LogicaNegocio.AdmistradorPaquetes.DeserializePackage(trimCharacter);
 
             if (informacionCliente != null)
             {
-                MenuPrincipal menu = new MenuPrincipal(informacionCliente.InstaciaGenerica);
+                MenuPrincipal menu = new MenuPrincipal(informacionCliente.InstaciaGenerica, nombreMaquinaCliente);
                 this.Invoke(new MethodInvoker(delegate { menu.Show(); }));
                 OcultarLogin();
             }
@@ -73,10 +51,10 @@ namespace Presentacion
             }
         }
 
-       // Este método sirve para ocultar la ventana de inicio de sesión cuando no se necesita.Primero,
-       // comprueba si el método se está ejecutando en el mismo hilo que el formulario.Si no es así,
-       // llama al método Invoke, que ejecuta el método en el hilo del formulario.Después, usa el método Hide
-       // para hacer invisible la ventana.
+        // Este método sirve para ocultar la ventana de inicio de sesión cuando no se necesita.Primero,
+        // comprueba si el método se está ejecutando en el mismo hilo que el formulario.Si no es así,
+        // llama al método Invoke, que ejecuta el método en el hilo del formulario.Después, usa el método Hide
+        // para hacer invisible la ventana.
 
         private void OcultarLogin()
         {
@@ -95,48 +73,35 @@ namespace Presentacion
             Application.Exit();
         }
 
-
         //verifica si un cuadro de texto llamado "txtCedula" está vacío. Si lo está, muestra un mensaje pidiendo que se ingrese un usuario.
         //Si el cuadro de texto no está vacío, el método intenta conectarse a un servidor mediante la función "ConnectToServer()".
         //Si la conexión tiene éxito, crea un objeto "Cliente" con la información del usuario ingresada en el cuadro de texto.
         //Luego, prepara un paquete de datos que contiene la información del cliente y lo envía al servidor utilizando una conexión de red.
         private void Conectar_Click(object sender, EventArgs e)
         {
-           
-
-            if (string.IsNullOrEmpty(txtCedula.Text))
-            {
-                MessageBox.Show("Por favor ingresa un usuario...");
-            }
-            else if (ConnectToServer())
-            {
-                Cliente cliente = new Cliente(txtCedula.Text, string.Empty, string.Empty, string.Empty, new DateTime(), 'M');
-                var paquete = new Paquete<Cliente>()
-                {
-                    ClienteId = nombreMaquinaCliente,
-                    TiposAccion = TiposAccion.ObtenerObjetoEspecifico,
-                    InstaciaGenerica = cliente
-
-                };
-
-                string clienteSerializado = AdmistradorPaquetes.SerializePackage(paquete);
-                tcpClient.WriteLineAndGetReply(clienteSerializado, TimeSpan.FromSeconds(3));
-            }          
-
-        }
-        //Este método intenta establecer una comunicación con el servidor usando una dirección y un puerto.
-        //Si lo logra, devuelve verdadero. Si no, muestra un mensaje de error y devuelve falso.
-        private bool ConnectToServer()
-        {
             try
             {
-                tcpClient.Connect(direccion, int.Parse(puerto));
-                return true;
+                if (string.IsNullOrEmpty(txtCedula.Text))
+                {
+                    MessageBox.Show("Por favor ingresa un usuario...");
+                }
+                else if (administradorTCP.ConectarTCP())
+                {
+                    Cliente cliente = new Cliente(txtCedula.Text, string.Empty, string.Empty, string.Empty, new DateTime(), 'M');
+                    var paquete = new Paquete<Cliente>()
+                    {
+                        ClienteId = nombreMaquinaCliente,
+                        TiposAccion = TiposAccion.ObtenerObjetoEspecifico,
+                        InstaciaGenerica = cliente
+                    };
+
+                    string clienteSerializado = AdmistradorPaquetes.SerializePackage(paquete);
+                    administradorTCP.TcpClient.WriteLineAndGetReply(clienteSerializado, TimeSpan.FromSeconds(3));
+                }
             }
-            catch (SocketException ex)
+            catch (Exception ex)
             {
                 MessageBox.Show("Error al conectar con el servidor: " + ex.Message);
-                return false;
             }
         }
 
@@ -153,8 +118,6 @@ namespace Presentacion
                     textBox.Text = texto.Remove(texto.IndexOf(c), 1);
                     textBox.Select(texto.Length, 0);
                     break;
-
-
                 }
             }
         }

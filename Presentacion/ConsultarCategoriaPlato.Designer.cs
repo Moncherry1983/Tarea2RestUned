@@ -52,8 +52,7 @@ namespace Presentacion
             this.dvgConsultaCategoriaPlato.Location = new System.Drawing.Point(184, 61);
             this.dvgConsultaCategoriaPlato.Name = "dvgConsultaCategoriaPlato";
             this.dvgConsultaCategoriaPlato.Size = new System.Drawing.Size(358, 357);
-            this.dvgConsultaCategoriaPlato.TabIndex = 4;
-            this.dvgConsultaCategoriaPlato.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            this.dvgConsultaCategoriaPlato.TabIndex = 4;            
             this.dvgConsultaCategoriaPlato.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridView1_CellFormatting);
             // 
             // label1
@@ -75,6 +74,7 @@ namespace Presentacion
             this.Controls.Add(this.label1);
             this.Name = "ConsultarCategoriaPlato";
             this.Text = "ConsultarCategoriaPlato";
+            this.Load += new System.EventHandler(this.ConsultarCategoriaPlato_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dvgConsultaCategoriaPlato)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
