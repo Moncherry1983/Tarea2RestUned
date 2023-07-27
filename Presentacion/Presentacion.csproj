@@ -172,6 +172,12 @@
     <Compile Include="MenuRestaurante.Designer.cs">
       <DependentUpon>MenuRestaurante.cs</DependentUpon>
     </Compile>
+    <Compile Include="Miscelaneas\PantallaEspera.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Miscelaneas\PantallaEspera.Designer.cs">
+      <DependentUpon>PantallaEspera.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Login.resx">
@@ -218,6 +224,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MenuRestaurante.resx">
       <DependentUpon>MenuRestaurante.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Miscelaneas\PantallaEspera.resx">
+      <DependentUpon>PantallaEspera.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

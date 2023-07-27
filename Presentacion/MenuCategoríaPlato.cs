@@ -1,17 +1,18 @@
-﻿using System;
-using Entidades;
+﻿using Entidades;
 using LogicaNegocio;
-using System.Windows.Forms;
+using Presentacion.Miscelaneas;
+using System;
 using System.Collections.Generic;
-using System.Collections;
+using System.Windows.Forms;
 
 namespace Presentacion
 {
     public partial class MenuCategoríaPlato : Form
     {
         //inicializacion de arrays que se van a utilizar en la ventana
-        //CategoriaPlatoLN categoria;
+        PantallaEspera pantallaEspera = new PantallaEspera();
         readonly string nombreMaquinaCliente;
+
         AdministradorTCP tcpClient;
 
         public MenuCategoríaPlato(string nombreMaquinaCliente)
@@ -19,10 +20,10 @@ namespace Presentacion
             //inicializacion de componentes de la ventana
             InitializeComponent();
             this.nombreMaquinaCliente = nombreMaquinaCliente;
-            dgvCategoriaPlato.ReadOnly = true;            
-            InitializeDataGridView();            
-
+            dgvCategoriaPlato.ReadOnly = true;
+            InitializeDataGridView();
         }
+
         //metodo para inicializar el datagridview
         void InitializeDataGridView()
         {
@@ -33,7 +34,6 @@ namespace Presentacion
             dgvCategoriaPlato.Columns.Add("Descripcion", "descripcion");
             dgvCategoriaPlato.Columns.Add("Estado", "estado");
 
-
             dgvCategoriaPlato.Columns["IdCategoria"].DataPropertyName = "IdCategoria";
             dgvCategoriaPlato.Columns["IdCategoria"].Width = 70;
 
@@ -42,8 +42,8 @@ namespace Presentacion
 
             dgvCategoriaPlato.Columns["Estado"].DataPropertyName = "Estado";
             dgvCategoriaPlato.Columns["Estado"].Width = 120;
-
         }
+
         //metodo para cargar los datos en el datagridview
         private void MenuCategoríaPlato_Load(object sender, EventArgs e)
         {
@@ -59,22 +59,19 @@ namespace Presentacion
             {
                 int idCategoria = int.Parse(txtidCategoria.Text);
                 string descripcion = txtdescripcion.Text;
-                
-                
+
                 //validaciones para que el usuario no deje campos vacios
                 if (String.IsNullOrEmpty(txtidCategoria.Text) || String.IsNullOrEmpty(txtdescripcion.Text))
                 {
                     MessageBox.Show("No deje campos vacios por favor...");
-
                 }
                 else if (cmbEstado.SelectedIndex == -1)
                 {
                     MessageBox.Show("No deje campos vacios por favor...");
-
                 }
                 else
                 {
-                    bool estado = cmbEstado.SelectedIndex == 0;                    
+                    bool estado = cmbEstado.SelectedIndex == 0;
                     CategoriaPlato categoriaPlato = new CategoriaPlato(int.Parse(txtidCategoria.Text), txtdescripcion.Text, cmbEstado.SelectedItem.ToString() == "Activo");
                     GuardarCategoriaPlato(categoriaPlato);
                     SolicitarDatosAlServidor();
@@ -83,11 +80,9 @@ namespace Presentacion
                 txtdescripcion.Text = "";
                 txtidCategoria.Text = "";
                 cmbEstado.SelectedIndex = -1;
-
             }
             catch (Exception ex)
             {
-
                 MessageBox.Show(ex.Message, "\n\tHa sucedido un error y no podido registrar el restaurante\n", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -126,6 +121,7 @@ namespace Presentacion
                 // El usuario no ha seleccionado ningún elemento del combobox
             }
         }
+
         //Este método se llama cuando se formatea una celda del DataGridView que muestra las categorías de platos.
         //Se obtiene la columna que corresponde a la celda y se verifica si su nombre es "Estado". Si es así, se convierte
         //el valor de la celda a un valor booleano y se muestra "Activo" o "Inactivo" según sea verdadero o falso. Si ocurre
@@ -147,7 +143,7 @@ namespace Presentacion
                 e.Value = "Desconocido";
             }
         }
-        
+
         private void GuardarCategoriaPlato(CategoriaPlato categoriaPlato)
         {
             try
@@ -177,6 +173,7 @@ namespace Presentacion
             {
                 if (tcpClient.ConectarTCP())
                 {
+                    pantallaEspera.Show();
                     CategoriaPlato categoriaPlato = new CategoriaPlato(0, "", true);
                     var paquete = new Paquete<CategoriaPlato>()
                     {
@@ -199,12 +196,12 @@ namespace Presentacion
         {
             string valorRecibido = e.MessageString.TrimEnd('\u0013');
             var informacionCategoriaPlatos = AdmistradorPaquetes.DeserializePackage(valorRecibido);
-                       
+
             if (informacionCategoriaPlatos != null)
-            {                
+            {
                 switch (informacionCategoriaPlatos.TiposAccion)
                 {
-                    case TiposAccion.Agregar:                        
+                    case TiposAccion.Agregar:
                         ReiniciarPantalla();
                         break;
 
@@ -217,7 +214,7 @@ namespace Presentacion
 
                     default:
                         break;
-                }                
+                }
             }
             else
             {
@@ -231,7 +228,7 @@ namespace Presentacion
             {
                 SolicitarDatosAlServidor();
                 txtidCategoria.Focus();
-                cmbEstado.SelectedIndex = 1;                
+                cmbEstado.SelectedIndex = 1;
             });
         }
 
@@ -239,11 +236,10 @@ namespace Presentacion
         {
             dgvCategoriaPlato.Invoke((MethodInvoker)delegate ()
             {
+                pantallaEspera.Hide();
                 dgvCategoriaPlato.DataSource = lista;
                 dgvCategoriaPlato.Refresh();
             });
-
         }
-
     }
 }

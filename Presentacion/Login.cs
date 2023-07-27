@@ -1,5 +1,6 @@
 ﻿using Entidades;
 using LogicaNegocio;
+using Presentacion.Miscelaneas;
 using System;
 using System.Net.Sockets;
 using System.Windows.Forms;
@@ -10,10 +11,12 @@ namespace Presentacion
     {
         String nombreMaquinaCliente = String.Empty;
         readonly AdministradorTCP administradorTCP = new AdministradorTCP();
+        PantallaEspera pantallaEspera = new PantallaEspera();
 
         public Login()
         {
             InitializeComponent();
+            //txtCedula.Text = "111111111";
         }
 
         //Este método se ejecuta cuando se carga el formulario de inicio de sesión.
@@ -42,7 +45,12 @@ namespace Presentacion
             if (informacionCliente != null)
             {
                 MenuPrincipal menu = new MenuPrincipal(informacionCliente.InstaciaGenerica, nombreMaquinaCliente);
-                this.Invoke(new MethodInvoker(delegate { menu.Show(); }));
+                this.Invoke(new MethodInvoker(delegate 
+                { 
+                    pantallaEspera.Hide();
+                    menu.Show(); 
+                
+                }));
                 OcultarLogin();
             }
             else
@@ -87,6 +95,7 @@ namespace Presentacion
                 }
                 else if (administradorTCP.ConectarTCP())
                 {
+                    pantallaEspera.Show();
                     Cliente cliente = new Cliente(txtCedula.Text, string.Empty, string.Empty, string.Empty, new DateTime(), 'M');
                     var paquete = new Paquete<Cliente>()
                     {
