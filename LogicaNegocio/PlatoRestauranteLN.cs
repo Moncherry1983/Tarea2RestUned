@@ -53,9 +53,9 @@ namespace LogicaNegocio
         {
 
             try
-            {                
+            {
                 //return PlatosRestauranteAD.ListarPlatoRestaurante().Where(rest => rest!= null && rest.RestauranteAsignado.IdRestaurante == id).FirstOrDefault();
-                return new PlatoRestaurante[0].FirstOrDefault();
+                return null;
             }
             catch (Exception ex)
             {

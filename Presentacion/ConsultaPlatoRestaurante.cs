@@ -109,11 +109,11 @@ namespace Presentacion
 
         private void ActualizarListaPlatos(int idRestaurante)
         {
-
-            PlatoRestaurante platoRest = platoRestauranteLN.ObtenerPlatosRestaurante(idRestaurante);
-            dgvConsultaPlatos.DataSource = platoRest != null ? platoRest.Platos : new Plato[10];
+            PlatoRestaurante platosRes = platoRestauranteLN.ObtenerPlatosRestaurante(idRestaurante);
+            dgvConsultaPlatos.DataSource = platosRes != null ? new List<Plato>() { platosRes.PlatoAsociado }.ToList() : new List<Plato>();
             dgvConsultaPlatos.Refresh();
-
+            dgvConsultaPlatos.Refresh();
+            
         }
 
 

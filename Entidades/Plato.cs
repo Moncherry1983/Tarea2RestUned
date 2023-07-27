@@ -15,17 +15,17 @@ namespace Entidades
         private int idPlato; // Identificador único de la categoría
         private string nombrePlato; // Nombre del plato
         private int precio; //precio del plato
-        private int idCategoria;
+        private CategoriaPlato categoriaPlato;
 
 
 
         // Constructor de la clase
-        public Plato(int idPlato, string nombrePlato, int precio, int idCategoria)
+        public Plato(int idPlato, string nombrePlato, int precio, CategoriaPlato categoriaPlato)
         {
             this.idPlato = idPlato;
             this.nombrePlato = nombrePlato;
             this.precio = precio;
-            this.idCategoria = idCategoria;
+            this.categoriaPlato = categoriaPlato;
 
         }
 
@@ -47,10 +47,10 @@ namespace Entidades
             get { return precio; }
             set { precio = value; }
         }
-        public int IdCategoria
+        public CategoriaPlato IdCategoria
         {
-            get { return idCategoria; }
-            set { idCategoria = value; }
+            get { return categoriaPlato; }
+            set { categoriaPlato = value; }
         }
         #endregion
     }
