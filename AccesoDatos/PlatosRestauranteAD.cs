@@ -1,22 +1,15 @@
-﻿using System;
-using Entidades;
-using System.Linq;
-using System.Text;
-using System.Data;
-using LogicaNegocio;
-using System.Reflection;
-using System.Windows.Forms;
-using System.Data.SqlClient;
-using System.Threading.Tasks;
+﻿using Entidades;
+using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace AccesoDatos
 {
     public static class PlatosRestauranteAD
     {
-
         public static void AgregarPlatoRestaurante(PlatoRestaurante plato)
-        { 
+        {
             string query = $"INSERT INTO PlatoRestaurante(IdAsignacion, IdRestaurante, IdPlato, FechaAsignacion) VALUES(,@IdAsignacion,@IdRestaurante, @IdPlato, @FechaAsignacion)";
             try
             {
@@ -28,10 +21,9 @@ namespace AccesoDatos
                     };
                     command.Parameters.AddWithValue("@IdAsignacion", plato.IdAsignacion);
                     command.Parameters.AddWithValue("@IdRestaurante", plato.RestauranteAsignado);
-                    command.Parameters.AddWithValue("@IdPlato", plato.Platos);
+                    command.Parameters.AddWithValue("@IdPlato", plato.PlatoAsociado);
                     command.Parameters.AddWithValue("@FechaAsignacion", plato.FechaAfiliacion);
                     command.ExecuteNonQuery();
-
                 }
             }
             catch (Exception ex)
@@ -147,11 +139,5 @@ namespace AccesoDatos
 
             return platoRestaurante;
         }
-
-
     }
 }
-
-
-
-

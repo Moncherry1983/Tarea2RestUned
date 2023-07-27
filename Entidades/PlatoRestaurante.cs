@@ -13,15 +13,15 @@ namespace Entidades
         private DateTime fechaAfiliacion;
         private Restaurante restauranteAsignado;
         private int idAsignacion;
-        private Plato platos;
+        private Plato platoAsociado;
 
 
-        public PlatoRestaurante( int idAsignacion, Restaurante restauranteAsignado, Plato platos, DateTime fechaAfiliacion)
+        public PlatoRestaurante( int idAsignacion, Restaurante restauranteAsignado, Plato platoAsociado, DateTime fechaAfiliacion)
         {
+            this.idAsignacion = idAsignacion;
             this.restauranteAsignado = restauranteAsignado;
+            this.platoAsociado = platoAsociado;
             this.fechaAfiliacion = fechaAfiliacion;
-
-
         }
 
       
@@ -45,31 +45,31 @@ namespace Entidades
 
         }
 
-        public Plato Platos
+        public Plato PlatoAsociado
         {
-            get { return platos; }
-            set { platos = value; }
+            get { return platoAsociado; }
+            set { platoAsociado = value; }
 
         }
 
 
-        public int GetIdRestaurante
-        {
-            get { return restauranteAsignado.IdRestaurante; }            
+        //public int GetIdRestaurante
+        //{
+        //    get { return restauranteAsignado.IdRestaurante; }            
 
-        }
+        //}
 
-        public string GetNombreRestaurante
-        {
-            get { return restauranteAsignado.NombreRestaurante; }
+        //public string GetNombreRestaurante
+        //{
+        //    get { return restauranteAsignado.NombreRestaurante; }
 
-        }
+        //}
 
-        public string GetDireccionRestaurante
-        {
-            get { return restauranteAsignado.Direccion; }
+        //public string GetDireccionRestaurante
+        //{
+        //    get { return restauranteAsignado.Direccion; }
 
-        }
+        //}
 
     
 

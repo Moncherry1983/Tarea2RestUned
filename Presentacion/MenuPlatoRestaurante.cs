@@ -113,9 +113,8 @@ namespace Presentacion
             this.Hide();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnGuardarAsociacionPlatoRest_Click(object sender, EventArgs e)
         {
-
             try
             {
                 int idAsignacion = int.Parse(lbAsignacion.Text);
@@ -148,27 +147,27 @@ namespace Presentacion
                 }
                 else
                 {
-                    //Este método toma un restaurante y una lista de platos seleccionados, y crea un objeto de tipo PlatoRestaurante que los asocia.
-                    //Luego verifica si el restaurante ya tiene platos asociados en la base de datos, y si no, los agrega y actualiza la interfaz gráfica.
-                    //Si el restaurante ya tiene platos asociados, lanza una excepción.
-                    Restaurante infoRestaurante = restauranteLn.ObtenerRestaurantePorId((int)cmbRestaurantesDisponibles.SelectedValue);                  
-                    PlatoRestaurante platoRestaurante = new PlatoRestaurante(int.Parse(lbAsignacion.Text), infoRestaurante, platosSeleccionados.ToArray(), dtpFechaAfiliacion.Value);
+                //    //Este método toma un restaurante y una lista de platos seleccionados, y crea un objeto de tipo PlatoRestaurante que los asocia.
+                //    //Luego verifica si el restaurante ya tiene platos asociados en la base de datos, y si no, los agrega y actualiza la interfaz gráfica.
+                //    //Si el restaurante ya tiene platos asociados, lanza una excepción.
+                //    Restaurante infoRestaurante = restauranteLn.ObtenerRestaurantePorId((int)cmbRestaurantesDisponibles.SelectedValue);                  
+                //    PlatoRestaurante platoRestaurante = new PlatoRestaurante(int.Parse(lbAsignacion.Text), infoRestaurante, platosSeleccionados, dtpFechaAfiliacion.Value);
                     
 
-                    if (platoRestauranteLN.ListarPlatoRestaurantes().Where(rest => rest != null && rest.RestauranteAsignado.IdRestaurante == infoRestaurante.IdRestaurante).Count() == 0)
-                    {
-                        platoRestauranteLN.AgregarPlatoRestaurante(platoRestaurante);
-                        PlatoRestaurante[] platoRest = platoRestauranteLN.ListarPlatoRestaurantes();
-                        dgvAsociacionesRestaurantes.DataSource = platoRest;
+                //    if (platoRestauranteLN.ListarPlatoRestaurantes().Where(rest => rest != null && rest.RestauranteAsignado.IdRestaurante == infoRestaurante.IdRestaurante).Count() == 0)
+                //    {
+                //        platoRestauranteLN.AgregarPlatoRestaurante(platoRestaurante);
+                //        PlatoRestaurante[] platoRest = platoRestauranteLN.ListarPlatoRestaurantes();
+                //        dgvAsociacionesRestaurantes.DataSource = platoRest;
 
-                        dgvAsociacionesRestaurantes.Refresh();
-                        ActualizarListaPlatos(platoRest[0].GetIdRestaurante);
+                //        dgvAsociacionesRestaurantes.Refresh();
+                //        ActualizarListaPlatos(platoRest[0].GetIdRestaurante);
 
-                        lbxPlatosSeleccionados.DataSource = null;
-                        lbxPlatosSeleccionados.Items.Clear();
-                    }
-                    else
-                        throw new Exception("El Restaurante ya fue incluido previamente...");
+                //        lbxPlatosSeleccionados.DataSource = null;
+                //        lbxPlatosSeleccionados.Items.Clear();
+                //    }
+                //    else
+                //        throw new Exception("El Restaurante ya fue incluido previamente...");
 
                 }
                 //terminar se vuelven a poner los valores por defecto
@@ -236,9 +235,8 @@ namespace Presentacion
         private void ActualizarListaPlatos(int idRestaurante)
         {
             PlatoRestaurante platosRes = platoRestauranteLN.ObtenerPlatosRestaurante(idRestaurante);
-            dgvAsociacionesPlatos.DataSource = platosRes != null ? new List<Plato>() { platosRes.Platos }.ToList() : new List<Plato>();
-            dgvAsociacionesPlatos.Refresh();
-            dgvAsociacionesPlatos.Refresh();
+            dgvAsociacionesPlatos.DataSource = platosRes != null ? new List<Plato>() { platosRes.PlatoAsociado }.ToList() : new List<Plato>();
+            dgvAsociacionesPlatos.Refresh();            
         }
 
         //Este método se encarga de formatear las celdas de una columna de un DataGridView que muestra las asociaciones entre restaurantes y otros datos.

@@ -110,7 +110,7 @@ namespace Presentacion
         private void ActualizarListaPlatos(int idRestaurante)
         {
             PlatoRestaurante platosRes = platoRestauranteLN.ObtenerPlatosRestaurante(idRestaurante);
-            dgvConsultaPlatos.DataSource = platosRes != null ? new List<Plato>() { platosRes.Platos }.ToList() : new List<Plato>();
+            dgvConsultaPlatos.DataSource = platosRes != null ? new List<Plato>() { platosRes.PlatoAsociado }.ToList() : new List<Plato>();
             dgvConsultaPlatos.Refresh();
             dgvConsultaPlatos.Refresh();
             
