@@ -131,8 +131,7 @@ namespace Presentacion
                 {
                     bool estado = cmbEstado.SelectedIndex == 0;
                     ExtraLN extraLN = new ExtraLN();
-                    Extra registrarExtra = new Extra(int.Parse(txtIdextra.Text), txtDescripcion.Text, cmbEstado.SelectedIndex == 0, int.Parse(txtPrecio.Text), (int)cmbCategoria.SelectedValue);
-                    extraLN.AgregarExtra(registrarExtra);
+                    Extra registrarExtra = new Extra(int.Parse(txtIdextra.Text), txtDescripcion.Text, int.Parse(txtPrecio.Text), cmbEstado.SelectedIndex == 0, (int)cmbCategoria.SelectedValue);                 
                     dgvExtra.DataSource = extraLN.ListarExtra();
                     dgvExtra.Refresh();
 

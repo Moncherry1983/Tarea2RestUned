@@ -6,6 +6,8 @@ using System;
 using Entidades;
 using System.Linq;
 using System.Text;
+using System.Data;
+using System.Data.SqlClient;
 using System.Threading.Tasks;
 using System.Security.Policy;
 using System.Collections.Generic;
@@ -13,63 +15,135 @@ using System.Runtime.InteropServices.ComTypes;
 
 namespace AccesoDatos
 {
-    //Este método sirve para añadir un restaurante al arreglo de restaurantes.Primero, declara una variable contador y una variable revisión.
-    //Luego, recorre el arreglo con un ciclo for y busca un espacio vacío.Si lo encuentra, guarda el índice en el contador y cambia la revisión a falso.
-    //Después, sale del ciclo y verifica si la revisión es falsa. Si es así, asigna el restaurante al espacio vacío usando el contador.Si no, significa que el arreglo
-    //está lleno y lanza una excepción.
     public static class RestauranteAD
     {
-        private static Restaurante[] restaurantes = new Restaurante[20];
+
         public static void AgregarRestaurante(Restaurante restaurante)
         {
-            int contador = 0;
-            bool revision = true;
-            for (int i = 0; i < restaurantes.Count(); i++)
-            {
-
-                if (restaurantes[i] == null)
-                {
-                    contador = i;
-                    revision = false;
-                    break;
-                }
-            }
-
-            if (!revision)
-            {
-                restaurantes[contador] = restaurante;
-            }
-            else
-            {
-                throw new Exception("La lista se encuentra llena.");
-            }
-
-
-        }
-
-        public static Restaurante[] ListarRestaurante()
-        {
+            string query = $"INSERT INTO Restaurante(IdRestaurante, Nombre, Direccion, Estado,Telefono) VALUES(@IdRestaurante, @Nombre, @Direccion, @Estado, @Telefono)";
             try
             {
-                return restaurantes;
+                if (ConexionDB.Conectar())
+                {
+                    SqlCommand command = new SqlCommand(query, ConexionDB.ObtenerConexion())
+                    {
+                        CommandType = CommandType.Text
+                    };
+                    command.Parameters.AddWithValue("@IdRestaurante", restaurante.IdRestaurante);
+                    command.Parameters.AddWithValue("@Nombre", restaurante.NombreRestaurante);
+                    command.Parameters.AddWithValue("@Direccion", restaurante.Direccion);
+                    command.Parameters.AddWithValue("@Estado", restaurante.Estado);
+                    command.Parameters.AddWithValue("@Telefono", restaurante.Telefono);
+                    command.ExecuteNonQuery();
 
+                }
             }
             catch (Exception ex)
             {
-
-                throw ex;
+                throw new Exception("Error:\n No se puede acceder a la base de datos.\n" + ex.Message);
             }
-
+            finally
+            {
+                try
+                {
+                    ConexionDB.CerrarConexion();
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
         }
 
+        public static List<Restaurante> ListarRestaurante()
+        {
+            List<Restaurante> ListaRestaurantes = new List<Restaurante>();
+            string query = $"SELECT IdRestaurante, Nombre, Estado FROM Restaurante WHERE Estado = 1";
 
+            SqlDataReader reader = null;
 
-        //Este método busca un restaurante en una lista de restaurantes según su identificador.Si lo encuentra, lo devuelve.Si no lo encuentra, devuelve null.
+            try
+            {
+                if (ConexionDB.Conectar())
+                {
+                    SqlCommand comand = new SqlCommand(query, ConexionDB.ObtenerConexion());
+                    reader = comand.ExecuteReader();
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            Restaurante restaurante = new Restaurante(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetBoolean(3), reader.GetString(4));
+                            ListaRestaurantes.Add(restaurante);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error:\n No se puede acceder a la base de datos.\n" + ex.Message);
+            }
+            finally
+            {
+                try
+                {
+                    if (reader != null && !reader.IsClosed)
+                    {
+                        reader.Close();
+                        ConexionDB.CerrarConexion();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+
+            return ListaRestaurantes;
+        }
+
         public static Restaurante ObtenerRestaurante(int idRestaurante)
         {
+            Restaurante restaurante = null;
+            string query = $"SELECT IdRestaurante, Direccion, Estado, Telefono FROM Restaurante WHERE IdCliente ={idRestaurante}";
+            SqlDataReader reader = null;
 
-            return restaurantes.Where(x => x.IdRestaurante == idRestaurante).FirstOrDefault();
+            try
+            {
+                if (ConexionDB.Conectar())
+                {
+                    SqlCommand comand = new SqlCommand(query, ConexionDB.ObtenerConexion());
+                    reader = comand.ExecuteReader();
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            restaurante = new Restaurante(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetBoolean(3), reader.GetString(4));
+                            return restaurante;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error:\n No se puede acceder a la base de datos.\n" + ex.Message);
+            }
+            finally
+            {
+                try
+                {
+                    if (reader != null && !reader.IsClosed)
+                    {
+                        reader.Close();
+                        ConexionDB.CerrarConexion();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
 
+            return restaurante;
         }
 
     }

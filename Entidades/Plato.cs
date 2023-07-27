@@ -20,12 +20,12 @@ namespace Entidades
 
 
         // Constructor de la clase
-        public Plato(int idPlato, string nombrePlato, int precio, CategoriaPlato categoria)
+        public Plato(int idPlato, string nombrePlato, int precio, CategoriaPlato categoriaPlato)
         {
             this.idPlato = idPlato;
             this.nombrePlato = nombrePlato;
             this.precio = precio;
-            this.categoriaPlato = categoria;
+            this.categoriaPlato = categoriaPlato;
 
         }
 

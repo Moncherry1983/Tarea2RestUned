@@ -1,27 +1,97 @@
-﻿using Entidades;
-using System;
-using System.Collections.Generic;
+﻿using System;
+using Entidades;
+using System.Data;
 using System.Data.SqlClient;
+using System.Collections.Generic;
 
 namespace AccesoDatos
 {
     public class ClienteAD
     {
-        internal static bool AgregarCliente(Cliente instaciaGenerica)
+        public static void AgregarRestaurante(Cliente ingresoCliente )
         {
-            throw new NotImplementedException();
+            string query = $"INSERT INTO Cliente(IdCliente, Nombre, PrimerApellido, SegundoApellido, FechaNacimiento, Genero) VALUES(@IdCliente, @Nombre, @PrimerApellido, @SegundoApellido, @FechaNacimiento, @Genero)";
+            try
+            {
+                if (ConexionDB.Conectar())
+                {
+                    SqlCommand command = new SqlCommand(query, ConexionDB.ObtenerConexion())
+                    {
+                        CommandType = CommandType.Text
+                    };
+                    command.Parameters.AddWithValue("@IdCliente", ingresoCliente.IdCedula);
+                    command.Parameters.AddWithValue("@Nombre", ingresoCliente.Nombre);
+                    command.Parameters.AddWithValue("@PrimerApellido", ingresoCliente.PApellido);
+                    command.Parameters.AddWithValue("@SegundoApellido", ingresoCliente.SApellido);
+                    command.Parameters.AddWithValue("@FechaNacimiento", ingresoCliente.FNacimiento);
+                    command.Parameters.AddWithValue("@Genero", ingresoCliente.Genero);                  
+                    command.ExecuteNonQuery();
+
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error:\n No se puede acceder a la base de datos.\n" + ex.Message);
+            }
+            finally
+            {
+                try
+                {
+                    ConexionDB.CerrarConexion();
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
         }
 
-        internal static List<Cliente> ListarClientes()
+        public static List<Cliente> ListarCliente()
         {
-            throw new NotImplementedException();
+            List<Cliente> ListaCliente = new List<Cliente>();
+            string query = $"SELECT IdCliente, Nombre, PrimerApellido, SegundoApellido, FechaNacimiento, Genero FROM Cliente ";
+
+            SqlDataReader reader = null;
+
+            try
+            {
+                if (ConexionDB.Conectar())
+                {
+                    SqlCommand comand = new SqlCommand(query, ConexionDB.ObtenerConexion());
+                    reader = comand.ExecuteReader();
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            Cliente cliente = new Cliente(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetDateTime(4), reader.GetString(5)[0]);
+                            ListaCliente.Add(cliente);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error:\n No se puede acceder a la base de datos.\n" + ex.Message);
+            }
+            finally
+            {
+                try
+                {
+                    if (reader != null && !reader.IsClosed)
+                    {
+                        reader.Close();
+                        ConexionDB.CerrarConexion();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+
+            return ListaCliente;
         }
 
-        //Este método busca un cliente en la base de datos usando su identificador.
-        //Primero crea una variable para guardar el cliente y otra para guardar la consulta SQL.
-        //Luego intenta conectarse a la base de datos y ejecutar la consulta. Si encuentra algún
-        //resultado, crea un objeto cliente con los datos leídos y lo devuelve. Si ocurre algún error,
-        //lanza una excepción con un mensaje. Al final, cierra el lector y la conexión a la base de datos.
         public Cliente ObtenerClientePorId(string id)
         {
             Cliente cliente = null;

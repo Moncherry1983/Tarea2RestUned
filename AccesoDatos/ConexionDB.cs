@@ -24,17 +24,20 @@ namespace AccesoDatos
         {
             try
             {
+                if (conectar == null)
+                {
+                    throw new Exception("La conexión no ha sido inicializada.");
+                }
                 conectar.Open();
                 return true;
             }
             catch (SqlException ex)
             {
                 conectar = null;
-                new Exception("No es posible conectar a la base de datos:\n" + ex.Message);
+                throw new Exception("No es posible conectar a la base de datos:\n" + ex.Message);
             }
-
-            return false;
         }
+
 
         // Este método se encarga de cerrar la conexión a la base de datos.
         public static void CerrarConexion()

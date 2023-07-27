@@ -18,7 +18,7 @@ namespace Entidades
         private int idCategoriaExtra;
 
         // Constructor de la clase
-        public Extra(int idExtra,string descripcion,bool estado,int precio, int idCategoriaExtra)
+        public Extra(int idExtra, string descripcion,int precio, bool estado, int idCategoriaExtra)
         {
             this.idExtra = idExtra;
             this.descripcion = descripcion;
