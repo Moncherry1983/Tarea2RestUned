@@ -31,6 +31,9 @@ namespace AccesoDatos
                     command.Parameters.AddWithValue("@Precio", ingresarPlatos.Precio);
                     command.ExecuteNonQuery();
 
+                    //Comentario de Prueba
+                    //Comentario de Prueba2
+
                 }
             }
             catch (Exception ex)
