@@ -50,6 +50,22 @@ namespace AccesoDatos
         //se verifica qué tipo de acción debe realizar el servidor, según la información recibida. Si la acción es "ObtenerObjetoEspecifico", busca un cliente en una base de datos
         //utilizando la información proporcionada en el paquete. Si encuentra al cliente, lo empaqueta y lo envía de vuelta al cliente. En caso de no encontrar al cliente, envía un mensaje
         //indicando que no se encontró.
+
+        //Este método se llama cuando se hace clic en el botón Desconectar.
+        //Lo que hace es agregar un mensaje al cuadro de texto Estado que dice
+        //que la desconexión fue exitosa. Luego, detiene el servidor para terminar la comunicación.
+        private void btnDesconectar_Click(object sender, EventArgs e)
+        {
+            txtEstado.Text += "  ...Desconeccion exitosa... " + Environment.NewLine;
+            server.Stop();
+        }
+
+        //Método que se llama cuando se hace clic en el botón Salir. Lo que hace es mostrar un mensaje en pantalla
+        private void btnSalir_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Estas saliendo Monitor Rest-Uned...");
+            Application.Exit();
+        }
         private void Server_DataReceived(object sender, SimpleTCP.Message msg)
         {
             var paqueteRecibido = AdmistradorPaquetes.DeserializePackage(msg.MessageString);            
@@ -68,8 +84,6 @@ namespace AccesoDatos
                     break;
             }
         }
-
-
         private void ProcesarCategoriaPlato(string textoSolicitud, Paquete<CategoriaPlato> paqueteCategoriaPlato, SimpleTCP.Message msg)
         {
             string respuesta = string.Empty;
@@ -226,22 +240,6 @@ namespace AccesoDatos
                 default:
                     break;
             }
-        }
-
-        //Este método se llama cuando se hace clic en el botón Desconectar.
-        //Lo que hace es agregar un mensaje al cuadro de texto Estado que dice
-        //que la desconexión fue exitosa. Luego, detiene el servidor para terminar la comunicación.
-        private void btnDesconectar_Click(object sender, EventArgs e)
-        {
-            txtEstado.Text += "  ...Desconeccion exitosa... " + Environment.NewLine;
-            server.Stop();
-        }
-
-        //Método que se llama cuando se hace clic en el botón Salir. Lo que hace es mostrar un mensaje en pantalla
-        private void button1_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("Estas saliendo Monitor Rest-Uned...");
-            Application.Exit();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Entidades;
 using LogicaNegocio;
+using Presentacion.Miscelaneas;
 using SimpleTCP;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,8 @@ namespace Presentacion
 {
     public partial class ConsultarCategoriaPlato : Form
     {        
-        readonly string nombreMaquinaCliente;        
+        readonly string nombreMaquinaCliente;
+        PantallaEspera pantallaEspera = new PantallaEspera();
         AdministradorTCP tcpClient;
 
         public ConsultarCategoriaPlato(string nombreMaquinaCliente)
@@ -45,7 +47,7 @@ namespace Presentacion
             SolicitarDatosAlServidor();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnRegresar_Click(object sender, EventArgs e)
         {
             new MenuPrincipal().Show();
             this.Hide();
@@ -91,6 +93,7 @@ namespace Presentacion
                 {
                     if (tcpClient.ConectarTCP())
                     {
+                        pantallaEspera.Show();
                         CategoriaPlato categoriaPlato = new CategoriaPlato(0, "", true);
                         var paquete = new Paquete<CategoriaPlato>()
                         {
@@ -113,7 +116,8 @@ namespace Presentacion
             dvgConsultaCategoriaPlato.Invoke((MethodInvoker)delegate () 
             {
                 dvgConsultaCategoriaPlato.DataSource = lista;
-                dvgConsultaCategoriaPlato.Refresh();                
+                dvgConsultaCategoriaPlato.Refresh();
+                pantallaEspera.Hide();
             });
         }
     

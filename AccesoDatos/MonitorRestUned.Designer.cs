@@ -35,7 +35,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.txtDireccion = new System.Windows.Forms.TextBox();
             this.txtPuerto = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnSalir = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // txtEstado
@@ -98,22 +98,22 @@
             this.txtPuerto.Size = new System.Drawing.Size(100, 20);
             this.txtPuerto.TabIndex = 6;
             // 
-            // button1
+            // btnSalir
             // 
-            this.button1.Location = new System.Drawing.Point(511, 80);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(83, 44);
-            this.button1.TabIndex = 7;
-            this.button1.Text = "Salir";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.btnSalir.Location = new System.Drawing.Point(511, 80);
+            this.btnSalir.Name = "btnSalir";
+            this.btnSalir.Size = new System.Drawing.Size(83, 44);
+            this.btnSalir.TabIndex = 7;
+            this.btnSalir.Text = "Salir";
+            this.btnSalir.UseVisualStyleBackColor = true;
+            this.btnSalir.Click += new System.EventHandler(this.btnSalir_Click);
             // 
             // MonitorRestUned
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(657, 415);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnSalir);
             this.Controls.Add(this.txtPuerto);
             this.Controls.Add(this.txtDireccion);
             this.Controls.Add(this.label2);
@@ -138,7 +138,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtDireccion;
         private System.Windows.Forms.TextBox txtPuerto;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnSalir;
     }
 }
 
