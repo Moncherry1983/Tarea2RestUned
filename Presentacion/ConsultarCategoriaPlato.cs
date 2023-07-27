@@ -38,6 +38,12 @@ namespace Presentacion
             dvgConsultaCategoriaPlato.Columns["Estado"].DataPropertyName = "Estado";
             dvgConsultaCategoriaPlato.Columns["Estado"].Width = 120;            
         }
+        private void ConsultarCategoriaPlato_Load(object sender, EventArgs e)
+        {
+            tcpClient = new AdministradorTCP();
+            tcpClient.TcpClient.DataReceived += Client_DataReceived;
+            SolicitarDatosAlServidor();
+        }
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -61,13 +67,6 @@ namespace Presentacion
             {
                 e.Value = "Unknown";
             }
-        }
-
-        private void ConsultarCategoriaPlato_Load(object sender, EventArgs e)
-        {
-            tcpClient = new AdministradorTCP();
-            tcpClient.TcpClient.DataReceived += Client_DataReceived;
-            SolicitarDatosAlServidor();
         }
 
         private void Client_DataReceived(object sender, SimpleTCP.Message e)
@@ -111,13 +110,11 @@ namespace Presentacion
             }
         private void CargarDatos(List<CategoriaPlato> lista)
         {
-
             dvgConsultaCategoriaPlato.Invoke((MethodInvoker)delegate () 
             {
-                dvgConsultaCategoriaPlato.DataSource = lista; //categoria.ListarCategoriaPlato();
+                dvgConsultaCategoriaPlato.DataSource = lista;
                 dvgConsultaCategoriaPlato.Refresh();                
             });
-
         }
     
     }

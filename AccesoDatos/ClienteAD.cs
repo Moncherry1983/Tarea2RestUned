@@ -1,11 +1,22 @@
 ﻿using Entidades;
 using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 
 namespace AccesoDatos
 {
     public class ClienteAD
     {
+        internal static bool AgregarCliente(Cliente instaciaGenerica)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal static List<Cliente> ListarClientes()
+        {
+            throw new NotImplementedException();
+        }
+
         //Este método busca un cliente en la base de datos usando su identificador.
         //Primero crea una variable para guardar el cliente y otra para guardar la consulta SQL.
         //Luego intenta conectarse a la base de datos y ejecutar la consulta. Si encuentra algún

@@ -33,10 +33,10 @@
             this.txtdescripcion = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.aceptar = new System.Windows.Forms.Button();
+            this.btnGuardar = new System.Windows.Forms.Button();
             this.dgvCategoriaPlato = new System.Windows.Forms.DataGridView();
             this.cmbEstado = new System.Windows.Forms.ComboBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnRegresar = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
@@ -84,15 +84,15 @@
             this.label3.Size = new System.Drawing.Size(0, 13);
             this.label3.TabIndex = 10;
             // 
-            // aceptar
+            // btnGuardar
             // 
-            this.aceptar.Location = new System.Drawing.Point(12, 221);
-            this.aceptar.Name = "aceptar";
-            this.aceptar.Size = new System.Drawing.Size(169, 69);
-            this.aceptar.TabIndex = 14;
-            this.aceptar.Text = "Guardar";
-            this.aceptar.UseVisualStyleBackColor = true;
-            this.aceptar.Click += new System.EventHandler(this.aceptar_Click);
+            this.btnGuardar.Location = new System.Drawing.Point(12, 221);
+            this.btnGuardar.Name = "btnGuardar";
+            this.btnGuardar.Size = new System.Drawing.Size(169, 69);
+            this.btnGuardar.TabIndex = 14;
+            this.btnGuardar.Text = "Guardar";
+            this.btnGuardar.UseVisualStyleBackColor = true;
+            this.btnGuardar.Click += new System.EventHandler(this.btnGuardar_Click);
             // 
             // dgvCategoriaPlato
             // 
@@ -110,23 +110,23 @@
             "Inactivo"});
             this.cmbEstado.FormattingEnabled = true;
             this.cmbEstado.Items.AddRange(new object[] {
-            "Activo",
-            "Inactivo"});
+            "Inactivo",
+            "Activo"});
             this.cmbEstado.Location = new System.Drawing.Point(64, 90);
             this.cmbEstado.Name = "cmbEstado";
             this.cmbEstado.Size = new System.Drawing.Size(121, 21);
             this.cmbEstado.TabIndex = 16;
             this.cmbEstado.SelectedIndexChanged += new System.EventHandler(this.cmbEstado_SelectedIndexChanged);
             // 
-            // button1
+            // btnRegresar
             // 
-            this.button1.Location = new System.Drawing.Point(12, 323);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(169, 72);
-            this.button1.TabIndex = 17;
-            this.button1.Text = "Regresar";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.btnRegresar.Location = new System.Drawing.Point(12, 323);
+            this.btnRegresar.Name = "btnRegresar";
+            this.btnRegresar.Size = new System.Drawing.Size(169, 72);
+            this.btnRegresar.TabIndex = 17;
+            this.btnRegresar.Text = "Regresar";
+            this.btnRegresar.UseVisualStyleBackColor = true;
+            this.btnRegresar.Click += new System.EventHandler(this.btnRegresar_Click);
             // 
             // label4
             // 
@@ -163,10 +163,10 @@
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnRegresar);
             this.Controls.Add(this.cmbEstado);
             this.Controls.Add(this.dgvCategoriaPlato);
-            this.Controls.Add(this.aceptar);
+            this.Controls.Add(this.btnGuardar);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.txtdescripcion);
             this.Controls.Add(this.label2);
@@ -174,6 +174,7 @@
             this.Controls.Add(this.label1);
             this.Name = "MenuCategoríaPlato";
             this.Text = "MenuCategoríaPlato";
+            this.Load += new System.EventHandler(this.MenuCategoríaPlato_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvCategoriaPlato)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -187,10 +188,10 @@
         private System.Windows.Forms.TextBox txtdescripcion;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button aceptar;
+        private System.Windows.Forms.Button btnGuardar;
         private System.Windows.Forms.DataGridView dgvCategoriaPlato;
         private System.Windows.Forms.ComboBox cmbEstado;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnRegresar;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;

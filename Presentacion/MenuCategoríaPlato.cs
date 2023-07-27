@@ -2,21 +2,25 @@
 using Entidades;
 using LogicaNegocio;
 using System.Windows.Forms;
+using System.Collections.Generic;
+using System.Collections;
 
 namespace Presentacion
 {
     public partial class MenuCategoríaPlato : Form
     {
         //inicializacion de arrays que se van a utilizar en la ventana
-        CategoriaPlatoLN categoria;
-        public MenuCategoríaPlato()
+        //CategoriaPlatoLN categoria;
+        readonly string nombreMaquinaCliente;
+        AdministradorTCP tcpClient;
+
+        public MenuCategoríaPlato(string nombreMaquinaCliente)
         {
             //inicializacion de componentes de la ventana
             InitializeComponent();
-            dgvCategoriaPlato.ReadOnly = true;
-            categoria = new CategoriaPlatoLN();
-            InitializeDataGridView();
-            CargarDatos();
+            this.nombreMaquinaCliente = nombreMaquinaCliente;
+            dgvCategoriaPlato.ReadOnly = true;            
+            InitializeDataGridView();            
 
         }
         //metodo para inicializar el datagridview
@@ -39,19 +43,17 @@ namespace Presentacion
             dgvCategoriaPlato.Columns["Estado"].DataPropertyName = "Estado";
             dgvCategoriaPlato.Columns["Estado"].Width = 120;
 
-
-            CargarDatos();
-
-
         }
         //metodo para cargar los datos en el datagridview
-        private void CargarDatos()
+        private void MenuCategoríaPlato_Load(object sender, EventArgs e)
         {
-            dgvCategoriaPlato.DataSource = categoria.ListarCategoriaPlato();
-            dgvCategoriaPlato.Refresh();
+            cmbEstado.SelectedIndex = 1;
+            tcpClient = new AdministradorTCP();
+            tcpClient.TcpClient.DataReceived += Client_DataReceived;
+            SolicitarDatosAlServidor();
         }
 
-        private void aceptar_Click(object sender, System.EventArgs e)
+        private void btnGuardar_Click(object sender, System.EventArgs e)
         {
             try
             {
@@ -72,12 +74,10 @@ namespace Presentacion
                 }
                 else
                 {
-                    bool estado = cmbEstado.SelectedIndex == 0;
-                    CategoriaPlatoLN categoriaLN = new CategoriaPlatoLN();
-                    CategoriaPlato categoriaPlato = new CategoriaPlato(int.Parse(txtidCategoria.Text), txtdescripcion.Text, cmbEstado.SelectedIndex == 0);
-                    categoriaLN.AgregarCategoriaPlato(categoriaPlato);
-                    dgvCategoriaPlato.DataSource = categoriaLN.ListarCategoriaPlato();
-                    dgvCategoriaPlato.Refresh();
+                    bool estado = cmbEstado.SelectedIndex == 0;                    
+                    CategoriaPlato categoriaPlato = new CategoriaPlato(int.Parse(txtidCategoria.Text), txtdescripcion.Text, cmbEstado.SelectedItem.ToString() == "Activo");
+                    GuardarCategoriaPlato(categoriaPlato);
+                    SolicitarDatosAlServidor();
                 }
 
                 txtdescripcion.Text = "";
@@ -92,15 +92,10 @@ namespace Presentacion
             }
         }
 
-        private void button1_Click(object sender, System.EventArgs e)
+        private void btnRegresar_Click(object sender, System.EventArgs e)
         {
             new MenuPrincipal().Show();
             this.Hide();
-        }
-
-        private void textBox1_TextChanged(object sender, System.EventArgs e)
-        {
-
         }
 
         private void txtidCategoria_TextChanged(object sender, System.EventArgs e)
@@ -152,5 +147,103 @@ namespace Presentacion
                 e.Value = "Desconocido";
             }
         }
+        
+        private void GuardarCategoriaPlato(CategoriaPlato categoriaPlato)
+        {
+            try
+            {
+                if (tcpClient.ConectarTCP())
+                {
+                    var paquete = new Paquete<CategoriaPlato>()
+                    {
+                        ClienteId = nombreMaquinaCliente,
+                        TiposAccion = TiposAccion.Agregar,
+                        InstaciaGenerica = categoriaPlato
+                    };
+
+                    string CategoriaPlatoSerializada = AdmistradorPaquetes.SerializePackage(paquete);
+                    tcpClient.TcpClient.WriteLineAndGetReply(CategoriaPlatoSerializada, TimeSpan.FromSeconds(3));
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al conectar con el servidor: " + ex.Message);
+            }
+        }
+
+        private void SolicitarDatosAlServidor()
+        {
+            try
+            {
+                if (tcpClient.ConectarTCP())
+                {
+                    CategoriaPlato categoriaPlato = new CategoriaPlato(0, "", true);
+                    var paquete = new Paquete<CategoriaPlato>()
+                    {
+                        ClienteId = nombreMaquinaCliente,
+                        TiposAccion = TiposAccion.Listar,
+                        InstaciaGenerica = categoriaPlato
+                    };
+
+                    string CategoriaPlatoSerializada = AdmistradorPaquetes.SerializePackage(paquete);
+                    tcpClient.TcpClient.WriteLineAndGetReply(CategoriaPlatoSerializada, TimeSpan.FromSeconds(3));
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al conectar con el servidor: " + ex.Message);
+            }
+        }
+
+        private void Client_DataReceived(object sender, SimpleTCP.Message e)
+        {
+            string valorRecibido = e.MessageString.TrimEnd('\u0013');
+            var informacionCategoriaPlatos = AdmistradorPaquetes.DeserializePackage(valorRecibido);
+                       
+            if (informacionCategoriaPlatos != null)
+            {                
+                switch (informacionCategoriaPlatos.TiposAccion)
+                {
+                    case TiposAccion.Agregar:                        
+                        ReiniciarPantalla();
+                        break;
+
+                    case TiposAccion.Listar:
+                        List<CategoriaPlato> listaCategoriaPlatos = informacionCategoriaPlatos.InstaciaGenerica;
+                        CargarDatos(listaCategoriaPlatos);
+                        break;
+
+                    case TiposAccion.ObtenerObjetoEspecifico:
+
+                    default:
+                        break;
+                }                
+            }
+            else
+            {
+                MessageBox.Show("La categoría de plato no existe");
+            }
+        }
+
+        private void ReiniciarPantalla()
+        {
+            txtidCategoria.Invoke((MethodInvoker)delegate ()
+            {
+                SolicitarDatosAlServidor();
+                txtidCategoria.Focus();
+                cmbEstado.SelectedIndex = 1;                
+            });
+        }
+
+        private void CargarDatos(List<CategoriaPlato> lista)
+        {
+            dgvCategoriaPlato.Invoke((MethodInvoker)delegate ()
+            {
+                dgvCategoriaPlato.DataSource = lista;
+                dgvCategoriaPlato.Refresh();
+            });
+
+        }
+
     }
 }

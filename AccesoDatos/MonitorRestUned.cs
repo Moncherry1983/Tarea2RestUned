@@ -52,119 +52,174 @@ namespace AccesoDatos
         //indicando que no se encontró.
         private void Server_DataReceived(object sender, SimpleTCP.Message msg)
         {
-            var paqueteRecibido = AdmistradorPaquetes.DeserializePackage(msg.MessageString);
-            //ResponseHandler(paqueteRecibido);
-
+            var paqueteRecibido = AdmistradorPaquetes.DeserializePackage(msg.MessageString);            
+            string textoSolicitud = "Solicitud recibida desde: ";
             switch (paqueteRecibido)
             {
                 case Paquete<CategoriaPlato> paqueteCategoriaPlato:
-                    switch (paqueteCategoriaPlato.TiposAccion)
+                    ProcesarCategoriaPlato(textoSolicitud,paqueteCategoriaPlato, msg);
+                    break;
+
+                case Paquete<Cliente> paqueteCliente:
+                    ProcesarCliente(textoSolicitud, paqueteCliente, msg);
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+
+        private void ProcesarCategoriaPlato(string textoSolicitud, Paquete<CategoriaPlato> paqueteCategoriaPlato, SimpleTCP.Message msg)
+        {
+            string respuesta = string.Empty;
+            switch (paqueteCategoriaPlato.TiposAccion)
+            {
+                case TiposAccion.Agregar:
+                    txtEstado.Invoke((MethodInvoker)delegate
                     {
-                        case TiposAccion.Agregar:
-                            break;
+                        txtEstado.Text += $"{textoSolicitud} {paqueteCategoriaPlato.ClienteId}, procesando la solicitud: {TiposAccion.Agregar}...{Environment.NewLine}";                        
 
-                        case TiposAccion.Listar:
-                            txtEstado.Invoke((MethodInvoker)delegate
-                            {
-                                txtEstado.Text += $"Solicitud del cliente Recibida, tramitando la solicitud...{Environment.NewLine}";
-                                string respuesta = string.Empty;
+                        if (CategoriaPlatoAD.AgregarCategoria(paqueteCategoriaPlato.InstaciaGenerica))
+                        {                            
+                            string serializedResult = AdmistradorPaquetes.SerializePackage(paqueteCategoriaPlato);
+                            msg.ReplyLine(serializedResult);
+                            respuesta = $"Respuesta enviada a: {paqueteCategoriaPlato.ClienteId}...{Environment.NewLine}";
+                        }
+                        else
+                        {
+                            respuesta = $"La Categoría Plato no se pudo agregar... {Environment.NewLine}";
+                        }
 
-                                var categoriasPlatos = CategoriaPlatoAD.ListarCategoriaPlato();
+                        txtEstado.Text += respuesta;
+                    });
+                    break;
 
-                                if (categoriasPlatos != null)
-                                {
-                                    Paquete<List<CategoriaPlato>> paqueteLista = new Paquete<List<CategoriaPlato>>();
-                                    paqueteLista.ClienteId = paqueteCategoriaPlato.ClienteId;
-                                    paqueteLista.TiposAccion = paqueteCategoriaPlato.TiposAccion;
-                                    paqueteLista.InstaciaGenerica = categoriasPlatos;
-                                    //Serialize and package Object gotten
-                                    string serializedResult = AdmistradorPaquetes.SerializePackage(paqueteLista);
-                                    msg.ReplyLine(serializedResult);
-                                    respuesta = $"Respuesta enviada...{Environment.NewLine}";
-                                }
-                                else
-                                {
-                                    respuesta = $"Cliente no existe... {Environment.NewLine}";
-                                }
+                case TiposAccion.Listar:
+                    txtEstado.Invoke((MethodInvoker)delegate
+                    {
+                        txtEstado.Text += $"{textoSolicitud} {paqueteCategoriaPlato.ClienteId}, procesando la solicitud: {TiposAccion.Listar}...{Environment.NewLine}";
 
-                                txtEstado.Text += respuesta;
-                            });
-                            break;
+                        var categoriasPlatos = CategoriaPlatoAD.ListarCategoriaPlato();
 
-                        case TiposAccion.ObtenerObjetoEspecifico:
+                        if (categoriasPlatos != null)
+                        {
+                            Paquete<List<CategoriaPlato>> paqueteLista = new Paquete<List<CategoriaPlato>>();
+                            paqueteLista.ClienteId = paqueteCategoriaPlato.ClienteId;
+                            paqueteLista.TiposAccion = paqueteCategoriaPlato.TiposAccion;
+                            paqueteLista.InstaciaGenerica = categoriasPlatos;                            
+                            string serializedResult = AdmistradorPaquetes.SerializePackage(paqueteLista);
+                            msg.ReplyLine(serializedResult);
+                            respuesta = $"Respuesta enviada a: {paqueteCategoriaPlato.ClienteId}...{Environment.NewLine}";
+                        }
+                        else
+                        {
+                            respuesta = $"La lista de categorías de platos no se pudo obtener... {Environment.NewLine}";
+                        }
 
-                            //txtEstado.Invoke((MethodInvoker)delegate
-                            //{
-                            //    txtEstado.Text += $"Solicitud del cliente Recibida, tramitando la solicitud...{Environment.NewLine}";
-                            //    string respuesta = string.Empty;
+                        txtEstado.Text += respuesta;
+                    });
+                    break;
 
-                            //    var clienteAD = new ClienteAD();
-                            //    var cliente = clienteAD.ObtenerClientePorId(paqueteCategoriaPlato.InstaciaGenerica.IdCedula);
+                case TiposAccion.ObtenerObjetoEspecifico:
 
-                            //    if (cliente != null)
-                            //    {
-                            //        paqueteCategoriaPlato.InstaciaGenerica = cliente;
-                            //        //Serialize and package Object gotten
-                            //        string serializedResult = AdmistradorPaquetes.SerializePackage(paqueteCategoriaPlato);
-                            //        msg.ReplyLine(serializedResult);
-                            //        respuesta = $"Respuesta enviada...{Environment.NewLine}";
-                            //    }
-                            //    else
-                            //    {
-                            //        respuesta = $"Cliente no existe... {Environment.NewLine}";
-                            //    }
+                    txtEstado.Text += $"{textoSolicitud} {paqueteCategoriaPlato.ClienteId}, procesando la solicitud: {TiposAccion.ObtenerObjetoEspecifico}...{Environment.NewLine}";                    
+                    var categoriasPlato = CategoriaPlatoAD.ObtenerCategoriaPlato(paqueteCategoriaPlato.InstaciaGenerica.IdCategoria);
 
-                            //    txtEstado.Text += respuesta;
-                            //});
-
-                            break;
-
-                        default:
-                            break;
+                    if (categoriasPlato != null)
+                    {
+                        paqueteCategoriaPlato.InstaciaGenerica = categoriasPlato;
+                        string serializedResult = AdmistradorPaquetes.SerializePackage(paqueteCategoriaPlato);
+                        msg.ReplyLine(serializedResult);
+                        respuesta = $"Respuesta enviada a: {paqueteCategoriaPlato.ClienteId}...{Environment.NewLine}";
                     }
+                    else
+                    {
+                        respuesta = $"La categorías de platos no se pudo obtener... {Environment.NewLine}";
+                    }
+
+                    txtEstado.Text += respuesta;
 
                     break;
 
-                case Paquete<Cliente> paquete:
-                    switch (paquete.TiposAccion)
+                default:
+                    break;
+            }
+        }
+        private void ProcesarCliente(string textoSolicitud, Paquete<Cliente> paqueteCliente, SimpleTCP.Message msg)
+        {
+            string respuesta = string.Empty;
+            switch (paqueteCliente.TiposAccion)
+            {
+                case TiposAccion.Agregar:
+                    txtEstado.Invoke((MethodInvoker)delegate
                     {
-                        case TiposAccion.Agregar:
-                            break;
+                        txtEstado.Text += $"{textoSolicitud} {paqueteCliente.ClienteId}, procesando la solicitud: {TiposAccion.Agregar}...{Environment.NewLine}";
 
-                        case TiposAccion.Listar:
-                            break;
+                        if (ClienteAD.AgregarCliente(paqueteCliente.InstaciaGenerica))
+                        {
+                            string serializedResult = AdmistradorPaquetes.SerializePackage(paqueteCliente);
+                            msg.ReplyLine(serializedResult);
+                            respuesta = $"Respuesta enviada a: {paqueteCliente.ClienteId}...{Environment.NewLine}";
+                        }
+                        else
+                        {
+                            respuesta = $"El Cliente no se pudo agregar... {Environment.NewLine}";
+                        }
 
-                        case TiposAccion.ObtenerObjetoEspecifico:
+                        txtEstado.Text += respuesta;
+                    });
+                    break;
 
-                            txtEstado.Invoke((MethodInvoker)delegate
-                            {
-                                txtEstado.Text += $"Solicitud del cliente Recibida, tramitando la solicitud...{Environment.NewLine}";
-                                string respuesta = string.Empty;
+                case TiposAccion.Listar:
+                    txtEstado.Invoke((MethodInvoker)delegate
+                    {
+                        txtEstado.Text += $"{textoSolicitud} {paqueteCliente.ClienteId}, procesando la solicitud: {TiposAccion.Listar}...{Environment.NewLine}";
 
-                                var clienteAD = new ClienteAD();
-                                var cliente = clienteAD.ObtenerClientePorId(paquete.InstaciaGenerica.IdCedula);
+                        var clientes = ClienteAD.ListarClientes();
 
-                                if (cliente != null)
-                                {
-                                    paquete.InstaciaGenerica = cliente;
-                                    //Serialize and package Object gotten
-                                    string serializedResult = AdmistradorPaquetes.SerializePackage(paquete);
-                                    msg.ReplyLine(serializedResult);
-                                    respuesta = $"Respuesta enviada...{Environment.NewLine}";
-                                }
-                                else
-                                {
-                                    respuesta = $"Cliente no existe... {Environment.NewLine}";
-                                }
+                        if (clientes != null)
+                        {
+                            Paquete<List<Cliente>> paqueteLista = new Paquete<List<Cliente>>();
+                            paqueteLista.ClienteId = paqueteCliente.ClienteId;
+                            paqueteLista.TiposAccion = paqueteCliente.TiposAccion;
+                            paqueteLista.InstaciaGenerica = clientes;
+                            string serializedResult = AdmistradorPaquetes.SerializePackage(paqueteLista);
+                            msg.ReplyLine(serializedResult);
+                            respuesta = $"Respuesta enviada a: {paqueteCliente.ClienteId}...{Environment.NewLine}";
+                        }
+                        else
+                        {
+                            respuesta = $"La lista de categorías de platos no se pudo obtener... {Environment.NewLine}";
+                        }
 
-                                txtEstado.Text += respuesta;
-                            });
+                        txtEstado.Text += respuesta;
+                    });
+                    break;
 
-                            break;
+                case TiposAccion.ObtenerObjetoEspecifico:
 
-                        default:
-                            break;
-                    }
+                    txtEstado.Invoke((MethodInvoker)delegate
+                    {
+                        txtEstado.Text += $"{textoSolicitud} {paqueteCliente.ClienteId}, procesando la solicitud: {TiposAccion.ObtenerObjetoEspecifico}...{Environment.NewLine}";
+
+                        var clienteAD = new ClienteAD();
+                        var cliente = clienteAD.ObtenerClientePorId(paqueteCliente.InstaciaGenerica.IdCedula);
+
+                        if (cliente != null)
+                        {
+                            paqueteCliente.InstaciaGenerica = cliente;                            
+                            string serializedResult = AdmistradorPaquetes.SerializePackage(paqueteCliente);
+                            msg.ReplyLine(serializedResult);
+                            respuesta = $"Respuesta enviada...{Environment.NewLine}";
+                        }
+                        else
+                        {
+                            respuesta = $"Cliente no existe... {Environment.NewLine}";
+                        }
+
+                        txtEstado.Text += respuesta;
+                    });
 
                     break;
 
