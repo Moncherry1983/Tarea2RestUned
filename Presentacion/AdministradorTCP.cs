@@ -1,5 +1,6 @@
 ﻿using SimpleTCP;
 using System;
+using System.Net.Sockets;
 
 namespace Presentacion
 {
@@ -41,6 +42,6 @@ namespace Presentacion
             {
                 throw ex;
             }
-        }
+        }       
     }
 }
