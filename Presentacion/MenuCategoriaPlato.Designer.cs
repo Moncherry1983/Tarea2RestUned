@@ -1,6 +1,6 @@
 ﻿namespace Presentacion
 {
-    partial class MenuCategoríaPlato
+    partial class MenuCategoriaPlato
     {
         /// <summary>
         /// Required designer variable.
@@ -115,7 +115,7 @@
             this.cmbEstado.Location = new System.Drawing.Point(64, 90);
             this.cmbEstado.Name = "cmbEstado";
             this.cmbEstado.Size = new System.Drawing.Size(121, 21);
-            this.cmbEstado.TabIndex = 16;
+            this.cmbEstado.TabIndex = 11;
             this.cmbEstado.SelectedIndexChanged += new System.EventHandler(this.cmbEstado_SelectedIndexChanged);
             // 
             // btnRegresar
@@ -155,7 +155,7 @@
             this.label6.TabIndex = 20;
             this.label6.Text = "Estado";
             // 
-            // MenuCategoríaPlato
+            // MenuCategoriaPlato
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -172,7 +172,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.txtidCategoria);
             this.Controls.Add(this.label1);
-            this.Name = "MenuCategoríaPlato";
+            this.Name = "MenuCategoriaPlato";
             this.Text = "MenuCategoríaPlato";
             this.Load += new System.EventHandler(this.MenuCategoríaPlato_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvCategoriaPlato)).EndInit();

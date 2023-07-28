@@ -109,6 +109,7 @@
             this.Controls.Add(this.button1);
             this.Controls.Add(this.btnConectar);
             this.Name = "Login";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Login";
             this.Load += new System.EventHandler(this.Login_Load);
             this.ResumeLayout(false);

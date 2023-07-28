@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnGuardar = new System.Windows.Forms.Button();
             this.txtNombre = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.txtidRestaurante = new System.Windows.Forms.TextBox();
@@ -43,20 +43,20 @@
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
+            this.btnRegresar = new System.Windows.Forms.Button();
             this.dgvRestaurantes = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRestaurantes)).BeginInit();
             this.SuspendLayout();
             // 
-            // button1
+            // btnGuardar
             // 
-            this.button1.Location = new System.Drawing.Point(12, 238);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(114, 67);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Guardar";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.btnGuardar.Location = new System.Drawing.Point(12, 238);
+            this.btnGuardar.Name = "btnGuardar";
+            this.btnGuardar.Size = new System.Drawing.Size(114, 67);
+            this.btnGuardar.TabIndex = 0;
+            this.btnGuardar.Text = "Guardar";
+            this.btnGuardar.UseVisualStyleBackColor = true;
+            this.btnGuardar.Click += new System.EventHandler(this.btnGuardar_Click);
             // 
             // txtNombre
             // 
@@ -65,7 +65,6 @@
             this.txtNombre.Name = "txtNombre";
             this.txtNombre.Size = new System.Drawing.Size(172, 20);
             this.txtNombre.TabIndex = 19;
-            this.txtNombre.TextChanged += new System.EventHandler(this.descripcion_TextChanged);
             // 
             // label2
             // 
@@ -74,7 +73,6 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(0, 13);
             this.label2.TabIndex = 17;
-            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // txtidRestaurante
             // 
@@ -82,7 +80,7 @@
             this.txtidRestaurante.Location = new System.Drawing.Point(144, 8);
             this.txtidRestaurante.Name = "txtidRestaurante";
             this.txtidRestaurante.Size = new System.Drawing.Size(65, 20);
-            this.txtidRestaurante.TabIndex = 16;
+            this.txtidRestaurante.TabIndex = 0;
             this.txtidRestaurante.TextChanged += new System.EventHandler(this.idCategoria_TextChanged);
             // 
             // label1
@@ -92,7 +90,6 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(0, 13);
             this.label1.TabIndex = 14;
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // txtDireccion
             // 
@@ -186,15 +183,15 @@
             this.label9.TabIndex = 36;
             this.label9.Text = "Ingrese el nombre del restaurante:";
             // 
-            // button2
+            // btnRegresar
             // 
-            this.button2.Location = new System.Drawing.Point(12, 331);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(114, 67);
-            this.button2.TabIndex = 37;
-            this.button2.Text = "Regresar";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.btnRegresar.Location = new System.Drawing.Point(12, 331);
+            this.btnRegresar.Name = "btnRegresar";
+            this.btnRegresar.Size = new System.Drawing.Size(114, 67);
+            this.btnRegresar.TabIndex = 37;
+            this.btnRegresar.Text = "Regresar";
+            this.btnRegresar.UseVisualStyleBackColor = true;
+            this.btnRegresar.Click += new System.EventHandler(this.btnRegresar_Click);
             // 
             // dgvRestaurantes
             // 
@@ -211,7 +208,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.dgvRestaurantes);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.btnRegresar);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
@@ -226,7 +223,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.txtidRestaurante);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnGuardar);
             this.Name = "MenuRestaurante";
             this.Text = "MenuRestaurante";
             this.Load += new System.EventHandler(this.MenuRestaurante_Load);
@@ -238,7 +235,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnGuardar;
         private System.Windows.Forms.TextBox txtNombre;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtidRestaurante;
@@ -253,7 +250,7 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btnRegresar;
         private System.Windows.Forms.DataGridView dgvRestaurantes;
     }
 }

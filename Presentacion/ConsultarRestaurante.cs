@@ -9,37 +9,22 @@ using System.Windows.Forms;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using Presentacion.Miscelaneas;
 
 namespace Presentacion
 {
     public partial class ConsultarRestaurante : Form
     {
 
-        RestauranteLN restauranteLn = new RestauranteLN();
-        RestauranteLN restaurante;
-        public ConsultarRestaurante()
+        readonly string nombreMaquinaCliente;
+        PantallaEspera pantallaEspera = new PantallaEspera();
+        AdministradorTCP tcpClient;
+        public ConsultarRestaurante(string nombreMaquinaCliente)
         {
             InitializeComponent();
+            this.nombreMaquinaCliente = nombreMaquinaCliente;
             InitializeDataGridView();
-            CargarDatos();
             dgvConsultaRestaurante.ReadOnly = true;
-            restaurante = new RestauranteLN();
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            new MenuPrincipal().Show();
-            this.Hide();
-
-        }
-        void CargarDatos()
-        {
-            dgvConsultaRestaurante.DataSource = restauranteLn.ListarRestaurantes();
-            dgvConsultaRestaurante.Refresh();
-        }
-        private void button1_Click(object sender, EventArgs e)
-        {  
-
         }
 
         void InitializeDataGridView()
@@ -69,12 +54,19 @@ namespace Presentacion
             dgvConsultaRestaurante.Columns["Telefono"].DataPropertyName = "Telefono";
             dgvConsultaRestaurante.Columns["Telefono"].Width = 70;
 
+        }
+        private void ConsultarRestaurante_Load(object sender, EventArgs e)
+        {
+            tcpClient = new AdministradorTCP();
+            tcpClient.TcpClient.DataReceived += Client_DataReceived;
+            SolicitarDatosAlServidor();
+        }
 
-           
-            dgvConsultaRestaurante.DataSource = restauranteLn.ListarRestaurantes();
-            dgvConsultaRestaurante.Refresh();
+        private void btnRegresar_Click(object sender, EventArgs e)
+        {
+            new MenuPrincipal().Show();
+            this.Hide();
 
-            CargarDatos();
         }
         private void dataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
@@ -93,5 +85,57 @@ namespace Presentacion
                 e.Value = "Unknown";
             }
         }
+
+        private void Client_DataReceived(object sender, SimpleTCP.Message e)
+        {
+            string valorRecibido = e.MessageString.TrimEnd('\u0013');
+            Paquete<List<Restaurante>> informacionRestaurante = AdmistradorPaquetes.DeserializePackage(valorRecibido);
+
+            if (informacionRestaurante != null)
+            {
+                List<Restaurante> listaRestaurantes = informacionRestaurante.InstaciaGenerica;
+                CargarDatos(listaRestaurantes);
+            }
+            else
+            {
+                MessageBox.Show("La categoría de plato no existe");
+            }
+        }
+
+        private void SolicitarDatosAlServidor()
+        {
+            try
+            {
+                if (tcpClient.ConectarTCP())
+                {
+                    pantallaEspera.Show();
+                    Restaurante restaurante = new Restaurante(0, "", "", true, "");
+                    var paquete = new Paquete<Restaurante>()
+                    {
+                        ClienteId = nombreMaquinaCliente,
+                        TiposAccion = TiposAccion.Listar,
+                        InstaciaGenerica = restaurante
+                    };
+
+                    string CategoriaPlatoSerializada = AdmistradorPaquetes.SerializePackage(paquete);
+                    tcpClient.TcpClient.WriteLineAndGetReply(CategoriaPlatoSerializada, TimeSpan.FromSeconds(3));
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al conectar con el servidor: " + ex.Message);
+            }
+        }
+
+        private void CargarDatos(List<Restaurante> lista)
+        {
+            dgvConsultaRestaurante.Invoke((MethodInvoker)delegate ()
+            {
+                dgvConsultaRestaurante.DataSource = lista;
+                dgvConsultaRestaurante.Refresh();
+                pantallaEspera.Hide();
+            });
+        }
+
     }
 }

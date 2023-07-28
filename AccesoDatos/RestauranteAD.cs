@@ -18,7 +18,7 @@ namespace AccesoDatos
     public static class RestauranteAD
     {
 
-        public static void AgregarRestaurante(Restaurante restaurante)
+        public static bool AgregarRestaurante(Restaurante restaurante)
         {
             string query = $"INSERT INTO Restaurante(IdRestaurante, Nombre, Direccion, Estado,Telefono) VALUES(@IdRestaurante, @Nombre, @Direccion, @Estado, @Telefono)";
             try
@@ -53,12 +53,13 @@ namespace AccesoDatos
                     throw ex;
                 }
             }
+            return true;
         }
 
         public static List<Restaurante> ListarRestaurante()
         {
             List<Restaurante> ListaRestaurantes = new List<Restaurante>();
-            string query = $"SELECT IdRestaurante, Nombre, Estado FROM Restaurante WHERE Estado = 1";
+            string query = $"SELECT IdRestaurante, Nombre, Direccion, Estado, Telefono FROM Restaurante WHERE Estado = 1";
 
             SqlDataReader reader = null;
 
@@ -72,7 +73,13 @@ namespace AccesoDatos
                     {
                         while (reader.Read())
                         {
-                            Restaurante restaurante = new Restaurante(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetBoolean(3), reader.GetString(4));
+                            Restaurante restaurante = new Restaurante(
+                                reader.GetInt32(0), 
+                                reader.GetString(1), 
+                                reader.GetString(2), 
+                                reader.GetBoolean(3), 
+                                reader.GetString(4)
+                            );
                             ListaRestaurantes.Add(restaurante);
                         }
                     }
@@ -104,7 +111,7 @@ namespace AccesoDatos
         public static Restaurante ObtenerRestaurante(int idRestaurante)
         {
             Restaurante restaurante = null;
-            string query = $"SELECT IdRestaurante, Direccion, Estado, Telefono FROM Restaurante WHERE IdCliente ={idRestaurante}";
+            string query = $"SELECT IdRestaurante, Nombre, Direccion, Estado, Telefono FROM Restaurante WHERE IdCliente ={idRestaurante}";
             SqlDataReader reader = null;
 
             try
