@@ -10,6 +10,8 @@ using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using Presentacion.Miscelaneas;
+using LogicaNegocio.Enumeradores;
+using System.Collections;
 
 namespace Presentacion
 {
@@ -93,7 +95,7 @@ namespace Presentacion
 
             if (informacionRestaurante != null)
             {
-                List<Restaurante> listaRestaurantes = informacionRestaurante.InstaciaGenerica;
+                List<Restaurante> listaRestaurantes = (List<Restaurante>)informacionRestaurante.ListaInstaciasGenericas[0];
                 CargarDatos(listaRestaurantes);
             }
             else
@@ -114,7 +116,7 @@ namespace Presentacion
                     {
                         ClienteId = nombreMaquinaCliente,
                         TiposAccion = TiposAccion.Listar,
-                        InstaciaGenerica = restaurante
+                        ListaInstaciasGenericas = new ArrayList() { restaurante }
                     };
 
                     string CategoriaPlatoSerializada = AdmistradorPaquetes.SerializePackage(paquete);

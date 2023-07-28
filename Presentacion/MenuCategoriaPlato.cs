@@ -1,7 +1,9 @@
 ﻿using Entidades;
 using LogicaNegocio;
+using LogicaNegocio.Enumeradores;
 using Presentacion.Miscelaneas;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
@@ -153,7 +155,7 @@ namespace Presentacion
                     {
                         ClienteId = nombreMaquinaCliente,
                         TiposAccion = TiposAccion.Agregar,
-                        InstaciaGenerica = categoriaPlato
+                        ListaInstaciasGenericas = new ArrayList() { categoriaPlato }
                     };
 
                     string CategoriaPlatoSerializada = AdmistradorPaquetes.SerializePackage(paquete);
@@ -178,7 +180,7 @@ namespace Presentacion
                     {
                         ClienteId = nombreMaquinaCliente,
                         TiposAccion = TiposAccion.Listar,
-                        InstaciaGenerica = categoriaPlato
+                        ListaInstaciasGenericas = new ArrayList() { categoriaPlato }
                     };
 
                     string CategoriaPlatoSerializada = AdmistradorPaquetes.SerializePackage(paquete);
@@ -205,7 +207,7 @@ namespace Presentacion
                         break;
 
                     case TiposAccion.Listar:
-                        List<CategoriaPlato> listaCategoriaPlatos = informacionCategoriaPlatos.InstaciaGenerica;
+                        List<CategoriaPlato> listaCategoriaPlatos = informacionCategoriaPlatos.ListaInstaciasGenericas[0];
                         CargarDatos(listaCategoriaPlatos);
                         break;
 

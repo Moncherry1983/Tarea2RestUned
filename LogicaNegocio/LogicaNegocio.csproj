@@ -49,11 +49,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AdmistradorPaquetes.cs" />
+    <Compile Include="Administradores\AdmistradorPaquetes.cs" />
     <Compile Include="CategoriaPlatoLN.cs" />
     <Compile Include="ClienteLN.cs" />
-    <Compile Include="Paquete.cs" />
-    <Compile Include="TiposAccion.cs" />
+    <Compile Include="Administradores\Paquete.cs" />
+    <Compile Include="Enumeradores\TiposAccion.cs" />
     <Compile Include="ExtraLN.cs" />
     <Compile Include="PlatoLN.cs" />
     <Compile Include="PlatoRestauranteLN.cs" />
@@ -70,5 +70,6 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

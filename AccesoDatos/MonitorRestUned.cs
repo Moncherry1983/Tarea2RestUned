@@ -1,7 +1,9 @@
 ﻿using Entidades;
 using LogicaNegocio;
+using LogicaNegocio.Enumeradores;
 using SimpleTCP;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Net;
 using System.Text;
@@ -98,7 +100,7 @@ namespace AccesoDatos
                     {
                         txtEstado.Text += $"{textoSolicitud} {paqueteCategoriaPlato.ClienteId}, procesando la solicitud: {TiposAccion.Agregar}...{Environment.NewLine}";                        
 
-                        if (CategoriaPlatoAD.AgregarCategoria(paqueteCategoriaPlato.InstaciaGenerica))
+                        if (CategoriaPlatoAD.AgregarCategoria((CategoriaPlato)paqueteCategoriaPlato.ListaInstaciasGenericas[0]))
                         {                            
                             string serializedResult = AdmistradorPaquetes.SerializePackage(paqueteCategoriaPlato);
                             msg.ReplyLine(serializedResult);
@@ -125,7 +127,7 @@ namespace AccesoDatos
                             Paquete<List<CategoriaPlato>> paqueteLista = new Paquete<List<CategoriaPlato>>();
                             paqueteLista.ClienteId = paqueteCategoriaPlato.ClienteId;
                             paqueteLista.TiposAccion = paqueteCategoriaPlato.TiposAccion;
-                            paqueteLista.InstaciaGenerica = categoriasPlatos;                            
+                            paqueteLista.ListaInstaciasGenericas = new ArrayList() { categoriasPlatos };                            
                             string serializedResult = AdmistradorPaquetes.SerializePackage(paqueteLista);
                             msg.ReplyLine(serializedResult);
                             respuesta = $"Respuesta enviada a: {paqueteCategoriaPlato.ClienteId}...{Environment.NewLine}";
@@ -142,11 +144,11 @@ namespace AccesoDatos
                 case TiposAccion.ObtenerObjetoEspecifico:
 
                     txtEstado.Text += $"{textoSolicitud} {paqueteCategoriaPlato.ClienteId}, procesando la solicitud: {TiposAccion.ObtenerObjetoEspecifico}...{Environment.NewLine}";                    
-                    var categoriasPlato = CategoriaPlatoAD.ObtenerCategoriaPlato(paqueteCategoriaPlato.InstaciaGenerica.IdCategoria);
+                    var categoriasPlato = CategoriaPlatoAD.ObtenerCategoriaPlato(((CategoriaPlato)paqueteCategoriaPlato.ListaInstaciasGenericas[0]).IdCategoria);
 
                     if (categoriasPlato != null)
                     {
-                        paqueteCategoriaPlato.InstaciaGenerica = categoriasPlato;
+                        paqueteCategoriaPlato.ListaInstaciasGenericas[0] = categoriasPlato;
                         string serializedResult = AdmistradorPaquetes.SerializePackage(paqueteCategoriaPlato);
                         msg.ReplyLine(serializedResult);
                         respuesta = $"Respuesta enviada a: {paqueteCategoriaPlato.ClienteId}...{Environment.NewLine}";
@@ -174,7 +176,7 @@ namespace AccesoDatos
                     {
                         txtEstado.Text += $"{textoSolicitud} {paqueteCliente.ClienteId}, procesando la solicitud: {TiposAccion.Agregar}...{Environment.NewLine}";
 
-                        if (ClienteAD.AgregarCliente(paqueteCliente.InstaciaGenerica))
+                        if (ClienteAD.AgregarCliente((Cliente)paqueteCliente.ListaInstaciasGenericas[0]))
                         {
                             string serializedResult = AdmistradorPaquetes.SerializePackage(paqueteCliente);
                             msg.ReplyLine(serializedResult);
@@ -202,7 +204,7 @@ namespace AccesoDatos
                             {
                                 ClienteId = paqueteCliente.ClienteId,
                                 TiposAccion = paqueteCliente.TiposAccion,
-                                InstaciaGenerica = clientes
+                                ListaInstaciasGenericas = new ArrayList() { clientes }
                             };
                             string serializedResult = AdmistradorPaquetes.SerializePackage(paqueteLista);
                             msg.ReplyLine(serializedResult);
@@ -223,11 +225,11 @@ namespace AccesoDatos
                     {
                         txtEstado.Text += $"{textoSolicitud} {paqueteCliente.ClienteId}, procesando la solicitud: {TiposAccion.ObtenerObjetoEspecifico}...{Environment.NewLine}";
                         
-                        var cliente = ClienteAD.ObtenerClientePorId(paqueteCliente.InstaciaGenerica.IdCedula);
+                        var cliente = ClienteAD.ObtenerClientePorId(((Cliente)paqueteCliente.ListaInstaciasGenericas[0]).IdCedula);
 
                         if (cliente != null)
                         {
-                            paqueteCliente.InstaciaGenerica = cliente;                            
+                            paqueteCliente.ListaInstaciasGenericas = new ArrayList() { cliente };                            
                             string serializedResult = AdmistradorPaquetes.SerializePackage(paqueteCliente);
                             msg.ReplyLine(serializedResult);
                             respuesta = $"Respuesta enviada...{Environment.NewLine}";
@@ -256,7 +258,7 @@ namespace AccesoDatos
                     {
                         txtEstado.Text += $"{textoSolicitud} {paqueteRestaurante.ClienteId}, procesando la solicitud: {TiposAccion.Agregar}...{Environment.NewLine}";
 
-                        if (RestauranteAD.AgregarRestaurante(paqueteRestaurante.InstaciaGenerica))
+                        if (RestauranteAD.AgregarRestaurante((Restaurante)paqueteRestaurante.ListaInstaciasGenericas[0]))
                         {
                             string serializedResult = AdmistradorPaquetes.SerializePackage(paqueteRestaurante);
                             msg.ReplyLine(serializedResult);
@@ -284,7 +286,7 @@ namespace AccesoDatos
                             {
                                 ClienteId = paqueteRestaurante.ClienteId,
                                 TiposAccion = paqueteRestaurante.TiposAccion,
-                                InstaciaGenerica = restaurantes
+                                ListaInstaciasGenericas = new ArrayList() { restaurantes }
                             };
                             string serializedResult = AdmistradorPaquetes.SerializePackage(paqueteLista);
                             msg.ReplyLine(serializedResult);
@@ -305,11 +307,11 @@ namespace AccesoDatos
                     {
                         txtEstado.Text += $"{textoSolicitud} {paqueteRestaurante.ClienteId}, procesando la solicitud: {TiposAccion.ObtenerObjetoEspecifico}...{Environment.NewLine}";
                         
-                        var cliente = RestauranteAD.ObtenerRestaurante(paqueteRestaurante.InstaciaGenerica.IdRestaurante);
+                        var cliente = RestauranteAD.ObtenerRestaurante(((Restaurante)paqueteRestaurante.ListaInstaciasGenericas[0]).IdRestaurante);
 
                         if (cliente != null)
                         {
-                            paqueteRestaurante.InstaciaGenerica = cliente;
+                            paqueteRestaurante.ListaInstaciasGenericas = new ArrayList() { cliente };
                             string serializedResult = AdmistradorPaquetes.SerializePackage(paqueteRestaurante);
                             msg.ReplyLine(serializedResult);
                             respuesta = $"Respuesta enviada...{Environment.NewLine}";

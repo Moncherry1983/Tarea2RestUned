@@ -90,7 +90,7 @@ namespace Presentacion
 
         private void button9_Click(object sender, EventArgs e)
         {
-            new ConsultaPlato().Show();
+            new ConsultaPlato(nombreMaquinaCliente).Show();
             this.Hide();
         }
 
