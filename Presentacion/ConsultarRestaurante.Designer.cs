@@ -51,7 +51,7 @@
             this.button2.TabIndex = 2;
             this.button2.Text = "Regresar";
             this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.button2.Click += new System.EventHandler(this.btnRegresar_Click);
             // 
             // label2
             // 
@@ -72,6 +72,7 @@
             this.Controls.Add(this.dgvConsultaRestaurante);
             this.Name = "ConsultarRestaurante";
             this.Text = "ConsultarRestaurante";
+            this.Load += new System.EventHandler(this.ConsultarRestaurante_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvConsultaRestaurante)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

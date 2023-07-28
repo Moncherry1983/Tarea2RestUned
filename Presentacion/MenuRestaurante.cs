@@ -1,26 +1,25 @@
-﻿using System;
-using Entidades;
+﻿using Entidades;
 using LogicaNegocio;
+using Presentacion.Miscelaneas;
+using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
-using System.Diagnostics.Contracts;
-using System.Text.RegularExpressions;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Presentacion
 {
     public partial class MenuRestaurante : Form
     {
+        readonly string nombreMaquinaCliente;
+        PantallaEspera pantallaEspera = new PantallaEspera();
+        AdministradorTCP tcpClient;
 
-        RestauranteLN restaLN = new RestauranteLN();
-
-        public MenuRestaurante()
+        public MenuRestaurante(string nombreMaquinaCliente)
         {
-            InitializeComponent();
+            InitializeComponent();            
+            this.nombreMaquinaCliente = nombreMaquinaCliente;
             dgvRestaurantes.ReadOnly = true;
             InitializeDataGridView();
-            CargarDatos();
         }
-
 
         void InitializeDataGridView()
         {
@@ -47,48 +46,73 @@ namespace Presentacion
             dgvRestaurantes.Columns["Estado"].Width = 60;
 
             dgvRestaurantes.Columns["Telefono"].DataPropertyName = "Telefono";
-            dgvRestaurantes.Columns["Telefono"].Width = 70;
-
-            CargarDatos();
+            dgvRestaurantes.Columns["Telefono"].Width = 70;            
         }
 
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
+        private void MenuRestaurante_Load(object sender, EventArgs e)
         {
-
+            tcpClient = new AdministradorTCP();
+            tcpClient.TcpClient.DataReceived += Client_DataReceived;
+            cmbEstado.SelectedIndex = 0;
+            SolicitarDatosAlServidor();
+            
         }
 
-        private void activo_CheckedChanged(object sender, EventArgs e)
+        private void SolicitarDatosAlServidor()
         {
+            try
+            {
+                if (tcpClient.ConectarTCP())
+                {
+                    pantallaEspera.Show();
+                    Restaurante restaurante = new Restaurante(0, "","", true, "");
+                    var paquete = new Paquete<Restaurante>()
+                    {
+                        ClienteId = nombreMaquinaCliente,
+                        TiposAccion = TiposAccion.Listar,
+                        InstaciaGenerica = restaurante
+                    };
 
+                    string CategoriaPlatoSerializada = AdmistradorPaquetes.SerializePackage(paquete);
+                    tcpClient.TcpClient.WriteLineAndGetReply(CategoriaPlatoSerializada, TimeSpan.FromSeconds(3));
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al conectar con el servidor: " + ex.Message);
+            }
         }
 
-        private void textBox4_TextChanged(object sender, EventArgs e)
+        private void Client_DataReceived(object sender, SimpleTCP.Message e)
         {
+            string valorRecibido = e.MessageString.TrimEnd('\u0013');
+            var informacionCategoriaPlatos = AdmistradorPaquetes.DeserializePackage(valorRecibido);
 
-        }
+            if (informacionCategoriaPlatos != null)
+            {
+                switch (informacionCategoriaPlatos.TiposAccion)
+                {
+                    case TiposAccion.Agregar:
+                        ReiniciarPantalla();
+                        break;
 
-        private void descripcion_TextChanged(object sender, EventArgs e)
-        {
+                    case TiposAccion.Listar:
+                        List<Restaurante> listaRestaurantes = informacionCategoriaPlatos.InstaciaGenerica;
+                        CargarDatos(listaRestaurantes);
+                        break;
 
-        }
+                    case TiposAccion.ObtenerObjetoEspecifico:
 
-        private void textBox3_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-        //actualiza el datagrid y hace un un refresh de la lista.
-        void CargarDatos()
-        {
-            dgvRestaurantes.DataSource = restaLN.ListarRestaurantes();
-            dgvRestaurantes.Refresh();
-        }
-
+                    default:
+                        break;
+                }
+            }
+            else
+            {
+                MessageBox.Show("La categoría de plato no existe");
+            }
+        }                
+        
         private void idCategoria_TextChanged(object sender, EventArgs e)
         {
             System.Windows.Forms.TextBox textBox = (System.Windows.Forms.TextBox)sender;
@@ -104,26 +128,9 @@ namespace Presentacion
                     break;
                 }
             }
-        }
-
-        private void inactivo_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-
-
-        }
-
-        private void button1_Click(object sender, EventArgs e)
+        }        
+        
+        private void btnGuardar_Click(object sender, EventArgs e)
         {
             try
             {
@@ -133,32 +140,20 @@ namespace Presentacion
                 String direccion = txtDireccion.Text;
                 string telefono = txtTelefono.Text;
 
-
-
                 if (String.IsNullOrEmpty(txtidRestaurante.Text) || String.IsNullOrEmpty(txtNombre.Text) || String.IsNullOrEmpty(txtTelefono.Text) || String.IsNullOrEmpty(txtDireccion.Text))
                 {
-
                     MessageBox.Show("No deje campos vacios por favor...");
-
                 }
                 else if (cmbEstado.SelectedIndex == -1)
                 {
-
                     MessageBox.Show("Debe seleccionar el estado del restaurante...");
-
-
                 }
                 else
                 {
                     bool estado = cmbEstado.SelectedIndex == 0;
-                    RestauranteLN restauranteLn = new RestauranteLN();
-                    Restaurante registrarRestaurante = new Restaurante(int.Parse(txtidRestaurante.Text), txtNombre.Text, txtDireccion.Text, cmbEstado.SelectedIndex == 0, txtTelefono.Text);
-                    restauranteLn.AgregarRestaurante(registrarRestaurante);
-                    dgvRestaurantes.DataSource = restauranteLn.ListarRestaurantes();
-                    dgvRestaurantes.Refresh();
-
-                    
-
+                    Restaurante restaurante = new Restaurante(int.Parse(txtidRestaurante.Text), txtNombre.Text, txtDireccion.Text, cmbEstado.SelectedItem.ToString() == "Activo", txtTelefono.Text);
+                    GuardarRestaurante(restaurante);
+                    SolicitarDatosAlServidor();
                 }
 
                 txtidRestaurante.Text = " ";
@@ -166,34 +161,17 @@ namespace Presentacion
                 txtDireccion.Text = " ";
                 cmbEstado.SelectedIndex = -1;
                 txtTelefono.Text = " ";
-
-
             }
             catch (Exception ex)
             {
-
-                MessageBox.Show(ex.Message, "\n\tHa sucedido un error y no podido registrar el restaurante\n",MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "\n\tHa sucedido un error y no podido registrar el restaurante\n", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
-
-
-        }
-
-        private void MenuRestaurante_Load(object sender, EventArgs e)
-        {
-
         }
 
         private void btnRegresar_Click(object sender, EventArgs e)
         {
-
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
             new MenuPrincipal().Show();
             this.Hide();
-
         }
 
         private void cmbEstado_SelectedIndexChanged(object sender, EventArgs e)
@@ -208,7 +186,7 @@ namespace Presentacion
             }
         }
 
-       //permite solo numero a agregar al telefono y no se puede pasar de 8 digitos
+        //permite solo numero a agregar al telefono y no se puede pasar de 8 digitos
         private void txtTelefono_TextChanged(object sender, EventArgs e)
         {
             if (txtTelefono.Text.Length > 8)
@@ -216,8 +194,6 @@ namespace Presentacion
                 txtTelefono.Text = txtTelefono.Text.Substring(0, 8);
                 txtTelefono.SelectionStart = txtTelefono.Text.Length;
             }
-            
-
 
             System.Windows.Forms.TextBox textBox = (System.Windows.Forms.TextBox)sender;
             string texto = textBox.Text;
@@ -231,9 +207,9 @@ namespace Presentacion
                     textBox.Select(texto.Length, 0);
                     break;
                 }
-              
             }
         }
+
         // metod para cambiar true y el false por activo y inactivo
         private void dgvRestaurantes_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
@@ -251,9 +227,50 @@ namespace Presentacion
             {
                 e.Value = "Unknown";
             }
+        }
 
+        private void GuardarRestaurante(Restaurante restaurante)
+        {
+            try
+            {
+                
+                if (tcpClient.ConectarTCP())
+                {
+                    var paquete = new Paquete<Restaurante>()
+                    {
+                        ClienteId = nombreMaquinaCliente,
+                        TiposAccion = TiposAccion.Agregar,
+                        InstaciaGenerica = restaurante
+                    };
+
+                    string CategoriaPlatoSerializada = AdmistradorPaquetes.SerializePackage(paquete);
+                    tcpClient.TcpClient.WriteLineAndGetReply(CategoriaPlatoSerializada, TimeSpan.FromSeconds(3));
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al conectar con el servidor: " + ex.Message);
+            }
+        }
+
+        private void ReiniciarPantalla()
+        {
+            txtidRestaurante.Invoke((MethodInvoker)delegate ()
+            {
+                SolicitarDatosAlServidor();
+                txtidRestaurante.Focus();
+                cmbEstado.SelectedIndex = 1;
+            });
+        }
+
+        private void CargarDatos(List<Restaurante> lista)
+        {
+            dgvRestaurantes.Invoke((MethodInvoker)delegate ()
+            {
+                pantallaEspera.Hide();
+                dgvRestaurantes.DataSource = lista;
+                dgvRestaurantes.Refresh();
+            });
         }
     }
 }
-
-

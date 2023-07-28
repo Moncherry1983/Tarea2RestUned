@@ -23,7 +23,7 @@ namespace Presentacion
 
         private void button1_Click(object sender, EventArgs e)
         {
-            MenuRestaurante menurestaurante = new MenuRestaurante();
+            MenuRestaurante menurestaurante = new MenuRestaurante(nombreMaquinaCliente);
             menurestaurante.Show();
             this.Hide();
         }
@@ -42,7 +42,7 @@ namespace Presentacion
 
         private void button2_Click(object sender, EventArgs e)
         {
-            new MenuCategoríaPlato(nombreMaquinaCliente).Show();
+            new MenuCategoriaPlato(nombreMaquinaCliente).Show();
             this.Hide();
         }
 
@@ -78,7 +78,7 @@ namespace Presentacion
 
         private void button7_Click(object sender, EventArgs e)
         {
-            new ConsultarRestaurante().Show();
+            new ConsultarRestaurante(nombreMaquinaCliente).Show();
             this.Hide();
         }
 

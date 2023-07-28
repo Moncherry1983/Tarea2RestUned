@@ -79,6 +79,10 @@ namespace AccesoDatos
                 case Paquete<Cliente> paqueteCliente:
                     ProcesarCliente(textoSolicitud, paqueteCliente, msg);
                     break;
+                
+                case Paquete<Restaurante> paqueteRestaurante:
+                    ProcesarRestaurante(textoSolicitud, paqueteRestaurante, msg);
+                    break;
 
                 default:
                     break;
@@ -194,10 +198,12 @@ namespace AccesoDatos
 
                         if (clientes != null)
                         {
-                            Paquete<List<Cliente>> paqueteLista = new Paquete<List<Cliente>>();
-                            paqueteLista.ClienteId = paqueteCliente.ClienteId;
-                            paqueteLista.TiposAccion = paqueteCliente.TiposAccion;
-                            paqueteLista.InstaciaGenerica = clientes;
+                            Paquete<List<Cliente>> paqueteLista = new Paquete<List<Cliente>>
+                            {
+                                ClienteId = paqueteCliente.ClienteId,
+                                TiposAccion = paqueteCliente.TiposAccion,
+                                InstaciaGenerica = clientes
+                            };
                             string serializedResult = AdmistradorPaquetes.SerializePackage(paqueteLista);
                             msg.ReplyLine(serializedResult);
                             respuesta = $"Respuesta enviada a: {paqueteCliente.ClienteId}...{Environment.NewLine}";
@@ -216,9 +222,8 @@ namespace AccesoDatos
                     txtEstado.Invoke((MethodInvoker)delegate
                     {
                         txtEstado.Text += $"{textoSolicitud} {paqueteCliente.ClienteId}, procesando la solicitud: {TiposAccion.ObtenerObjetoEspecifico}...{Environment.NewLine}";
-
-                        var clienteAD = new ClienteAD();
-                        var cliente = clienteAD.ObtenerClientePorId(paqueteCliente.InstaciaGenerica.IdCedula);
+                        
+                        var cliente = ClienteAD.ObtenerClientePorId(paqueteCliente.InstaciaGenerica.IdCedula);
 
                         if (cliente != null)
                         {
@@ -241,5 +246,88 @@ namespace AccesoDatos
                     break;
             }
         }
+        private void ProcesarRestaurante(string textoSolicitud, Paquete<Restaurante> paqueteRestaurante, SimpleTCP.Message msg)
+        {
+            string respuesta = string.Empty;
+            switch (paqueteRestaurante.TiposAccion)
+            {
+                case TiposAccion.Agregar:
+                    txtEstado.Invoke((MethodInvoker)delegate
+                    {
+                        txtEstado.Text += $"{textoSolicitud} {paqueteRestaurante.ClienteId}, procesando la solicitud: {TiposAccion.Agregar}...{Environment.NewLine}";
+
+                        if (RestauranteAD.AgregarRestaurante(paqueteRestaurante.InstaciaGenerica))
+                        {
+                            string serializedResult = AdmistradorPaquetes.SerializePackage(paqueteRestaurante);
+                            msg.ReplyLine(serializedResult);
+                            respuesta = $"Respuesta enviada a: {paqueteRestaurante.ClienteId}...{Environment.NewLine}";
+                        }
+                        else
+                        {
+                            respuesta = $"El restaurante no se pudo agregar... {Environment.NewLine}";
+                        }
+
+                        txtEstado.Text += respuesta;
+                    });
+                    break;
+
+                case TiposAccion.Listar:
+                    txtEstado.Invoke((MethodInvoker)delegate
+                    {
+                        txtEstado.Text += $"{textoSolicitud} {paqueteRestaurante.ClienteId}, procesando la solicitud: {TiposAccion.Listar}...{Environment.NewLine}";
+
+                        var restaurantes = RestauranteAD.ListarRestaurante();
+
+                        if (restaurantes != null)
+                        {
+                            Paquete<List<Restaurante>> paqueteLista = new Paquete<List<Restaurante>>
+                            {
+                                ClienteId = paqueteRestaurante.ClienteId,
+                                TiposAccion = paqueteRestaurante.TiposAccion,
+                                InstaciaGenerica = restaurantes
+                            };
+                            string serializedResult = AdmistradorPaquetes.SerializePackage(paqueteLista);
+                            msg.ReplyLine(serializedResult);
+                            respuesta = $"Respuesta enviada a: {paqueteRestaurante.ClienteId}...{Environment.NewLine}";
+                        }
+                        else
+                        {
+                            respuesta = $"El restaurante no se pudo obtener... {Environment.NewLine}";
+                        }
+
+                        txtEstado.Text += respuesta;
+                    });
+                    break;
+
+                case TiposAccion.ObtenerObjetoEspecifico:
+
+                    txtEstado.Invoke((MethodInvoker)delegate
+                    {
+                        txtEstado.Text += $"{textoSolicitud} {paqueteRestaurante.ClienteId}, procesando la solicitud: {TiposAccion.ObtenerObjetoEspecifico}...{Environment.NewLine}";
+                        
+                        var cliente = RestauranteAD.ObtenerRestaurante(paqueteRestaurante.InstaciaGenerica.IdRestaurante);
+
+                        if (cliente != null)
+                        {
+                            paqueteRestaurante.InstaciaGenerica = cliente;
+                            string serializedResult = AdmistradorPaquetes.SerializePackage(paqueteRestaurante);
+                            msg.ReplyLine(serializedResult);
+                            respuesta = $"Respuesta enviada...{Environment.NewLine}";
+                        }
+                        else
+                        {
+                            respuesta = $"El Restaurante no existe... {Environment.NewLine}";
+                        }
+
+                        txtEstado.Text += respuesta;
+                    });
+
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
     }
 }

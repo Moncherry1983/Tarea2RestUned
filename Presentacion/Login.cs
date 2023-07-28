@@ -2,7 +2,6 @@
 using LogicaNegocio;
 using Presentacion.Miscelaneas;
 using System;
-using System.Net.Sockets;
 using System.Windows.Forms;
 
 namespace Presentacion
@@ -16,7 +15,7 @@ namespace Presentacion
         public Login()
         {
             InitializeComponent();
-            //txtCedula.Text = "111111111";
+            txtCedula.Text = "111111111";
         }
 
         //Este método se ejecuta cuando se carga el formulario de inicio de sesión.
@@ -24,11 +23,11 @@ namespace Presentacion
         //El cliente TCP tiene un evento que se activa cuando recibe datos. Luego, genera un nombre aleatorio
         //para la máquina del cliente y lo muestra en una etiqueta.
         private void Login_Load(object sender, EventArgs e)
-        {
+        {            
             administradorTCP.TcpClient.DataReceived += Client_DataReceived;
             Random valorAleatorio = new Random();
-            nombreMaquinaCliente = "Cliente" + valorAleatorio.Next(1, 10);
             lblNombreMaquina.Text = nombreMaquinaCliente;
+            nombreMaquinaCliente = "Cliente" + valorAleatorio.Next(1, 10);
         }
 
         //Este método se ejecuta cuando se hace clic en el botón de conexión.Tambien este método se ejecuta cuando el cliente recibe un mensaje del servidor.
@@ -40,16 +39,15 @@ namespace Presentacion
         private void Client_DataReceived(object sender, SimpleTCP.Message e)
         {
             string trimCharacter = e.MessageString.TrimEnd('\u0013');
-            Paquete<Cliente> informacionCliente = LogicaNegocio.AdmistradorPaquetes.DeserializePackage(trimCharacter);
+            Paquete<Cliente> informacionCliente = AdmistradorPaquetes.DeserializePackage(trimCharacter);
 
             if (informacionCliente != null)
             {
                 MenuPrincipal menu = new MenuPrincipal(informacionCliente.InstaciaGenerica, nombreMaquinaCliente);
-                this.Invoke(new MethodInvoker(delegate 
-                { 
+                this.Invoke(new MethodInvoker(delegate
+                {
                     pantallaEspera.Hide();
-                    menu.Show(); 
-                
+                    menu.Show();
                 }));
                 OcultarLogin();
             }

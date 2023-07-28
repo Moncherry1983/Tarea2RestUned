@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace AccesoDatos
 {
-    public class ClienteAD
+    public static class ClienteAD
     {
         public static bool AgregarCliente(Cliente ingresoCliente )
         {
@@ -94,7 +94,7 @@ namespace AccesoDatos
             return ListaCliente;
         }
 
-        public Cliente ObtenerClientePorId(string id)
+        public static Cliente ObtenerClientePorId(string id)
         {
             Cliente cliente = null;
             string query = $"SELECT IdCliente, Nombre, PrimerApellido, SegundoApellido, FechaNacimiento, Genero FROM Cliente WHERE IdCliente ={id}";

@@ -7,15 +7,13 @@ using System.Windows.Forms;
 
 namespace Presentacion
 {
-    public partial class MenuCategoríaPlato : Form
-    {
-        //inicializacion de arrays que se van a utilizar en la ventana
-        PantallaEspera pantallaEspera = new PantallaEspera();
+    public partial class MenuCategoriaPlato : Form
+    {        
         readonly string nombreMaquinaCliente;
-
+        PantallaEspera pantallaEspera = new PantallaEspera();
         AdministradorTCP tcpClient;
 
-        public MenuCategoríaPlato(string nombreMaquinaCliente)
+        public MenuCategoriaPlato(string nombreMaquinaCliente)
         {
             //inicializacion de componentes de la ventana
             InitializeComponent();
@@ -48,6 +46,7 @@ namespace Presentacion
         private void MenuCategoríaPlato_Load(object sender, EventArgs e)
         {
             cmbEstado.SelectedIndex = 1;
+            
             tcpClient = new AdministradorTCP();
             tcpClient.TcpClient.DataReceived += Client_DataReceived;
             SolicitarDatosAlServidor();
