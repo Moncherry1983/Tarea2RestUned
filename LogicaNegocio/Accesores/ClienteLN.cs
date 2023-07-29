@@ -1,19 +1,12 @@
-﻿using System;
-using Entidades;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using static LogicaNegocio.PlatoRestauranteLN;
+﻿using Entidades;
+using System;
 
-namespace LogicaNegocio
+namespace LogicaNegocio.Accesores
 {
     public class ClienteLN
     {
-
         public void AgregarCliente(Cliente ingresarClientes)
         {
-           
             try
             {
                 //var clienteActuales = ClienteAD.ListarCliente();
@@ -21,20 +14,15 @@ namespace LogicaNegocio
                 //    ClienteAD.AgregarCliente(ingresarClientes);
                 //else
                 //    throw new Exception("Ya existe un cliente con ese Id");
-
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
-
         }
-
 
         public Cliente[] ListarCliente()
         {
-
             try
             {
                 //return ClienteAD.ListarCliente();
@@ -42,10 +30,8 @@ namespace LogicaNegocio
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
-
         }
     }
 }

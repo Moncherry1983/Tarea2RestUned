@@ -1,7 +1,9 @@
 ﻿using Entidades;
 using LogicaNegocio;
+using LogicaNegocio.Enumeradores;
 using Presentacion.Miscelaneas;
 using System;
+using System.Collections;
 using System.Windows.Forms;
 
 namespace Presentacion
@@ -15,7 +17,7 @@ namespace Presentacion
         public Login()
         {
             InitializeComponent();
-            txtCedula.Text = "111111111";
+            ///txtCedula.Text = "111111111";
         }
 
         //Este método se ejecuta cuando se carga el formulario de inicio de sesión.
@@ -43,7 +45,7 @@ namespace Presentacion
 
             if (informacionCliente != null)
             {
-                MenuPrincipal menu = new MenuPrincipal(informacionCliente.InstaciaGenerica, nombreMaquinaCliente);
+                MenuPrincipal menu = new MenuPrincipal((Cliente)informacionCliente.ListaInstaciasGenericas[0], nombreMaquinaCliente);
                 this.Invoke(new MethodInvoker(delegate
                 {
                     pantallaEspera.Hide();
@@ -99,7 +101,7 @@ namespace Presentacion
                     {
                         ClienteId = nombreMaquinaCliente,
                         TiposAccion = TiposAccion.ObtenerObjetoEspecifico,
-                        InstaciaGenerica = cliente
+                        ListaInstaciasGenericas = new ArrayList() { cliente }
                     };
 
                     string clienteSerializado = AdmistradorPaquetes.SerializePackage(paquete);

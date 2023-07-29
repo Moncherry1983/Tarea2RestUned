@@ -1,19 +1,19 @@
-﻿using System;
+﻿//La capa de acceso a datos es una parte importante de cualquier aplicación que necesita trabajar con una base de datos o un servicio externo.
+//Su objetivo es simplificar la conexión, consulta y modificación de los datos, para que el resto de la aplicación los pueda usar de forma fácil y eficaz.
+//La capa de acceso a datos también se ocupa de las transacciones, los errores y la seguridad de los datos.
 using Entidades;
-using System.Linq;
-using System.Text;
+using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 
-namespace AccesoDatos
+namespace AccesoDatos.Accesores
 {
-    public static class ExtraAD
+    public static class RestauranteAD
     {
-        public static void AgregarExtra(Extra ingresarExtras) 
+        public static bool AgregarRestaurante(Restaurante restaurante)
         {
-            string query = $"INSERT INTO Extra(IdExtra, Descripcion, IdCategoria, Estado, Precio ) VALUES(@IdExtra, @Descripcion, @IdCategoria, @Estado, @Precio)";
+            string query = $"INSERT INTO Restaurante(IdRestaurante, Nombre, Direccion, Estado,Telefono) VALUES(@IdRestaurante, @Nombre, @Direccion, @Estado, @Telefono)";
             try
             {
                 if (ConexionDB.Conectar())
@@ -22,13 +22,12 @@ namespace AccesoDatos
                     {
                         CommandType = CommandType.Text
                     };
-                    command.Parameters.AddWithValue("@IdExtra", ingresarExtras.IdCategoriaextra);
-                    command.Parameters.AddWithValue("@Descripcion", ingresarExtras.Descripcion);
-                    command.Parameters.AddWithValue("@IdCategoria", ingresarExtras.IdCategoriaextra);
-                    command.Parameters.AddWithValue("@Estado", ingresarExtras.Estado);
-                    command.Parameters.AddWithValue("@Estado", ingresarExtras.Precio);
+                    command.Parameters.AddWithValue("@IdRestaurante", restaurante.IdRestaurante);
+                    command.Parameters.AddWithValue("@Nombre", restaurante.NombreRestaurante);
+                    command.Parameters.AddWithValue("@Direccion", restaurante.Direccion);
+                    command.Parameters.AddWithValue("@Estado", restaurante.Estado);
+                    command.Parameters.AddWithValue("@Telefono", restaurante.Telefono);
                     command.ExecuteNonQuery();
-
                 }
             }
             catch (Exception ex)
@@ -46,12 +45,13 @@ namespace AccesoDatos
                     throw ex;
                 }
             }
+            return true;
         }
 
-        public static List<Extra> ListarExtra()
+        public static List<Restaurante> ListarRestaurante()
         {
-            List<Extra> ingresarExtras = new List<Extra>();
-            string query = $"SELECT e.IdExtra, e.Descripcion,e.IdCategoria, e.Estado, e.Precio FROM Extra as e INNER JOIN  CategoriaPlato as c ON e.IdExtra = c.IdCategoria ";
+            List<Restaurante> ListaRestaurantes = new List<Restaurante>();
+            string query = $"SELECT IdRestaurante, Nombre, Direccion, Estado, Telefono FROM Restaurante WHERE Estado = 1";
 
             SqlDataReader reader = null;
 
@@ -64,11 +64,15 @@ namespace AccesoDatos
                     if (reader.HasRows)
                     {
                         while (reader.Read())
-
                         {
-                            CategoriaPlato categoriaPlato = new CategoriaPlato(reader.GetInt32(2), reader.GetString(4), reader.GetBoolean(5));
-                            Extra extra = new Extra(reader.GetInt32(0), reader.GetString(1), reader.GetInt32(2), reader.GetBoolean(3), reader.GetInt32(4));
-                            ingresarExtras.Add(extra);
+                            Restaurante restaurante = new Restaurante(
+                                reader.GetInt32(0),
+                                reader.GetString(1),
+                                reader.GetString(2),
+                                reader.GetBoolean(3),
+                                reader.GetString(4)
+                            );
+                            ListaRestaurantes.Add(restaurante);
                         }
                     }
                 }
@@ -93,13 +97,13 @@ namespace AccesoDatos
                 }
             }
 
-            return ingresarExtras;
+            return ListaRestaurantes;
         }
 
-        public static Extra ObtenerExtra(int idExtra)
+        public static Restaurante ObtenerRestaurante(int idRestaurante)
         {
-            Extra ingresarExtras = null;
-            string query = $"\"SELECT e.IdExtra, e.Descripcion,e.IdCategoria, e.Estado, e.Precio FROM Extra as e INNER JOIN  CategoriaPlato as c ON e.IdExtra = c.IdCategoria WHERE e.IdExtra ={idExtra}";
+            Restaurante restaurante = null;
+            string query = $"SELECT IdRestaurante, Nombre, Direccion, Estado, Telefono FROM Restaurante WHERE IdCliente ={idRestaurante}";
             SqlDataReader reader = null;
 
             try
@@ -112,9 +116,8 @@ namespace AccesoDatos
                     {
                         while (reader.Read())
                         {
-                            CategoriaPlato categoriaPlato = new CategoriaPlato(reader.GetInt32(2), reader.GetString(4), reader.GetBoolean(5));
-                            Extra extra = new Extra(reader.GetInt32(0), reader.GetString(1), reader.GetInt32(2), reader.GetBoolean(3), reader.GetInt32(4));
-                            return ingresarExtras;
+                            restaurante = new Restaurante(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetBoolean(3), reader.GetString(4));
+                            return restaurante;
                         }
                     }
                 }
@@ -139,8 +142,7 @@ namespace AccesoDatos
                 }
             }
 
-            return ingresarExtras;
+            return restaurante;
         }
-
     }
 }

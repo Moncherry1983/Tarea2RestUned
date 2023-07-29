@@ -1,7 +1,9 @@
 ﻿using Entidades;
 using LogicaNegocio;
+using LogicaNegocio.Enumeradores;
 using Presentacion.Miscelaneas;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
@@ -19,11 +21,11 @@ namespace Presentacion
             InitializeComponent();
             this.nombreMaquinaCliente = nombreMaquinaCliente;
             dgvCategoriaPlato.ReadOnly = true;
-            InitializeDataGridView();
+            InicializarDataGridView();
         }
 
         //metodo para inicializar el datagridview
-        void InitializeDataGridView()
+        void InicializarDataGridView()
         {
             dgvCategoriaPlato.ReadOnly = true;
             dgvCategoriaPlato.AutoGenerateColumns = false;
@@ -72,7 +74,7 @@ namespace Presentacion
                 {
                     bool estado = cmbEstado.SelectedIndex == 0;
                     CategoriaPlato categoriaPlato = new CategoriaPlato(int.Parse(txtidCategoria.Text), txtdescripcion.Text, cmbEstado.SelectedItem.ToString() == "Activo");
-                    GuardarCategoriaPlato(categoriaPlato);
+                    GuardarCambios(categoriaPlato);
                     SolicitarDatosAlServidor();
                 }
 
@@ -128,7 +130,6 @@ namespace Presentacion
         private void dgvCategoriaPlato_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
             DataGridViewColumn col = dgvCategoriaPlato.Columns[e.ColumnIndex];
-
             try
             {
                 if (col.Name == "Estado")
@@ -137,13 +138,13 @@ namespace Presentacion
                         e.Value = Convert.ToBoolean(e.Value) ? "Activo" : "Inactivo";
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 e.Value = "Desconocido";
             }
         }
 
-        private void GuardarCategoriaPlato(CategoriaPlato categoriaPlato)
+        private void GuardarCambios(CategoriaPlato categoriaPlato)
         {
             try
             {
@@ -153,7 +154,7 @@ namespace Presentacion
                     {
                         ClienteId = nombreMaquinaCliente,
                         TiposAccion = TiposAccion.Agregar,
-                        InstaciaGenerica = categoriaPlato
+                        ListaInstaciasGenericas = new ArrayList() { categoriaPlato }
                     };
 
                     string CategoriaPlatoSerializada = AdmistradorPaquetes.SerializePackage(paquete);
@@ -178,7 +179,7 @@ namespace Presentacion
                     {
                         ClienteId = nombreMaquinaCliente,
                         TiposAccion = TiposAccion.Listar,
-                        InstaciaGenerica = categoriaPlato
+                        ListaInstaciasGenericas = new ArrayList() { categoriaPlato }
                     };
 
                     string CategoriaPlatoSerializada = AdmistradorPaquetes.SerializePackage(paquete);
@@ -205,7 +206,7 @@ namespace Presentacion
                         break;
 
                     case TiposAccion.Listar:
-                        List<CategoriaPlato> listaCategoriaPlatos = informacionCategoriaPlatos.InstaciaGenerica;
+                        List<CategoriaPlato> listaCategoriaPlatos = informacionCategoriaPlatos.ListaInstaciasGenericas[0];
                         CargarDatos(listaCategoriaPlatos);
                         break;
 

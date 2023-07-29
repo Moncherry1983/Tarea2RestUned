@@ -1,8 +1,10 @@
 ﻿using Entidades;
 using LogicaNegocio;
+using LogicaNegocio.Enumeradores;
 using Presentacion.Miscelaneas;
 using SimpleTCP;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
@@ -19,10 +21,10 @@ namespace Presentacion
             InitializeComponent();
             this.nombreMaquinaCliente= nombreMaquinaCliente;
             dvgConsultaCategoriaPlato.ReadOnly = true;            
-            InitializeDataGridView();            
+            InicializarDataGridView();            
         }
 
-        void InitializeDataGridView()
+        void InicializarDataGridView()
         {
             dvgConsultaCategoriaPlato.ReadOnly = true;
             dvgConsultaCategoriaPlato.AutoGenerateColumns = false;
@@ -78,7 +80,7 @@ namespace Presentacion
 
             if (informacionCategoriaPlatos != null)
             {
-                List<CategoriaPlato> listaCategoriaPlatos = informacionCategoriaPlatos.InstaciaGenerica;
+                List<CategoriaPlato> listaCategoriaPlatos = (List<CategoriaPlato>)informacionCategoriaPlatos.ListaInstaciasGenericas[0];
                 CargarDatos(listaCategoriaPlatos);
             }
             else
@@ -99,7 +101,7 @@ namespace Presentacion
                         {
                             ClienteId = nombreMaquinaCliente,
                             TiposAccion = TiposAccion.Listar,
-                            InstaciaGenerica = categoriaPlato
+                            ListaInstaciasGenericas = new ArrayList() { categoriaPlato } 
                         };
 
                         string CategoriaPlatoSerializada = AdmistradorPaquetes.SerializePackage(paquete);                    

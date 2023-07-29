@@ -1,14 +1,9 @@
-﻿using System;
-using Entidades;
+﻿using Entidades;
+using LogicaNegocio.Accesores;
+using System;
 using System.Data;
 using System.Linq;
-using System.Text;
-using LogicaNegocio;
-using System.Drawing;
 using System.Windows.Forms;
-using System.ComponentModel;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 
 namespace Presentacion
 {
@@ -16,18 +11,17 @@ namespace Presentacion
     {
         CategoriaPlatoLN categorias = new CategoriaPlatoLN();
         ExtraLN extras;
+
         public ConsultarExtra()
         {
             InitializeComponent();
             dvgConsultaExtra.ReadOnly = true;
-            extras = new ExtraLN();         
-            InitializeDataGridView();
+            extras = new ExtraLN();
+            InicializarDataGridView();
             CargarDatos();
         }
 
-       
- 
-        void InitializeDataGridView()
+        void InicializarDataGridView()
         {
             dvgConsultaExtra.ReadOnly = true;
             dvgConsultaExtra.AutoGenerateColumns = false;
@@ -54,10 +48,7 @@ namespace Presentacion
             dvgConsultaExtra.Columns["IdCategoriaExtra"].Width = 120;
 
             CargarDatos();
-
         }
-
-       
 
         void CargarDatos()
         {
@@ -73,10 +64,7 @@ namespace Presentacion
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-
         }
-
-       
 
         private CategoriaPlato[] ObtenerCategoriasDisponibles()
         {
@@ -98,7 +86,6 @@ namespace Presentacion
             }
             catch (Exception ex)
             {
-
             }
 
             try
@@ -116,7 +103,3 @@ namespace Presentacion
         }
     }
 }
-
-
-
-

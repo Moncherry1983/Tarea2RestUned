@@ -30,7 +30,7 @@
         {
             this.label1 = new System.Windows.Forms.Label();
             this.dgvConsultaCliente = new System.Windows.Forms.DataGridView();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnRegresar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvConsultaCliente)).BeginInit();
             this.SuspendLayout();
             // 
@@ -41,8 +41,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(157, 13);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Consulta de Clientes ingresados";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
+            this.label1.Text = "Consulta de Clientes ingresados";            
             // 
             // dgvConsultaCliente
             // 
@@ -50,26 +49,25 @@
             this.dgvConsultaCliente.Location = new System.Drawing.Point(12, 81);
             this.dgvConsultaCliente.Name = "dgvConsultaCliente";
             this.dgvConsultaCliente.Size = new System.Drawing.Size(700, 357);
-            this.dgvConsultaCliente.TabIndex = 1;
-            this.dgvConsultaCliente.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
-            this.dgvConsultaCliente.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridView1_CellFormatting);
+            this.dgvConsultaCliente.TabIndex = 1;            
+            this.dgvConsultaCliente.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvConsultaCliente_CellFormatting);
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(601, 41);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(90, 34);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "Regresar";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.btnRegresar.Location = new System.Drawing.Point(601, 41);
+            this.btnRegresar.Name = "button1";
+            this.btnRegresar.Size = new System.Drawing.Size(90, 34);
+            this.btnRegresar.TabIndex = 2;
+            this.btnRegresar.Text = "Regresar";
+            this.btnRegresar.UseVisualStyleBackColor = true;
+            this.btnRegresar.Click += new System.EventHandler(this.btnRegersar_Click);
             // 
             // ConsultarCliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnRegresar);
             this.Controls.Add(this.dgvConsultaCliente);
             this.Controls.Add(this.label1);
             this.Name = "ConsultarCliente";
@@ -84,6 +82,6 @@
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DataGridView dgvConsultaCliente;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnRegresar;
     }
 }

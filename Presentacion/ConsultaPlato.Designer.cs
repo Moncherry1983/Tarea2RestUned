@@ -72,6 +72,7 @@
             this.Controls.Add(this.label1);
             this.Name = "ConsultaPlato";
             this.Text = "ConsultaPlato";
+            this.Load += new System.EventHandler(this.ConsultaPlato_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvConsultaPlatos)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

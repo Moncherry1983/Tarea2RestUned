@@ -1,16 +1,16 @@
-﻿using Entidades;
-using System;
-using System.Collections.Generic;
+﻿using System;
+using Entidades;
 using System.Data;
 using System.Data.SqlClient;
+using System.Collections.Generic;
 
-namespace AccesoDatos
+namespace AccesoDatos.Accesores
 {
-    public static class PlatosRestauranteAD
+    public static class ClienteAD
     {
-        public static void AgregarPlatoRestaurante(PlatoRestaurante plato)
+        public static bool AgregarCliente(Cliente ingresoCliente )
         {
-            string query = $"INSERT INTO PlatoRestaurante(IdAsignacion, IdRestaurante, IdPlato, FechaAsignacion) VALUES(,@IdAsignacion,@IdRestaurante, @IdPlato, @FechaAsignacion)";
+            string query = $"INSERT INTO Cliente(IdCliente, Nombre, PrimerApellido, SegundoApellido, FechaNacimiento, Genero) VALUES(@IdCliente, @Nombre, @PrimerApellido, @SegundoApellido, @FechaNacimiento, @Genero)";
             try
             {
                 if (ConexionDB.Conectar())
@@ -19,11 +19,14 @@ namespace AccesoDatos
                     {
                         CommandType = CommandType.Text
                     };
-                    command.Parameters.AddWithValue("@IdAsignacion", plato.IdAsignacion);
-                    command.Parameters.AddWithValue("@IdRestaurante", plato.RestauranteAsignado);
-                    command.Parameters.AddWithValue("@IdPlato", plato.PlatoAsociado);
-                    command.Parameters.AddWithValue("@FechaAsignacion", plato.FechaAfiliacion);
+                    command.Parameters.AddWithValue("@IdCliente", ingresoCliente.IdCedula);
+                    command.Parameters.AddWithValue("@Nombre", ingresoCliente.Nombre);
+                    command.Parameters.AddWithValue("@PrimerApellido", ingresoCliente.PApellido);
+                    command.Parameters.AddWithValue("@SegundoApellido", ingresoCliente.SApellido);
+                    command.Parameters.AddWithValue("@FechaNacimiento", ingresoCliente.FNacimiento);
+                    command.Parameters.AddWithValue("@Genero", ingresoCliente.Genero);                  
                     command.ExecuteNonQuery();
+
                 }
             }
             catch (Exception ex)
@@ -41,12 +44,14 @@ namespace AccesoDatos
                     throw ex;
                 }
             }
+
+            return true;
         }
 
-        public static List<PlatoRestaurante> ListarPlatoRestaurante()
+        public static List<Cliente> ListarClientes()
         {
-            List<PlatoRestaurante> ListaPlatoRestaurante = new List<PlatoRestaurante>();
-            string query = $"SELECT (IdAsignacion, IdRestaurante, IdPlato, FechaAsignacion  FROM PlatoRestaurante";
+            List<Cliente> ListaCliente = new List<Cliente>();
+            string query = $"SELECT IdCliente, Nombre, PrimerApellido, SegundoApellido, FechaNacimiento, Genero FROM Cliente ";
 
             SqlDataReader reader = null;
 
@@ -60,11 +65,8 @@ namespace AccesoDatos
                     {
                         while (reader.Read())
                         {
-                            Restaurante restauranteAsignado = new Restaurante(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetBoolean(3), reader.GetString(4));
-                            CategoriaPlato categoriaPlato = new CategoriaPlato(reader.GetInt32(0), reader.GetString(1), reader.GetBoolean(2));
-                            Plato platos = new Plato(reader.GetInt32(0), reader.GetString(1), reader.GetInt32(2), categoriaPlato);
-                            PlatoRestaurante platoRest = new PlatoRestaurante(reader.GetInt32(0), restauranteAsignado, platos, reader.GetDateTime(3));
-                            ListaPlatoRestaurante.Add(platoRest);
+                            Cliente cliente = new Cliente(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetDateTime(4), reader.GetString(5)[0]);
+                            ListaCliente.Add(cliente);
                         }
                     }
                 }
@@ -89,15 +91,15 @@ namespace AccesoDatos
                 }
             }
 
-            return ListaPlatoRestaurante;
+            return ListaCliente;
         }
 
-        public static PlatoRestaurante ObtenerPlatoRestaurante(int idAsignacion)
+        public static Cliente ObtenerClientePorId(string id)
         {
-            PlatoRestaurante platoRestaurante = null;
-            string query = $"SELECT pl.IdAsignacion, p.IdPlato, p.Nombre, p.Precio, r.IdRestaurante, r.Nombre, r.Direccion, pl.FechaAsignacion FROM Plato as p INNER JOIN  Restaurante as r ON p.IdPlato = r.IdRestaurante INNER JOIN PlatoRestaurante as pl ON pl.IdAsignacion = p.IdPlato and pl.IdAsignacion = r.IdRestaurante where pl.IdAsignacion ={idAsignacion}";
-            SqlDataReader reader = null;
+            Cliente cliente = null;
+            string query = $"SELECT IdCliente, Nombre, PrimerApellido, SegundoApellido, FechaNacimiento, Genero FROM Cliente WHERE IdCliente ={id}";
 
+            SqlDataReader reader = null;
             try
             {
                 if (ConexionDB.Conectar())
@@ -108,11 +110,9 @@ namespace AccesoDatos
                     {
                         while (reader.Read())
                         {
-                            Restaurante restauranteAsignado = new Restaurante(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetBoolean(3), reader.GetString(4));
-                            CategoriaPlato categoriaPlato = new CategoriaPlato(reader.GetInt32(0), reader.GetString(1), reader.GetBoolean(2));
-                            Plato platos = new Plato(reader.GetInt32(0), reader.GetString(1), reader.GetInt32(2), categoriaPlato);
-                            PlatoRestaurante platoRest = new PlatoRestaurante(reader.GetInt32(0), restauranteAsignado, platos, reader.GetDateTime(3));
-                            return platoRestaurante;
+                            cliente = new Cliente(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetDateTime(4), reader.GetString(5).ToCharArray()[0]);
+
+                            return cliente;
                         }
                     }
                 }
@@ -137,7 +137,7 @@ namespace AccesoDatos
                 }
             }
 
-            return platoRestaurante;
+            return cliente;
         }
     }
 }

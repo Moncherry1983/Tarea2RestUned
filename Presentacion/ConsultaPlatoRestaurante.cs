@@ -1,20 +1,15 @@
-﻿using System;
-using Entidades;
+﻿using Entidades;
+using LogicaNegocio.Accesores;
+using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
-using LogicaNegocio;
-using System.Drawing;
 using System.Windows.Forms;
-using System.ComponentModel;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 
 namespace Presentacion
 {
     public partial class ConsultaPlatoRestaurante : Form
     {
-
         RestauranteLN restauranteLn = new RestauranteLN();
         RestauranteLN restaurante;
         PlatoLN platoLn = new PlatoLN();
@@ -27,12 +22,11 @@ namespace Presentacion
             dgvConsultaRestaurante.ReadOnly = true;
             dgvConsultaPlatos.ReadOnly = true;
             restaurante = new RestauranteLN();
-            InitializeDataGridView();
+            InicializarDataGridView();
             CargarDatos();
         }
 
-
-        void InitializeDataGridView()
+        void InicializarDataGridView()
         {
             dgvConsultaRestaurante.ReadOnly = true;
             dgvConsultaRestaurante.AutoGenerateColumns = false;
@@ -65,7 +59,6 @@ namespace Presentacion
             dgvConsultaRestaurante.Columns["FechaAfiliacion"].DataPropertyName = "FechaAfiliacion";
             dgvConsultaRestaurante.Columns["FechaAfiliacion"].Width = 85;
 
-
             ///////////////////////////////////////////////////////////////////////////////////////////
             dgvConsultaPlatos.Columns["IdPlato"].DataPropertyName = "IdPlato";
             dgvConsultaPlatos.Columns["IdPlato"].Width = 98;
@@ -79,20 +72,14 @@ namespace Presentacion
             CargarDatos();
         }
 
-
-
         void CargarDatos()
         {
-
             dgvConsultaRestaurante.DataSource = platoRestauranteLN.ListarPlatoRestaurantes();
             dgvConsultaRestaurante.Refresh();
 
             dgvConsultaPlatos.DataSource = platosSeleccionados;
             dgvConsultaRestaurante.Refresh();
         }
-
-
-     
 
         private Restaurante[] ObtenerInformacionRestaurantesDisponibles()
         {
@@ -101,11 +88,7 @@ namespace Presentacion
 
         private void label3_Click_1(object sender, EventArgs e)
         {
-
         }
-
-
- 
 
         private void ActualizarListaPlatos(int idRestaurante)
         {
@@ -113,10 +96,7 @@ namespace Presentacion
             dgvConsultaPlatos.DataSource = platosRes != null ? new List<Plato>() { platosRes.PlatoAsociado }.ToList() : new List<Plato>();
             dgvConsultaPlatos.Refresh();
             dgvConsultaPlatos.Refresh();
-            
         }
-
-
 
         private void button2_Click(object sender, EventArgs e)
         {
@@ -138,7 +118,6 @@ namespace Presentacion
             }
             catch (Exception ex)
             {
-
             }
 
             if (col.Name == "FechaAfiliacion")

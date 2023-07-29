@@ -1,9 +1,9 @@
-﻿using System;
-using Entidades;
-using System.Linq;
-using LogicaNegocio;
-using System.Windows.Forms;
+﻿using Entidades;
+using LogicaNegocio.Accesores;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Windows.Forms;
 
 namespace Presentacion
 {
@@ -11,8 +11,10 @@ namespace Presentacion
     {
         //inicializan los objetos de la capa de negocio
         ClienteLN ingresarClientes = new ClienteLN();
+
         ClienteLN cliente;
         private readonly IDictionary<char, string> generos = new Dictionary<char, string>();
+
         public MenuClientes()
         {
             //inicializa los componentes del formulario
@@ -22,13 +24,12 @@ namespace Presentacion
             generos.Add('M', "Masculino");
             generos.Add('F', "Femenino");
             CargarGeneros();
-            InitializeDataGridView();
+            InicializarDataGridView();
             CargarDatos();
-
-
         }
+
         //metodo para inicializar el datagridview
-        void InitializeDataGridView()
+        void InicializarDataGridView()
         {
             dgvCliente.ReadOnly = true;
             dgvCliente.AutoGenerateColumns = false;
@@ -59,7 +60,6 @@ namespace Presentacion
             dgvCliente.Columns["Genero"].Width = 80;
 
             CargarDatos();
-
         }
 
         //Este método carga los géneros de una lista en un cuadro combinado.
@@ -76,13 +76,10 @@ namespace Presentacion
             cmbGenero.ValueMember = "Key";
 
             cmbGenero.DataSource = generos.ToList();
-
-
         }
 
         private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
         {
-
         }
 
         //Este método carga los datos de los clientes en el datagridview.
@@ -96,13 +93,11 @@ namespace Presentacion
         {
             try
             {
-
                 string idPersona = txtIdPersona.Text;
                 string nombre = txtNombrePersona.Text;
                 String pApellido = txtPrimerApellido.Text;
                 String sApellido = txtSegundoApellido.Text;
                 DateTime fNacimiento = dtpFNacimiento.Value;
-
 
                 DateTime fechaActual = DateTime.Now;
                 if (fNacimiento > fechaActual)
@@ -116,30 +111,21 @@ namespace Presentacion
                     //validaciones para que no se dejen campos vacios
                     if (String.IsNullOrEmpty(txtIdPersona.Text) || String.IsNullOrEmpty(txtNombrePersona.Text) || String.IsNullOrEmpty(txtPrimerApellido.Text) || String.IsNullOrEmpty(txtSegundoApellido.Text))
                     {
-
                         MessageBox.Show("No deje campos vacios por favor...");
-
                     }
                     else if (cmbGenero.SelectedIndex == -1)
                     {
-
                         MessageBox.Show("No deje campos vacios por favor...");
-
-
                     }
                     else
                     {
-                        
                         char genero = char.Parse(cmbGenero.SelectedValue.ToString());
                         ClienteLN clienteLN = new ClienteLN();
                         Cliente cliente = new Cliente(txtIdPersona.Text, txtNombrePersona.Text, txtPrimerApellido.Text, txtSegundoApellido.Text, dtpFNacimiento.Value, char.Parse(cmbGenero.SelectedValue.ToString()));
                         clienteLN.AgregarCliente(cliente);
                         dgvCliente.DataSource = clienteLN.ListarCliente();
                         dgvCliente.Refresh();
-
                     }
-
-
                 }
                 txtIdPersona.Text = " ";
                 txtNombrePersona.Text = " ";
@@ -147,29 +133,23 @@ namespace Presentacion
                 txtSegundoApellido.Text = " ";
                 cmbGenero.SelectedIndex = -1;
                 dtpFNacimiento.ResetText();
-
             }
             catch (Exception ex)
             {
-
                 MessageBox.Show(ex.Message + "\n\tHa sucedido un error y no podido registrar el cliente\n");
             }
-
         }
 
         private void label2_Click(object sender, EventArgs e)
         {
-
         }
 
         private void txtNombrePersona_TextChanged(object sender, EventArgs e)
         {
-
         }
 
         private void label3_Click(object sender, EventArgs e)
         {
-
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -177,6 +157,7 @@ namespace Presentacion
             new MenuPrincipal().Show();
             this.Hide();
         }
+
         //Este código define un método que se ejecuta cuando se formatea una celda del control DataGridView llamado dgvCliente.
         //El método recibe dos parámetros: el objeto que disparó el evento y los argumentos del evento. El método verifica si la columna
         //de la celda es la que tiene el nombre "FNacimiento", que almacena la fecha de nacimiento de los clientes. Si es así, intenta convertir
@@ -203,7 +184,6 @@ namespace Presentacion
                         }
                     }
                 }
-             
             }
             catch (Exception ex)
             {
@@ -236,8 +216,8 @@ namespace Presentacion
                 txtIdPersona.Text = txtIdPersona.Text.Substring(0, 9);
                 txtIdPersona.SelectionStart = txtIdPersona.Text.Length;
             }
-
         }
+
         //
         private void cmbGenero_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -252,4 +232,3 @@ namespace Presentacion
         }
     }
 }
-
