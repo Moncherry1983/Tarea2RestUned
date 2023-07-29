@@ -20,10 +20,10 @@ namespace Presentacion
             InitializeComponent();            
             this.nombreMaquinaCliente = nombreMaquinaCliente;
             dgvRestaurantes.ReadOnly = true;
-            InitializeDataGridView();
+            InicializarDataGridView();
         }
 
-        void InitializeDataGridView()
+        void InicializarDataGridView()
         {
             //se bloquea para no se pueda manipular permite columnas personalizadas
             dgvRestaurantes.ReadOnly = true;

@@ -21,10 +21,10 @@ namespace Presentacion
             InitializeComponent();
             this.nombreMaquinaCliente= nombreMaquinaCliente;
             dvgConsultaCategoriaPlato.ReadOnly = true;            
-            InitializeDataGridView();            
+            InicializarDataGridView();            
         }
 
-        void InitializeDataGridView()
+        void InicializarDataGridView()
         {
             dvgConsultaCategoriaPlato.ReadOnly = true;
             dvgConsultaCategoriaPlato.AutoGenerateColumns = false;

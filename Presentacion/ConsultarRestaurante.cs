@@ -25,11 +25,11 @@ namespace Presentacion
         {
             InitializeComponent();
             this.nombreMaquinaCliente = nombreMaquinaCliente;
-            InitializeDataGridView();
+            InicializarDataGridView();
             dgvConsultaRestaurante.ReadOnly = true;
         }
 
-        void InitializeDataGridView()
+        void InicializarDataGridView()
         {
             //se bloquea para no se pueda manipular permite columnas personalizadas
             dgvConsultaRestaurante.ReadOnly = true;

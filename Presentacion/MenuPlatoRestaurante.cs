@@ -1,10 +1,10 @@
-﻿using System;
-using Entidades;
+﻿using Entidades;
+using LogicaNegocio.Accesores;
+using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using LogicaNegocio;
 using System.Windows.Forms;
-using System.Collections.Generic;
 
 namespace Presentacion
 {
@@ -12,6 +12,7 @@ namespace Presentacion
     {
         // se inicializan los array nesesarios para interactuar con la ventana
         RestauranteLN restauranteLn = new RestauranteLN();
+
         PlatoLN platoLn = new PlatoLN();
         PlatoRestauranteLN platoRestauranteLN = new PlatoRestauranteLN();
         List<Plato> platosSeleccionados = new List<Plato>();
@@ -26,11 +27,11 @@ namespace Presentacion
             platoRestauranteLN = new PlatoRestauranteLN();
             platosSeleccionados = new List<Plato>();
             ObtenerInformacionRestaurantes();
-            InitializeDataGridView();
-
+            InicializarDataGridView();
         }
+
         // se inicializa el gridview
-        void InitializeDataGridView()
+        void InicializarDataGridView()
         {
             dgvAsociacionesRestaurantes.ReadOnly = true;
             dgvAsociacionesRestaurantes.AutoGenerateColumns = false;
@@ -63,7 +64,6 @@ namespace Presentacion
             dgvAsociacionesRestaurantes.Columns["FechaAfiliacion"].DataPropertyName = "FechaAfiliacion";
             dgvAsociacionesRestaurantes.Columns["FechaAfiliacion"].Width = 85;
 
-
             ///////////////////////////////////////////////////////////////////////////////////////////
             dgvAsociacionesPlatos.Columns["IdPlato"].DataPropertyName = "IdPlato";
             dgvAsociacionesPlatos.Columns["IdPlato"].Width = 98;
@@ -76,6 +76,7 @@ namespace Presentacion
 
             CargarDatos();
         }
+
         //Este método obtiene la información de los restaurantes disponibles y la muestra en un combo box.
         //Primero llama a otro método que lista las categorías de los restaurantes desde la lógica de negocio
         private void ObtenerInformacionRestaurantes()
@@ -86,7 +87,6 @@ namespace Presentacion
             cmbRestaurantesDisponibles.ValueMember = "IdRestaurante";
             cmbRestaurantesDisponibles.DataSource = ObtenerInformacionRestaurantesDisponibles();
         }
-
 
         //Este método carga los datos de las asociaciones entre platos y restaurantes en dos tablas.
         //La primera tabla muestra todos los platos y restaurantes que existen en la base de datos.
@@ -126,7 +126,6 @@ namespace Presentacion
                     // El usuario ha seleccionado una fecha posterior a la fecha actual.
                     // Realiza acciones de validación o muestra un mensaje de error al usuario.
                     throw new Exception("\"La fecha seleccionada no tiene un orden cronologico...\"");
-
                 }
 
                 if (lbxPlatosSeleccionados.SelectedItem == null)
@@ -139,7 +138,6 @@ namespace Presentacion
                 if (cmbRestaurantesDisponibles.SelectedIndex == -1)
                 {
                     throw new Exception("/tSeleccione un Restaurante...");
-
                 }
                 if (platosSeleccionados.Count > 10)
                 {
@@ -147,33 +145,30 @@ namespace Presentacion
                 }
                 else
                 {
-                //    //Este método toma un restaurante y una lista de platos seleccionados, y crea un objeto de tipo PlatoRestaurante que los asocia.
-                //    //Luego verifica si el restaurante ya tiene platos asociados en la base de datos, y si no, los agrega y actualiza la interfaz gráfica.
-                //    //Si el restaurante ya tiene platos asociados, lanza una excepción.
-                //    Restaurante infoRestaurante = restauranteLn.ObtenerRestaurantePorId((int)cmbRestaurantesDisponibles.SelectedValue);                  
-                //    PlatoRestaurante platoRestaurante = new PlatoRestaurante(int.Parse(lbAsignacion.Text), infoRestaurante, platosSeleccionados, dtpFechaAfiliacion.Value);
-                    
+                    //    //Este método toma un restaurante y una lista de platos seleccionados, y crea un objeto de tipo PlatoRestaurante que los asocia.
+                    //    //Luego verifica si el restaurante ya tiene platos asociados en la base de datos, y si no, los agrega y actualiza la interfaz gráfica.
+                    //    //Si el restaurante ya tiene platos asociados, lanza una excepción.
+                    //    Restaurante infoRestaurante = restauranteLn.ObtenerRestaurantePorId((int)cmbRestaurantesDisponibles.SelectedValue);
+                    //    PlatoRestaurante platoRestaurante = new PlatoRestaurante(int.Parse(lbAsignacion.Text), infoRestaurante, platosSeleccionados, dtpFechaAfiliacion.Value);
 
-                //    if (platoRestauranteLN.ListarPlatoRestaurantes().Where(rest => rest != null && rest.RestauranteAsignado.IdRestaurante == infoRestaurante.IdRestaurante).Count() == 0)
-                //    {
-                //        platoRestauranteLN.AgregarPlatoRestaurante(platoRestaurante);
-                //        PlatoRestaurante[] platoRest = platoRestauranteLN.ListarPlatoRestaurantes();
-                //        dgvAsociacionesRestaurantes.DataSource = platoRest;
+                    //    if (platoRestauranteLN.ListarPlatoRestaurantes().Where(rest => rest != null && rest.RestauranteAsignado.IdRestaurante == infoRestaurante.IdRestaurante).Count() == 0)
+                    //    {
+                    //        platoRestauranteLN.AgregarPlatoRestaurante(platoRestaurante);
+                    //        PlatoRestaurante[] platoRest = platoRestauranteLN.ListarPlatoRestaurantes();
+                    //        dgvAsociacionesRestaurantes.DataSource = platoRest;
 
-                //        dgvAsociacionesRestaurantes.Refresh();
-                //        ActualizarListaPlatos(platoRest[0].GetIdRestaurante);
+                    //        dgvAsociacionesRestaurantes.Refresh();
+                    //        ActualizarListaPlatos(platoRest[0].GetIdRestaurante);
 
-                //        lbxPlatosSeleccionados.DataSource = null;
-                //        lbxPlatosSeleccionados.Items.Clear();
-                //    }
-                //    else
-                //        throw new Exception("El Restaurante ya fue incluido previamente...");
-
+                    //        lbxPlatosSeleccionados.DataSource = null;
+                    //        lbxPlatosSeleccionados.Items.Clear();
+                    //    }
+                    //    else
+                    //        throw new Exception("El Restaurante ya fue incluido previamente...");
                 }
                 //terminar se vuelven a poner los valores por defecto
                 cmbRestaurantesDisponibles.SelectedIndex = -1;
                 dtpFechaAfiliacion.ResetText();
-
             }
             catch (Exception ex)
             {
@@ -186,14 +181,13 @@ namespace Presentacion
         //para obtener la lista de platos con esos identificadores. Finalmente, se muestra la lista de platos en el control lbxPlatosSeleccionados.
         private void btnPLatos_Click(object sender, EventArgs e)
         {
-
             using (ListaPlatos platosDialog = new ListaPlatos())
             {
                 DialogResult result = platosDialog.ShowDialog();
                 if (result == DialogResult.Cancel)
                 {
                     var listaIdsPlatosSeleccionados = platosDialog.idPlatosSeleccionados;
-                    //Consultar Logica de negocios -> AccesoDatos mi lista de Ids Seleccionadas contra la lista existente, que retorne la lista de platos 
+                    //Consultar Logica de negocios -> AccesoDatos mi lista de Ids Seleccionadas contra la lista existente, que retorne la lista de platos
                     platosSeleccionados = platoLn.ListarPlatosSeleccionados(listaIdsPlatosSeleccionados);
                 }
             }
@@ -207,13 +201,14 @@ namespace Presentacion
         {
             return restauranteLn.ListarRestaurantesActivos();
         }
+
         private void label3_Click_1(object sender, EventArgs e)
         {
         }
 
-        //Este método se ejecuta cuando se cambia la selección de una fila en el control DataGridView que muestra las asociaciones 
-        //entre restaurantes y platos.Obtiene la fila seleccionada y verifica si tiene un valor en la primera celda, que corresponde 
-        //al identificador del restaurante. Si tiene un valor, llama al método ActualizarListaPlatos con ese valor como parámetro, para 
+        //Este método se ejecuta cuando se cambia la selección de una fila en el control DataGridView que muestra las asociaciones
+        //entre restaurantes y platos.Obtiene la fila seleccionada y verifica si tiene un valor en la primera celda, que corresponde
+        //al identificador del restaurante. Si tiene un valor, llama al método ActualizarListaPlatos con ese valor como parámetro, para
         //mostrar los platos asociados a ese restaurante. Si no tiene un valor, llama al mismo método con -1 como parámetro, para indicar
         //que no hay ningún restaurante seleccionado y que se debe vaciar la lista de platos.
         private void dgvAsociacionesRestaurantes_SelectionChanged(object sender, EventArgs e)
@@ -236,7 +231,7 @@ namespace Presentacion
         {
             PlatoRestaurante platosRes = platoRestauranteLN.ObtenerPlatosRestaurante(idRestaurante);
             dgvAsociacionesPlatos.DataSource = platosRes != null ? new List<Plato>() { platosRes.PlatoAsociado }.ToList() : new List<Plato>();
-            dgvAsociacionesPlatos.Refresh();            
+            dgvAsociacionesPlatos.Refresh();
         }
 
         //Este método se encarga de formatear las celdas de una columna de un DataGridView que muestra las asociaciones entre restaurantes y otros datos.
@@ -256,7 +251,6 @@ namespace Presentacion
             }
             catch (Exception ex)
             {
-
             }
 
             if (col.Name == "FechaAfiliacion")
@@ -288,5 +282,4 @@ namespace Presentacion
             }
         }
     }
-
 }

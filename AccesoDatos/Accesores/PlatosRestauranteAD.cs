@@ -4,13 +4,13 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace AccesoDatos
+namespace AccesoDatos.Accesores
 {
-    public static class CategoriaPlatoAD
+    public static class PlatosRestauranteAD
     {
-        public static bool AgregarCategoria(CategoriaPlato categoria)
+        public static void AgregarPlatoRestaurante(PlatoRestaurante plato)
         {
-            string query = $"INSERT INTO CategoriaPlato(IdCategoria, Descripcion, Estado) VALUES(@IdCategoria, @Descripcion, @Estado)";
+            string query = $"INSERT INTO PlatoRestaurante(IdAsignacion, IdRestaurante, IdPlato, FechaAsignacion) VALUES(,@IdAsignacion,@IdRestaurante, @IdPlato, @FechaAsignacion)";
             try
             {
                 if (ConexionDB.Conectar())
@@ -19,10 +19,11 @@ namespace AccesoDatos
                     {
                         CommandType = CommandType.Text
                     };
-                    command.Parameters.AddWithValue("@IdCategoria", categoria.IdCategoria);
-                    command.Parameters.AddWithValue("@Descripcion", categoria.Descripcion);
-                    command.Parameters.AddWithValue("@Estado", categoria.Estado);
-                    command.ExecuteNonQuery();                    
+                    command.Parameters.AddWithValue("@IdAsignacion", plato.IdAsignacion);
+                    command.Parameters.AddWithValue("@IdRestaurante", plato.RestauranteAsignado);
+                    command.Parameters.AddWithValue("@IdPlato", plato.PlatoAsociado);
+                    command.Parameters.AddWithValue("@FechaAsignacion", plato.FechaAfiliacion);
+                    command.ExecuteNonQuery();
                 }
             }
             catch (Exception ex)
@@ -40,14 +41,13 @@ namespace AccesoDatos
                     throw ex;
                 }
             }
-
-            return true;
         }
 
-        public static List<CategoriaPlato> ListarCategoriaPlato()
+        public static List<PlatoRestaurante> ListarPlatoRestaurante()
         {
-            List<CategoriaPlato> listaCategoriaPlato = new List<CategoriaPlato>();
-            string query = $"SELECT IdCategoria, Descripcion, Estado FROM CategoriaPlato WHERE Estado = 1";
+            List<PlatoRestaurante> ListaPlatoRestaurante = new List<PlatoRestaurante>();
+            string query = $"SELECT (IdAsignacion, IdRestaurante, IdPlato, FechaAsignacion  FROM PlatoRestaurante";
+
             SqlDataReader reader = null;
 
             try
@@ -60,8 +60,11 @@ namespace AccesoDatos
                     {
                         while (reader.Read())
                         {
+                            Restaurante restauranteAsignado = new Restaurante(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetBoolean(3), reader.GetString(4));
                             CategoriaPlato categoriaPlato = new CategoriaPlato(reader.GetInt32(0), reader.GetString(1), reader.GetBoolean(2));
-                            listaCategoriaPlato.Add(categoriaPlato);
+                            Plato platos = new Plato(reader.GetInt32(0), reader.GetString(1), reader.GetInt32(2), categoriaPlato);
+                            PlatoRestaurante platoRest = new PlatoRestaurante(reader.GetInt32(0), restauranteAsignado, platos, reader.GetDateTime(3));
+                            ListaPlatoRestaurante.Add(platoRest);
                         }
                     }
                 }
@@ -86,13 +89,13 @@ namespace AccesoDatos
                 }
             }
 
-            return listaCategoriaPlato;
+            return ListaPlatoRestaurante;
         }
 
-        public static CategoriaPlato ObtenerCategoriaPlato(int idCategoria)
+        public static PlatoRestaurante ObtenerPlatoRestaurante(int idAsignacion)
         {
-            CategoriaPlato categoriaPlato = null;
-            string query = $"SELECT IdCategoria, Descripcion, Estado FROM CategoriaPlato WHERE IdCliente ={idCategoria}";
+            PlatoRestaurante platoRestaurante = null;
+            string query = $"SELECT pl.IdAsignacion, p.IdPlato, p.Nombre, p.Precio, r.IdRestaurante, r.Nombre, r.Direccion, pl.FechaAsignacion FROM Plato as p INNER JOIN  Restaurante as r ON p.IdPlato = r.IdRestaurante INNER JOIN PlatoRestaurante as pl ON pl.IdAsignacion = p.IdPlato and pl.IdAsignacion = r.IdRestaurante where pl.IdAsignacion ={idAsignacion}";
             SqlDataReader reader = null;
 
             try
@@ -105,8 +108,11 @@ namespace AccesoDatos
                     {
                         while (reader.Read())
                         {
-                            categoriaPlato = new CategoriaPlato(reader.GetInt32(0), reader.GetString(1), reader.GetBoolean(2));
-                            return categoriaPlato;
+                            Restaurante restauranteAsignado = new Restaurante(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetBoolean(3), reader.GetString(4));
+                            CategoriaPlato categoriaPlato = new CategoriaPlato(reader.GetInt32(0), reader.GetString(1), reader.GetBoolean(2));
+                            Plato platos = new Plato(reader.GetInt32(0), reader.GetString(1), reader.GetInt32(2), categoriaPlato);
+                            PlatoRestaurante platoRest = new PlatoRestaurante(reader.GetInt32(0), restauranteAsignado, platos, reader.GetDateTime(3));
+                            return platoRestaurante;
                         }
                     }
                 }
@@ -131,7 +137,7 @@ namespace AccesoDatos
                 }
             }
 
-            return categoriaPlato;
+            return platoRestaurante;
         }
     }
 }

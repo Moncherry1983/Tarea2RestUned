@@ -1,8 +1,7 @@
 ﻿using SimpleTCP;
 using System;
-using System.Net.Sockets;
 
-namespace Presentacion
+namespace Presentacion.Miscelaneas
 {
     public class AdministradorTCP
     {
@@ -42,6 +41,6 @@ namespace Presentacion
             {
                 throw ex;
             }
-        }       
+        }
     }
 }
