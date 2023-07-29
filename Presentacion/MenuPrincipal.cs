@@ -30,7 +30,7 @@ namespace Presentacion
 
         private void button5_Click(object sender, EventArgs e)
         {
-            new MenuPlatoRestaurante().Show();
+            new MenuPlatoRestaurante(nombreMaquinaCliente).Show();
             this.Hide();
         }
 

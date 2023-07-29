@@ -10,6 +10,8 @@ namespace Presentacion
 {
     public partial class MenuPlatoRestaurante : Form
     {
+
+        string nombreMaquinaCliente;
         // se inicializan los array nesesarios para interactuar con la ventana
         RestauranteLN restauranteLn = new RestauranteLN();
 
@@ -18,7 +20,7 @@ namespace Presentacion
         List<Plato> platosSeleccionados = new List<Plato>();
 
         //inicializa los componentes nesesarios para utlizar la ventana
-        public MenuPlatoRestaurante()
+        public MenuPlatoRestaurante( string nombreMaquinaCliente)
         {
             InitializeComponent();
             dgvAsociacionesRestaurantes.ReadOnly = true;
@@ -181,7 +183,7 @@ namespace Presentacion
         //para obtener la lista de platos con esos identificadores. Finalmente, se muestra la lista de platos en el control lbxPlatosSeleccionados.
         private void btnPLatos_Click(object sender, EventArgs e)
         {
-            using (ListaPlatos platosDialog = new ListaPlatos())
+            using (ListaPlatos platosDialog = new ListaPlatos(nombreMaquinaCliente))
             {
                 DialogResult result = platosDialog.ShowDialog();
                 if (result == DialogResult.Cancel)
