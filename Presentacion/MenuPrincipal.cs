@@ -72,7 +72,7 @@ namespace Presentacion
 
         private void button6_Click(object sender, EventArgs e)
         {
-            new MenuExtra(nombreMaquinaCliente).Show();
+            new MenuExtra().Show();
             this.Hide();
         }
 

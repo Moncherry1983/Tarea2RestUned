@@ -12,12 +12,12 @@ namespace Presentacion
     {
         String nombreMaquinaCliente = String.Empty;
         readonly AdministradorTCP administradorTCP = new AdministradorTCP();
-        PantallaEspera pantallaEspera = new PantallaEspera();
+        readonly PantallaEspera pantallaEspera = new PantallaEspera();
 
         public Login()
         {
             InitializeComponent();
-            //txtCedula.Text = "111111111";
+            txtCedula.Text = "111111111";
         }
 
         //Este método se ejecuta cuando se carga el formulario de inicio de sesión.
