@@ -12,12 +12,13 @@ namespace Presentacion
     {
         //inicializacion de arrays a utilizar
         private PlatoLN platoLn = new PlatoLN();
+        string nombreMaquinaCliente;
 
         PlatoLN plato;
         private readonly Plato[] platos = new Plato[10];
         public List<int> idPlatosSeleccionados = new List<int>();
 
-        public ListaPlatos()
+        public ListaPlatos(string nombreMaquinaCliente)
         {
             //inicializacion de componentes
             InitializeComponent();
@@ -30,7 +31,7 @@ namespace Presentacion
         //Este código corresponde a una clase llamada ListaPlatos que hereda de la clase Form y sirve para mostrar una lista de platos disponible
         private void button2_Click(object sender, EventArgs e)
         {
-            new MenuPlatoRestaurante().Show();
+            new MenuPlatoRestaurante(this.nombreMaquinaCliente).Show();
             this.Hide();
         }
 

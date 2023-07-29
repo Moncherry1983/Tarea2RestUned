@@ -237,8 +237,8 @@ namespace Presentacion
                         ListaInstaciasGenericas = new ArrayList() { categoriaPlato, plato }
                     };
 
-                    string CategoriaPlatoSerializada = AdmistradorPaquetes.SerializePackage(paquete);
-                    tcpClient.TcpClient.WriteLineAndGetReply(CategoriaPlatoSerializada, TimeSpan.FromSeconds(3));
+                    string paqueteSerializado = AdmistradorPaquetes.SerializePackage(paquete);
+                    tcpClient.TcpClient.WriteLineAndGetReply(paqueteSerializado, TimeSpan.FromSeconds(3));
                 }
             }
             catch (Exception ex)
