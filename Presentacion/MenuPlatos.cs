@@ -18,7 +18,7 @@ namespace Presentacion
         AdministradorTCP tcpClient;
         List<CategoriaPlato> listaCategoriaPlatos= new List<CategoriaPlato>();
 
-        public MenuPlatos()
+        public MenuPlatos(string nombreMaquinaCliente)
         {
             InitializeComponent();
             this.nombreMaquinaCliente = nombreMaquinaCliente;
@@ -303,9 +303,10 @@ namespace Presentacion
 
             dgvPlato.Invoke((MethodInvoker)delegate ()
             {
-                pantallaEspera.Hide();
                 dgvPlato.DataSource = listaPlatos;                
                 dgvPlato.Refresh();
+
+                pantallaEspera.Hide();
             });
         }
 

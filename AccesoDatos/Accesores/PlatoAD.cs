@@ -63,7 +63,7 @@ namespace AccesoDatos.Accesores
 
                         {
                             CategoriaPlato categoriaPlato = new CategoriaPlato(reader.GetInt32(2), reader.GetString(4), reader.GetBoolean(5));
-                            Plato plato = new Plato(reader.GetInt32(0), reader.GetString(1), reader.GetInt32(2), categoriaPlato);
+                            Plato plato = new Plato(reader.GetInt32(0), reader.GetString(1), reader.GetInt32(3), categoriaPlato);
                             Listaplatos.Add(plato);
                         }
                     }
