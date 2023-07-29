@@ -1,8 +1,13 @@
 ﻿using Entidades;
+using LogicaNegocio;
 using LogicaNegocio.Accesores;
+using LogicaNegocio.Enumeradores;
+using Presentacion.Miscelaneas;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Sockets;
 using System.Windows.Forms;
 
 namespace Presentacion
@@ -10,22 +15,22 @@ namespace Presentacion
     public partial class MenuClientes : Form
     {
         //inicializan los objetos de la capa de negocio
-        ClienteLN ingresarClientes = new ClienteLN();
+        readonly string nombreMaquinaCliente;
+        readonly PantallaEspera pantallaEspera = new PantallaEspera();
+        AdministradorTCP tcpClient;
+        List<CategoriaPlato> listaCategoriaPlatos = new List<CategoriaPlato>();
 
-        ClienteLN cliente;
+        
         private readonly IDictionary<char, string> generos = new Dictionary<char, string>();
 
-        public MenuClientes()
+        public MenuClientes(string nombreMaquinaCliente)
         {
             //inicializa los componentes del formulario
             InitializeComponent();
+            this.nombreMaquinaCliente = nombreMaquinaCliente;
             dgvCliente.ReadOnly = true;
-            cliente = new ClienteLN();
-            generos.Add('M', "Masculino");
-            generos.Add('F', "Femenino");
-            CargarGeneros();
             InicializarDataGridView();
-            CargarDatos();
+            InicializarComboBox();
         }
 
         //metodo para inicializar el datagridview
@@ -59,37 +64,29 @@ namespace Presentacion
             dgvCliente.Columns["Genero"].DataPropertyName = "Genero";
             dgvCliente.Columns["Genero"].Width = 80;
 
-            CargarDatos();
         }
 
-        //Este método carga los géneros de una lista en un cuadro combinado.
-        //Primero llama a otro método que obtiene los géneros desde la lógica de negocio.
-        //Luego configura el cuadro combinado para que solo se pueda seleccionar una opción y se muestre el valor de cada género.
-        //Finalmente asigna la lista de géneros como fuente de datos del cuadro combinado.
-        private void CargarGeneros()
+        private void InicializarComboBox()
         {
-            //llamar metodo listar Categorias desde la logica de negocio
-
-            //cargar combox
+            generos.Add('M', "Masculino");
+            generos.Add('F', "Femenino");
+            
             cmbGenero.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbGenero.DisplayMember = "Value";
             cmbGenero.ValueMember = "Key";
 
             cmbGenero.DataSource = generos.ToList();
-        }
 
-        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
+        }
+        private void MenuClientes_Load(object sender, EventArgs e)
         {
+            tcpClient = new AdministradorTCP();
+            tcpClient.TcpClient.DataReceived += Client_DataReceived;
+            SolicitarDatosAlServidor();
         }
-
+ 
         //Este método carga los datos de los clientes en el datagridview.
-        void CargarDatos()
-        {
-            dgvCliente.DataSource = cliente.ListarCliente();
-            dgvCliente.Refresh();
-        }
-
-        private void button1_Click(object sender, EventArgs e)
+        private void btnGuardar_Click(object sender, EventArgs e)
         {
             try
             {
@@ -122,9 +119,8 @@ namespace Presentacion
                         char genero = char.Parse(cmbGenero.SelectedValue.ToString());
                         ClienteLN clienteLN = new ClienteLN();
                         Cliente cliente = new Cliente(txtIdPersona.Text, txtNombrePersona.Text, txtPrimerApellido.Text, txtSegundoApellido.Text, dtpFNacimiento.Value, char.Parse(cmbGenero.SelectedValue.ToString()));
-                        clienteLN.AgregarCliente(cliente);
-                        dgvCliente.DataSource = clienteLN.ListarCliente();
-                        dgvCliente.Refresh();
+                        GuardarCambios(cliente);
+                        SolicitarDatosAlServidor();
                     }
                 }
                 txtIdPersona.Text = " ";
@@ -140,19 +136,11 @@ namespace Presentacion
             }
         }
 
-        private void label2_Click(object sender, EventArgs e)
-        {
-        }
-
         private void txtNombrePersona_TextChanged(object sender, EventArgs e)
         {
         }
 
-        private void label3_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void button2_Click(object sender, EventArgs e)
+        private void btnRegresar_Click(object sender, EventArgs e)
         {
             new MenuPrincipal().Show();
             this.Hide();
@@ -218,7 +206,6 @@ namespace Presentacion
             }
         }
 
-        //
         private void cmbGenero_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cmbGenero.SelectedIndex != -1)
@@ -230,5 +217,105 @@ namespace Presentacion
                 // El usuario no ha seleccionado ningún elemento del combobox
             }
         }
+
+        private void GuardarCambios(Cliente cliente)
+        {
+            try
+            {
+                if (tcpClient.ConectarTCP())
+                {
+                    var paquete = new Paquete<Cliente>()
+                    {
+                        ClienteId = nombreMaquinaCliente,
+                        TiposAccion = TiposAccion.Agregar,
+                        ListaInstaciasGenericas = new ArrayList() { cliente }
+                    };
+
+                    string paqueteSerializado = AdmistradorPaquetes.SerializePackage(paquete);
+                    tcpClient.TcpClient.WriteLineAndGetReply(paqueteSerializado, TimeSpan.FromSeconds(3));
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al conectar con el servidor: " + ex.Message);
+            }
+        }
+
+        private void SolicitarDatosAlServidor()
+        {
+            try
+            {
+                if (tcpClient.ConectarTCP())
+                {
+                    pantallaEspera.Show();
+                    Cliente cliente = new Cliente("", "", "", "",new DateTime(),'M');
+                    var paquete = new Paquete<Cliente>()
+                    {
+                        ClienteId = nombreMaquinaCliente,
+                        TiposAccion = TiposAccion.Listar,
+                        ListaInstaciasGenericas = new ArrayList() { cliente }
+                    };
+
+                    string paqueteSerializado = AdmistradorPaquetes.SerializePackage(paquete);
+                    tcpClient.TcpClient.WriteLineAndGetReply(paqueteSerializado, TimeSpan.FromSeconds(3));
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al conectar con el servidor: " + ex.Message);
+            }
+        }
+
+        private void Client_DataReceived(object sender, SimpleTCP.Message e)
+        {
+            string valorRecibido = e.MessageString.TrimEnd('\u0013');
+            var informacionPaquete = AdmistradorPaquetes.DeserializePackage(valorRecibido);
+
+            if (informacionPaquete != null)
+            {
+                switch (informacionPaquete.TiposAccion)
+                {
+                    case TiposAccion.Agregar:
+                        ReiniciarPantalla();
+                        break;
+
+                    case TiposAccion.Listar:
+                        List<Cliente> listaCliente = informacionPaquete.ListaInstaciasGenericas[0];
+                        CargarDatos(listaCliente);
+                        break;
+
+                    case TiposAccion.ObtenerObjetoEspecifico:
+
+                    default:
+                        break;
+                }
+            }
+            else
+            {
+                MessageBox.Show("El cliente no existe");
+            }
+        }
+
+        private void ReiniciarPantalla()
+        {
+            txtIdPersona.Invoke((MethodInvoker)delegate ()
+            {
+                SolicitarDatosAlServidor();
+                txtIdPersona.Focus();
+                cmbGenero.SelectedIndex = 0;
+            });
+        }
+
+        private void CargarDatos( List<Cliente> listaClientes)
+        {
+            dgvCliente.Invoke((MethodInvoker)delegate ()
+            {
+                dgvCliente.DataSource = listaClientes;
+                dgvCliente.Refresh();
+
+                pantallaEspera.Hide();
+            });
+        }
+
     }
 }

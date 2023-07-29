@@ -17,7 +17,7 @@ namespace Presentacion
         public Login()
         {
             InitializeComponent();
-            ///txtCedula.Text = "111111111";
+            txtCedula.Text = "111111111";
         }
 
         //Este método se ejecuta cuando se carga el formulario de inicio de sesión.

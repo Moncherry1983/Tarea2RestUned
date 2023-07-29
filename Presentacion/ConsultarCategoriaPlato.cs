@@ -2,7 +2,6 @@
 using LogicaNegocio;
 using LogicaNegocio.Enumeradores;
 using Presentacion.Miscelaneas;
-using SimpleTCP;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,7 +10,7 @@ using System.Windows.Forms;
 namespace Presentacion
 {
     public partial class ConsultarCategoriaPlato : Form
-    {        
+    {
         readonly string nombreMaquinaCliente;
         PantallaEspera pantallaEspera = new PantallaEspera();
         AdministradorTCP tcpClient;
@@ -19,9 +18,9 @@ namespace Presentacion
         public ConsultarCategoriaPlato(string nombreMaquinaCliente)
         {
             InitializeComponent();
-            this.nombreMaquinaCliente= nombreMaquinaCliente;
-            dvgConsultaCategoriaPlato.ReadOnly = true;            
-            InicializarDataGridView();            
+            this.nombreMaquinaCliente = nombreMaquinaCliente;
+            dvgConsultaCategoriaPlato.ReadOnly = true;
+            InicializarDataGridView();
         }
 
         void InicializarDataGridView()
@@ -40,8 +39,9 @@ namespace Presentacion
             dvgConsultaCategoriaPlato.Columns["Descripcion"].Width = 120;
 
             dvgConsultaCategoriaPlato.Columns["Estado"].DataPropertyName = "Estado";
-            dvgConsultaCategoriaPlato.Columns["Estado"].Width = 120;            
+            dvgConsultaCategoriaPlato.Columns["Estado"].Width = 120;
         }
+
         private void ConsultarCategoriaPlato_Load(object sender, EventArgs e)
         {
             tcpClient = new AdministradorTCP();
@@ -53,7 +53,7 @@ namespace Presentacion
         {
             new MenuPrincipal().Show();
             this.Hide();
-        }        
+        }
 
         private void dvgConsultaCategoriaPlato_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
@@ -85,43 +85,43 @@ namespace Presentacion
             }
             else
             {
-               MessageBox.Show("La categoría de plato no existe");
+                MessageBox.Show("La categoría de plato no existe");
             }
         }
-        
-        private void SolicitarDatosAlServidor()
-            {
-                try
-                {
-                    if (tcpClient.ConectarTCP())
-                    {
-                        pantallaEspera.Show();
-                        CategoriaPlato categoriaPlato = new CategoriaPlato(0, "", true);
-                        var paquete = new Paquete<CategoriaPlato>()
-                        {
-                            ClienteId = nombreMaquinaCliente,
-                            TiposAccion = TiposAccion.Listar,
-                            ListaInstaciasGenericas = new ArrayList() { categoriaPlato } 
-                        };
 
-                        string CategoriaPlatoSerializada = AdmistradorPaquetes.SerializePackage(paquete);                    
-                        tcpClient.TcpClient.WriteLineAndGetReply(CategoriaPlatoSerializada, TimeSpan.FromSeconds(3));
-                    }
-                }
-                catch (Exception ex)
+        private void SolicitarDatosAlServidor()
+        {
+            try
+            {
+                if (tcpClient.ConectarTCP())
                 {
-                    MessageBox.Show("Error al conectar con el servidor: " + ex.Message);
+                    pantallaEspera.Show();
+                    CategoriaPlato categoriaPlato = new CategoriaPlato(0, "", true);
+                    var paquete = new Paquete<CategoriaPlato>()
+                    {
+                        ClienteId = nombreMaquinaCliente,
+                        TiposAccion = TiposAccion.Listar,
+                        ListaInstaciasGenericas = new ArrayList() { categoriaPlato }
+                    };
+
+                    string CategoriaPlatoSerializada = AdmistradorPaquetes.SerializePackage(paquete);
+                    tcpClient.TcpClient.WriteLineAndGetReply(CategoriaPlatoSerializada, TimeSpan.FromSeconds(3));
                 }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al conectar con el servidor: " + ex.Message);
+            }
+        }
+
         private void CargarDatos(List<CategoriaPlato> lista)
         {
-            dvgConsultaCategoriaPlato.Invoke((MethodInvoker)delegate () 
+            dvgConsultaCategoriaPlato.Invoke((MethodInvoker)delegate ()
             {
                 dvgConsultaCategoriaPlato.DataSource = lista;
                 dvgConsultaCategoriaPlato.Refresh();
                 pantallaEspera.Hide();
             });
         }
-    
     }
 }
