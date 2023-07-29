@@ -182,8 +182,8 @@ namespace Presentacion
                         ListaInstaciasGenericas = new ArrayList() { categoriaPlato }
                     };
 
-                    string CategoriaPlatoSerializada = AdmistradorPaquetes.SerializePackage(paquete);
-                    tcpClient.TcpClient.WriteLineAndGetReply(CategoriaPlatoSerializada, TimeSpan.FromSeconds(3));
+                    string paqueteSerializado = AdmistradorPaquetes.SerializePackage(paquete);
+                    tcpClient.TcpClient.WriteLineAndGetReply(paqueteSerializado, TimeSpan.FromSeconds(3));
                 }
             }
             catch (Exception ex)
@@ -195,18 +195,18 @@ namespace Presentacion
         private void Client_DataReceived(object sender, SimpleTCP.Message e)
         {
             string valorRecibido = e.MessageString.TrimEnd('\u0013');
-            var informacionCategoriaPlatos = AdmistradorPaquetes.DeserializePackage(valorRecibido);
+            var informacionPaquete = AdmistradorPaquetes.DeserializePackage(valorRecibido);
 
-            if (informacionCategoriaPlatos != null)
+            if (informacionPaquete != null)
             {
-                switch (informacionCategoriaPlatos.TiposAccion)
+                switch (informacionPaquete.TiposAccion)
                 {
                     case TiposAccion.Agregar:
                         ReiniciarPantalla();
                         break;
 
                     case TiposAccion.Listar:
-                        List<CategoriaPlato> listaCategoriaPlatos = informacionCategoriaPlatos.ListaInstaciasGenericas[0];
+                        List<CategoriaPlato> listaCategoriaPlatos = informacionPaquete.ListaInstaciasGenericas[0];
                         CargarDatos(listaCategoriaPlatos);
                         break;
 
