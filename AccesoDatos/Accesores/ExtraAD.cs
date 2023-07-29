@@ -3,20 +3,17 @@ using Entidades;
 using System.Linq;
 using System.Text;
 using System.Data;
-using LogicaNegocio;
-using System.Reflection;
-using System.Windows.Forms;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 
-namespace AccesoDatos
+namespace AccesoDatos.Accesores
 {
-    public static class PlatoAD
+    public static class ExtraAD
     {
-        public static void AgregarPlato(Plato ingresarPlatos)
+        public static void AgregarExtra(Extra ingresarExtras) 
         {
-            string query = $"INSERT INTO Plato(IdPlato, Nombre, IdCategoria, Precio ) VALUES(@IdPlato, @Nombre, @IdCategoria, @Precio)";
+            string query = $"INSERT INTO Extra(IdExtra, Descripcion, IdCategoria, Estado, Precio ) VALUES(@IdExtra, @Descripcion, @IdCategoria, @Estado, @Precio)";
             try
             {
                 if (ConexionDB.Conectar())
@@ -25,14 +22,12 @@ namespace AccesoDatos
                     {
                         CommandType = CommandType.Text
                     };
-                    command.Parameters.AddWithValue("@IdPlato", ingresarPlatos.IdPlato);
-                    command.Parameters.AddWithValue("@NombrePlato", ingresarPlatos.NombrePlato);                 
-                    command.Parameters.AddWithValue("@IdCategoria", ingresarPlatos.CategoriaPlato.IdCategoria);
-                    command.Parameters.AddWithValue("@Precio", ingresarPlatos.Precio);
+                    command.Parameters.AddWithValue("@IdExtra", ingresarExtras.IdCategoriaextra);
+                    command.Parameters.AddWithValue("@Descripcion", ingresarExtras.Descripcion);
+                    command.Parameters.AddWithValue("@IdCategoria", ingresarExtras.IdCategoriaextra);
+                    command.Parameters.AddWithValue("@Estado", ingresarExtras.Estado);
+                    command.Parameters.AddWithValue("@Estado", ingresarExtras.Precio);
                     command.ExecuteNonQuery();
-
-                    //Comentario de Prueba
-                    //Comentario de Prueba2
 
                 }
             }
@@ -53,13 +48,13 @@ namespace AccesoDatos
             }
         }
 
-        public static List<Plato> ListarRestaurante()
+        public static List<Extra> ListarExtra()
         {
-            List<Plato> Listaplatos = new List<Plato>();
-            string query = $"SELECT p.IdPlato, p.Nombre, p.IdCategoria, p.Precio, c.Descripcion, c.Estado FROM Plato as p INNER JOIN  CategoriaPlato as c ON p.IdCategoria = c.IdCategoria ";
+            List<Extra> ingresarExtras = new List<Extra>();
+            string query = $"SELECT e.IdExtra, e.Descripcion,e.IdCategoria, e.Estado, e.Precio FROM Extra as e INNER JOIN  CategoriaPlato as c ON e.IdExtra = c.IdCategoria ";
 
             SqlDataReader reader = null;
-           
+
             try
             {
                 if (ConexionDB.Conectar())
@@ -72,8 +67,8 @@ namespace AccesoDatos
 
                         {
                             CategoriaPlato categoriaPlato = new CategoriaPlato(reader.GetInt32(2), reader.GetString(4), reader.GetBoolean(5));
-                            Plato plato = new Plato(reader.GetInt32(0), reader.GetString(1), reader.GetInt32(2),categoriaPlato);
-                            Listaplatos.Add(plato);
+                            Extra extra = new Extra(reader.GetInt32(0), reader.GetString(1), reader.GetInt32(2), reader.GetBoolean(3), reader.GetInt32(4));
+                            ingresarExtras.Add(extra);
                         }
                     }
                 }
@@ -98,15 +93,15 @@ namespace AccesoDatos
                 }
             }
 
-            return Listaplatos;
+            return ingresarExtras;
         }
 
-        public static Plato ObtenerPlato(int idPlato)
+        public static Extra ObtenerExtra(int idExtra)
         {
-            Plato plato = null;
-            string query = $"SELECT p.IdPlato, p.Nombre, p.IdCategoria, p.Precio, c.Descripcion, c.Estado FROM Plato as p INNER JOIN  CategoriaPlato as c ON p.IdCategoria = c.IdCategoria WHERE p.IdPlato ={idPlato}";
+            Extra ingresarExtras = null;
+            string query = $"\"SELECT e.IdExtra, e.Descripcion,e.IdCategoria, e.Estado, e.Precio FROM Extra as e INNER JOIN  CategoriaPlato as c ON e.IdExtra = c.IdCategoria WHERE e.IdExtra ={idExtra}";
             SqlDataReader reader = null;
-           
+
             try
             {
                 if (ConexionDB.Conectar())
@@ -118,8 +113,8 @@ namespace AccesoDatos
                         while (reader.Read())
                         {
                             CategoriaPlato categoriaPlato = new CategoriaPlato(reader.GetInt32(2), reader.GetString(4), reader.GetBoolean(5));
-                             plato = new Plato(reader.GetInt32(0), reader.GetString(1), reader.GetInt32(2), categoriaPlato);
-                            return plato;
+                            Extra extra = new Extra(reader.GetInt32(0), reader.GetString(1), reader.GetInt32(2), reader.GetBoolean(3), reader.GetInt32(4));
+                            return ingresarExtras;
                         }
                     }
                 }
@@ -144,9 +139,8 @@ namespace AccesoDatos
                 }
             }
 
-            return plato;
+            return ingresarExtras;
         }
-
 
     }
 }

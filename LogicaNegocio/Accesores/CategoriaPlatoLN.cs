@@ -1,43 +1,30 @@
-﻿using System;
-using Entidades;
-using System.Linq;
-using System.Text;
-using System.Diagnostics;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using static LogicaNegocio.PlatoRestauranteLN;
+﻿using Entidades;
+using System;
 
-namespace LogicaNegocio
+namespace LogicaNegocio.Accesores
 {
-
     //se consulta el acceso de datos y se proceda la informacion nesesaria pen caso de manipular la informacion.
     public class CategoriaPlatoLN
     {
-
         public void AgregarCategoriaPlato(CategoriaPlato categoria)
         {
-
-            try { 
-            //{
-            //    var categoriaPlatoActuales = CategoriaPlatoAD.ListarCategoriaPlato();
-            //    if (categoriaPlatoActuales.Where(categoPlato => categoPlato != null && categoPlato.IdCategoria == categoria.IdCategoria).Count()==0)
-            //        CategoriaPlatoAD.AgregarCategoria(categoria);
-            //    else
-            //        throw new Exception("Ya el id de la categoria existe ");
-
+            try
+            {
+                //{
+                //    var categoriaPlatoActuales = CategoriaPlatoAD.ListarCategoriaPlato();
+                //    if (categoriaPlatoActuales.Where(categoPlato => categoPlato != null && categoPlato.IdCategoria == categoria.IdCategoria).Count()==0)
+                //        CategoriaPlatoAD.AgregarCategoria(categoria);
+                //    else
+                //        throw new Exception("Ya el id de la categoria existe ");
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
-
         }
-
 
         public CategoriaPlato[] ListarCategoriaPlato()
         {
-
             try
             {
                 //return CategoriaPlatoAD.ListarCategoriaPlato();
@@ -45,7 +32,6 @@ namespace LogicaNegocio
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }
@@ -55,7 +41,6 @@ namespace LogicaNegocio
         //de cada categoría. Si ocurre algún error durante el proceso, el método lanza una excepción con el mensaje correspondiente.
         public CategoriaPlato[] ListarCategoriaPlatoCombo()
         {
-
             try
             {
                 //return CategoriaPlatoAD.ListarCategoriaPlato().Where( cat => cat != null && cat.Estado == true).ToArray();
@@ -63,12 +48,8 @@ namespace LogicaNegocio
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
-
         }
     }
 }
-
-

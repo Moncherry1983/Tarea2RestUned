@@ -53,6 +53,12 @@ namespace Entidades
             set { categoriaPlato = value; }
         }
 
+        public int IdCategoria
+        {
+            get { return categoriaPlato.IdCategoria; }            
+        }
+        
+
 
         #endregion
     }

@@ -1,16 +1,16 @@
-﻿using System;
-using Entidades;
+﻿using Entidades;
+using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Collections.Generic;
 
-namespace AccesoDatos
+namespace AccesoDatos.Accesores
 {
-    public static class ClienteAD
+    public static class CategoriaPlatoAD
     {
-        public static bool AgregarCliente(Cliente ingresoCliente )
+        public static bool AgregarCategoria(CategoriaPlato categoria)
         {
-            string query = $"INSERT INTO Cliente(IdCliente, Nombre, PrimerApellido, SegundoApellido, FechaNacimiento, Genero) VALUES(@IdCliente, @Nombre, @PrimerApellido, @SegundoApellido, @FechaNacimiento, @Genero)";
+            string query = $"INSERT INTO CategoriaPlato(IdCategoria, Descripcion, Estado) VALUES(@IdCategoria, @Descripcion, @Estado)";
             try
             {
                 if (ConexionDB.Conectar())
@@ -19,14 +19,10 @@ namespace AccesoDatos
                     {
                         CommandType = CommandType.Text
                     };
-                    command.Parameters.AddWithValue("@IdCliente", ingresoCliente.IdCedula);
-                    command.Parameters.AddWithValue("@Nombre", ingresoCliente.Nombre);
-                    command.Parameters.AddWithValue("@PrimerApellido", ingresoCliente.PApellido);
-                    command.Parameters.AddWithValue("@SegundoApellido", ingresoCliente.SApellido);
-                    command.Parameters.AddWithValue("@FechaNacimiento", ingresoCliente.FNacimiento);
-                    command.Parameters.AddWithValue("@Genero", ingresoCliente.Genero);                  
-                    command.ExecuteNonQuery();
-
+                    command.Parameters.AddWithValue("@IdCategoria", categoria.IdCategoria);
+                    command.Parameters.AddWithValue("@Descripcion", categoria.Descripcion);
+                    command.Parameters.AddWithValue("@Estado", categoria.Estado);
+                    command.ExecuteNonQuery();                    
                 }
             }
             catch (Exception ex)
@@ -48,11 +44,10 @@ namespace AccesoDatos
             return true;
         }
 
-        public static List<Cliente> ListarClientes()
+        public static List<CategoriaPlato> ListarCategoriasPlatos()
         {
-            List<Cliente> ListaCliente = new List<Cliente>();
-            string query = $"SELECT IdCliente, Nombre, PrimerApellido, SegundoApellido, FechaNacimiento, Genero FROM Cliente ";
-
+            List<CategoriaPlato> listaCategoriaPlato = new List<CategoriaPlato>();
+            string query = $"SELECT IdCategoria, Descripcion, Estado FROM CategoriaPlato WHERE Estado = 1";
             SqlDataReader reader = null;
 
             try
@@ -65,8 +60,8 @@ namespace AccesoDatos
                     {
                         while (reader.Read())
                         {
-                            Cliente cliente = new Cliente(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetDateTime(4), reader.GetString(5)[0]);
-                            ListaCliente.Add(cliente);
+                            CategoriaPlato categoriaPlato = new CategoriaPlato(reader.GetInt32(0), reader.GetString(1), reader.GetBoolean(2));
+                            listaCategoriaPlato.Add(categoriaPlato);
                         }
                     }
                 }
@@ -91,15 +86,15 @@ namespace AccesoDatos
                 }
             }
 
-            return ListaCliente;
+            return listaCategoriaPlato;
         }
 
-        public static Cliente ObtenerClientePorId(string id)
+        public static CategoriaPlato ObtenerCategoriaPlato(int idCategoria)
         {
-            Cliente cliente = null;
-            string query = $"SELECT IdCliente, Nombre, PrimerApellido, SegundoApellido, FechaNacimiento, Genero FROM Cliente WHERE IdCliente ={id}";
-
+            CategoriaPlato categoriaPlato = null;
+            string query = $"SELECT IdCategoria, Descripcion, Estado FROM CategoriaPlato WHERE IdCliente ={idCategoria}";
             SqlDataReader reader = null;
+
             try
             {
                 if (ConexionDB.Conectar())
@@ -110,9 +105,8 @@ namespace AccesoDatos
                     {
                         while (reader.Read())
                         {
-                            cliente = new Cliente(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetDateTime(4), reader.GetString(5).ToCharArray()[0]);
-
-                            return cliente;
+                            categoriaPlato = new CategoriaPlato(reader.GetInt32(0), reader.GetString(1), reader.GetBoolean(2));
+                            return categoriaPlato;
                         }
                     }
                 }
@@ -137,7 +131,7 @@ namespace AccesoDatos
                 }
             }
 
-            return cliente;
+            return categoriaPlato;
         }
     }
 }

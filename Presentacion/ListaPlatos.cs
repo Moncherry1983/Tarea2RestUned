@@ -1,15 +1,10 @@
-﻿using System;
-using Entidades;
+﻿using Entidades;
+using LogicaNegocio.Accesores;
+using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
-using LogicaNegocio;
-using System.Drawing;
 using System.Windows.Forms;
-using System.ComponentModel;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.Security.Cryptography;
 
 namespace Presentacion
 {
@@ -17,6 +12,7 @@ namespace Presentacion
     {
         //inicializacion de arrays a utilizar
         private PlatoLN platoLn = new PlatoLN();
+
         PlatoLN plato;
         private readonly Plato[] platos = new Plato[10];
         public List<int> idPlatosSeleccionados = new List<int>();
@@ -27,17 +23,19 @@ namespace Presentacion
             InitializeComponent();
             dgvPlatosDisponibles.ReadOnly = true;
             plato = new PlatoLN();
-            InitializeDataGridView();
+            InicializarDataGridView();
             CargarDatos();
         }
+
         //Este código corresponde a una clase llamada ListaPlatos que hereda de la clase Form y sirve para mostrar una lista de platos disponible
         private void button2_Click(object sender, EventArgs e)
         {
             new MenuPlatoRestaurante().Show();
             this.Hide();
         }
+
         //Este código corresponde a una clase llamada ListaPlatos que hereda de la clase Form y sirve para mostrar una lista de platos disponible
-        void InitializeDataGridView()
+        void InicializarDataGridView()
         {
             dgvPlatosDisponibles.ReadOnly = true;
             dgvPlatosDisponibles.AutoGenerateColumns = false;
@@ -58,21 +56,18 @@ namespace Presentacion
             dgvPlatosDisponibles.Columns["Precio"].DataPropertyName = "Precio";
             dgvPlatosDisponibles.Columns["Precio"].Width = 60;
 
-
             dgvPlatosDisponibles.Columns["IdPlato"].DataPropertyName = "IdPlato";
             dgvPlatosDisponibles.Columns["IdPlato"].Width = 50;
 
-
             CargarDatos();
         }
+
         //Carga los datos de los platos al data grid view
         void CargarDatos()
         {
-
             dgvPlatosDisponibles.DataSource = plato.ListarPlato();
             dgvPlatosDisponibles.Refresh();
         }
-
 
         //Este método se ejecuta cuando se hace clic en el botón 1.
         //Obtiene las filas seleccionadas de la tabla de platos disponibles y las guarda en un arreglo.
@@ -82,7 +77,6 @@ namespace Presentacion
         //Si no hay ninguna fila seleccionada, muestra un mensaje de error.
         private void button1_Click(object sender, EventArgs e)
         {
-
             DataGridViewRow[] selectedRows = dgvPlatosDisponibles.SelectedRows
             .OfType<DataGridViewRow>()
             .Where(row => !row.IsNewRow)
@@ -111,12 +105,10 @@ namespace Presentacion
                 // No se han seleccionado filas, mostrar un mensaje de error o realizar alguna acción adicional
                 MessageBox.Show("No se ha seleccionado ningún plato.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-
         }
     }
 }

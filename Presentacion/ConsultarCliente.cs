@@ -1,31 +1,23 @@
-﻿using System;
-using Entidades;
-using System.Data;
-using System.Linq;
-using System.Text;
-using LogicaNegocio;
-using System.Drawing;
+﻿using LogicaNegocio.Accesores;
+using System;
 using System.Windows.Forms;
-using System.ComponentModel;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 
 namespace Presentacion
 {
     public partial class ConsultarCliente : Form
     {
-        ClienteLN ingresarClientes = new ClienteLN();
         ClienteLN cliente;
+
         public ConsultarCliente()
         {
             InitializeComponent();
             dgvConsultaCliente.ReadOnly = true;
             cliente = new ClienteLN();
-            InitializeDataGridView();
+            InicializarDataGridView();
             CargarDatos();
         }
 
-        void InitializeDataGridView()
+        void InicializarDataGridView()
         {
             dgvConsultaCliente.ReadOnly = true;
             dgvConsultaCliente.AutoGenerateColumns = false;
@@ -56,7 +48,6 @@ namespace Presentacion
             dgvConsultaCliente.Columns["Genero"].Width = 80;
 
             CargarDatos();
-
         }
 
         void CargarDatos()
@@ -65,24 +56,13 @@ namespace Presentacion
             dgvConsultaCliente.Refresh();
         }
 
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button1_Click(object sender, EventArgs e)
+        private void btnRegersar_Click(object sender, EventArgs e)
         {
             new MenuPrincipal().Show();
             this.Hide();
-        }
+        }        
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-        private void dataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        private void dgvConsultaCliente_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
             DataGridViewColumn col = dgvConsultaCliente.Columns[e.ColumnIndex];
 
@@ -103,7 +83,6 @@ namespace Presentacion
                         }
                     }
                 }
-
             }
             catch (Exception ex)
             {

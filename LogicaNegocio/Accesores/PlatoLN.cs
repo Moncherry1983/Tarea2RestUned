@@ -1,21 +1,14 @@
-﻿using System;
-using Entidades;
-using System.Linq;
-using System.Text;
-using System.Collections;
-using System.Threading.Tasks;
+﻿using Entidades;
+using System;
 using System.Collections.Generic;
-using static LogicaNegocio.PlatoRestauranteLN;
 
-namespace LogicaNegocio
+namespace LogicaNegocio.Accesores
 {
     //se consulta el acceso de datos y se proceda la informacion nesesaria pen caso de manipular la informacion.
     public class PlatoLN
     {
-
         public void AgregarPlato(Plato ingresarPlato)
         {
-
             try
             {
                 //var PlatoActuales = PlatoAD.ListarPlatos();
@@ -30,10 +23,8 @@ namespace LogicaNegocio
             }
         }
 
-
         public Plato[] ListarPlato()
         {
-
             try
             {
                 //return PlatoAD.ListarPlatos();
@@ -41,11 +32,9 @@ namespace LogicaNegocio
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }
-
 
         //Este método recibe una lista de identificadores de platos seleccionados y devuelve una lista de objetos Plato que corresponden
         //a esos identificadores. Primero, obtiene todos los platos de la base de datos usando el objeto PlatoAD. Luego, verifica si alguna
@@ -70,10 +59,5 @@ namespace LogicaNegocio
             //return resultado.ToList();
             return new List<Plato>();
         }
-
     }
 }
-
-
-
-

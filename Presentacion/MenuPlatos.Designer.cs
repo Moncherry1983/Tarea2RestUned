@@ -37,8 +37,8 @@
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.dgvPlato = new System.Windows.Forms.DataGridView();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.btnGuardar = new System.Windows.Forms.Button();
+            this.btnRegresar = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.cmbPlatos = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPlato)).BeginInit();
@@ -50,8 +50,7 @@
             this.txtNombrePlato.Location = new System.Drawing.Point(152, 42);
             this.txtNombrePlato.Name = "txtNombrePlato";
             this.txtNombrePlato.Size = new System.Drawing.Size(149, 20);
-            this.txtNombrePlato.TabIndex = 20;
-            this.txtNombrePlato.TextChanged += new System.EventHandler(this.descripcion_TextChanged);
+            this.txtNombrePlato.TabIndex = 20;            
             // 
             // label2
             // 
@@ -125,23 +124,23 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(12, 214);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(115, 56);
-            this.button1.TabIndex = 37;
-            this.button1.Text = "Guardar";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.btnGuardar.Location = new System.Drawing.Point(12, 214);
+            this.btnGuardar.Name = "button1";
+            this.btnGuardar.Size = new System.Drawing.Size(115, 56);
+            this.btnGuardar.TabIndex = 37;
+            this.btnGuardar.Text = "Guardar";
+            this.btnGuardar.UseVisualStyleBackColor = true;
+            this.btnGuardar.Click += new System.EventHandler(this.btnGuardar_Click);
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(12, 298);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(115, 51);
-            this.button2.TabIndex = 38;
-            this.button2.Text = "Regresar";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.btnRegresar.Location = new System.Drawing.Point(12, 298);
+            this.btnRegresar.Name = "button2";
+            this.btnRegresar.Size = new System.Drawing.Size(115, 51);
+            this.btnRegresar.TabIndex = 38;
+            this.btnRegresar.Text = "Regresar";
+            this.btnRegresar.UseVisualStyleBackColor = true;
+            this.btnRegresar.Click += new System.EventHandler(this.btnRegresar_Click);
             // 
             // label5
             // 
@@ -159,7 +158,7 @@
             this.cmbPlatos.Name = "cmbPlatos";
             this.cmbPlatos.Size = new System.Drawing.Size(121, 21);
             this.cmbPlatos.TabIndex = 41;
-            this.cmbPlatos.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            this.cmbPlatos.SelectedIndexChanged += new System.EventHandler(this.cmbPlatos_SelectedIndexChanged);
             // 
             // MenuPlatos
             // 
@@ -168,8 +167,8 @@
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.cmbPlatos);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnRegresar);
+            this.Controls.Add(this.btnGuardar);
             this.Controls.Add(this.dgvPlato);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
@@ -181,6 +180,7 @@
             this.Controls.Add(this.label1);
             this.Name = "MenuPlatos";
             this.Text = "MenuRegistrarPlatos";
+            this.Load += new System.EventHandler(this.MenuPlatos_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvPlato)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -197,8 +197,8 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.DataGridView dgvPlato;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btnGuardar;
+        private System.Windows.Forms.Button btnRegresar;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ComboBox cmbPlatos;
     }
