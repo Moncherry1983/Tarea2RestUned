@@ -55,7 +55,7 @@ namespace Presentacion
             this.Hide();
         }        
 
-        private void dataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        private void dvgConsultaCategoriaPlato_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
             DataGridViewColumn col = dvgConsultaCategoriaPlato.Columns[e.ColumnIndex];
 
