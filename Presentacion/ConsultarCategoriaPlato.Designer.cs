@@ -53,7 +53,7 @@ namespace Presentacion
             this.dvgConsultaCategoriaPlato.Name = "dvgConsultaCategoriaPlato";
             this.dvgConsultaCategoriaPlato.Size = new System.Drawing.Size(358, 357);
             this.dvgConsultaCategoriaPlato.TabIndex = 4;            
-            this.dvgConsultaCategoriaPlato.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridView1_CellFormatting);
+            this.dvgConsultaCategoriaPlato.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dvgConsultaCategoriaPlato_CellFormatting);
             // 
             // label1
             // 
