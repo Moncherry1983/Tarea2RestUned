@@ -3,6 +3,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace Entidades
 {
@@ -17,7 +18,13 @@ namespace Entidades
         private bool estado; // Estado del restaurante (activo o inactivo)
         private string telefono; // Teléfono del restaurante
 
+        public Restaurante(int idRestaurante)
+        {
+            this.idRestaurante = idRestaurante;
+        }
+
         //Constructor de la clase
+        [JsonConstructor]
         public Restaurante(int idRestaurante, string nombreRestaurante, string direccion, bool estado, string telefono)
         {
             this.idRestaurante = idRestaurante;

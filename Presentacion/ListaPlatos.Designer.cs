@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.dgvPlatosDisponibles = new System.Windows.Forms.DataGridView();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnGuardarSeleccionados = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPlatosDisponibles)).BeginInit();
@@ -41,18 +41,17 @@
             this.dgvPlatosDisponibles.Location = new System.Drawing.Point(98, 50);
             this.dgvPlatosDisponibles.Name = "dgvPlatosDisponibles";
             this.dgvPlatosDisponibles.Size = new System.Drawing.Size(278, 279);
-            this.dgvPlatosDisponibles.TabIndex = 0;
-            this.dgvPlatosDisponibles.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            this.dgvPlatosDisponibles.TabIndex = 0;            
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(12, 335);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(118, 50);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "Guarda Plato";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.btnGuardarSeleccionados.Location = new System.Drawing.Point(12, 335);
+            this.btnGuardarSeleccionados.Name = "button1";
+            this.btnGuardarSeleccionados.Size = new System.Drawing.Size(118, 50);
+            this.btnGuardarSeleccionados.TabIndex = 1;
+            this.btnGuardarSeleccionados.Text = "Guarda Plato";
+            this.btnGuardarSeleccionados.UseVisualStyleBackColor = true;
+            this.btnGuardarSeleccionados.Click += new System.EventHandler(this.btnGuardarSeleccionados_Click);
             // 
             // label1
             // 
@@ -81,10 +80,11 @@
             this.ClientSize = new System.Drawing.Size(535, 402);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnGuardarSeleccionados);
             this.Controls.Add(this.dgvPlatosDisponibles);
             this.Name = "ListaPlatos";
             this.Text = "ListaPlatos";
+            this.Load += new System.EventHandler(this.ListaPlatos_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvPlatosDisponibles)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -94,7 +94,7 @@
         #endregion
 
         private System.Windows.Forms.DataGridView dgvPlatosDisponibles;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnGuardarSeleccionados;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
     }
