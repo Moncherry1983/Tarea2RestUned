@@ -396,23 +396,8 @@ namespace AccesoDatos
 
                         if (listaObjetos.Count > 0)
                         {
-                            //Armar los objeto ompletos de PlatoRestaurante
-                            List<PlatoRestaurante> listaProcesada = new List<PlatoRestaurante>();
-                            foreach (var item in (List<PlatoRestaurante>)listaObjetos[0])
-                            {
-                                List<Plato> listaPlatoTemp = new List<Plato>();
-                                foreach (var pl in item.ListaPlatosAsociados)
-                                {
-                                    Plato plTe = ((List<Plato>)listaObjetos[2]).Where(pla => pla.IdPlato == pl.IdPlato).FirstOrDefault();
-                                    listaPlatoTemp.Add(plTe);
-                                }
-
-                                Restaurante resTemp = ((List<Restaurante>)listaObjetos[1]).Where(rs=> rs.IdRestaurante == item.RestauranteAsignado.IdRestaurante).FirstOrDefault();
-                                PlatoRestaurante prTemp = new PlatoRestaurante(item.IdAsignacion, resTemp, listaPlatoTemp, item.FechaAfiliacion);
-                                listaProcesada.Add(prTemp);
-                            }
-
-                            listaObjetos[0] = listaProcesada;
+                            //Armar los objeto completos de PlatoRestaurante
+                            listaObjetos[0] = ProcesarPlatosPorRestaurante((List<PlatoRestaurante>)listaObjetos[0], (List<Restaurante>)listaObjetos[1], (List<Plato>)listaObjetos[2]);
                             ////
 
                             Paquete<List<Restaurante>> paqueteLista = new Paquete<List<Restaurante>>
@@ -462,6 +447,26 @@ namespace AccesoDatos
                 default:
                     break;
             }
+        }
+
+        private object ProcesarPlatosPorRestaurante(List<PlatoRestaurante> listaPlatoRestaurantes, List<Restaurante> listaRestaurantes, List<Plato> listaPlatos)
+        {
+            List<PlatoRestaurante> listaProcesada = new List<PlatoRestaurante>();
+            foreach (var platoRest in listaPlatoRestaurantes)
+            {
+                List<Plato> listaPlatoTemp = new List<Plato>();
+                foreach (var platoAsociado in platoRest.ListaPlatosAsociados)
+                {
+                    Plato platoTemp = listaPlatos.Where(infoPlato => infoPlato.IdPlato == platoAsociado.IdPlato).FirstOrDefault();
+                    listaPlatoTemp.Add(platoTemp);
+                }
+
+                Restaurante resTemp = listaRestaurantes.Where(infoRestaurante => infoRestaurante.IdRestaurante == platoRest.RestauranteAsignado.IdRestaurante).FirstOrDefault();
+                PlatoRestaurante prTemp = new PlatoRestaurante(platoRest.IdAsignacion, resTemp, listaPlatoTemp, platoRest.FechaAfiliacion);
+                listaProcesada.Add(prTemp);
+            }
+
+            return listaProcesada;
         }
 
         private void ProcesarRestaurante(string textoSolicitud, Paquete<Restaurante> paqueteRestaurante, SimpleTCP.Message msg)
