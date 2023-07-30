@@ -1,12 +1,14 @@
 ﻿using System;
+using System;
 using Entidades;
 using SimpleTCP;
 using LogicaNegocio;
 using System.Collections;
+using System.Collections;
 using System.Windows.Forms;
 using Presentacion.Miscelaneas;
-using LogicaNegocio.Enumeradores;
 using System.Collections.Generic;
+using LogicaNegocio.Enumeradores;
 
 namespace Presentacion
 {
