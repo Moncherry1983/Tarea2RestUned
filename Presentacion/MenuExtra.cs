@@ -1,31 +1,33 @@
-﻿using Entidades;
-using LogicaNegocio.Accesores;
-using System;
-using System.Data;
+﻿using System;
+using Entidades;
 using System.Linq;
+using LogicaNegocio;
+using System.Collections;
 using System.Windows.Forms;
+using LogicaNegocio.Accesores;
+using Presentacion.Miscelaneas;
+using LogicaNegocio.Enumeradores;
+using System.Collections.Generic;
 
 namespace Presentacion
 {
     public partial class MenuExtra : Form
     {
-        //inicializa los arrays
-        CategoriaPlatoLN categorias = new CategoriaPlatoLN();
-
-        ExtraLN extras;
-
-        public MenuExtra()
-        {    //inicializa los componentes de la ventana
+        //inicializacion de arrays que se van a utilizar en la ventana
+        PantallaEspera pantallaEspera = new PantallaEspera();
+        readonly string nombreMaquinaCliente;
+        AdministradorTCP tcpClient;
+        List<CategoriaPlato> listaCategoriaPlatos = new List<CategoriaPlato>();
+        public MenuExtra(string nombreMaquinaCliente)
+        {    //inicializa los componentes de la ventana      
             InitializeComponent();
             dgvExtra.ReadOnly = true;
-            extras = new ExtraLN();
-            ObtenerInformacionCategorias();
-            InicializarDataGridView();
-            CargarDatos();
+            this.nombreMaquinaCliente = nombreMaquinaCliente;         
+            InitializeDataGridView();
+            InicializarComboBox();
         }
-
         //crear los datagrid para que se muestren los datos
-        void InicializarDataGridView()
+        void InitializeDataGridView()
         {
             dgvExtra.ReadOnly = true;
             dgvExtra.AutoGenerateColumns = false;
@@ -51,34 +53,28 @@ namespace Presentacion
             dgvExtra.Columns["IdCategoriaExtra"].DataPropertyName = "IdCategoriaExtra";
             dgvExtra.Columns["IdCategoriaExtra"].Width = 120;
 
-            CargarDatos();
         }
 
+
         //metodo para obtener las categorias disponibles
-        private void ObtenerInformacionCategorias()
+        private void InicializarComboBox()
         {
             //llamar metodo listar Categorias desde la logica de negocio
 
-            //carga el combobox con las categorías disponibles que se obtienen de una función.
-            //Establece el estilo del combobox como una lista desplegable, el campo que se muestra
-            //como la descripción de la categoría y el campo que se usa como el valor de la categoría.
-            //Asigna el resultado de la función ObtenerCategoriasDisponibles() como la fuente de datos del combobox.
+            //cargar combox
             cmbCategoria.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbCategoria.DisplayMember = "Descripcion";
             cmbCategoria.ValueMember = "IdCategoria";
-            cmbCategoria.DataSource = ObtenerCategoriasDisponibles();
+
+            //cmbPlatos.DataSource = ObtenerCategoriasDisponibles();
         }
 
         private void MenuExtra_Load(object sender, EventArgs e)
         {
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
+            tcpClient = new AdministradorTCP();
+            tcpClient.TcpClient.DataReceived += Client_DataReceived;
+            cmbEstado.SelectedIndex = 0;
+            SolicitarDatosAlServidor();
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -87,16 +83,12 @@ namespace Presentacion
             this.Hide();
         }
 
-        void CargarDatos()
-        {
-            dgvExtra.DataSource = extras.ListarExtra();
-            dgvExtra.Refresh();
-        }
 
         private void button1_Click(object sender, EventArgs e)
         {
             try
             {
+
                 int idExtra = int.Parse(txtIdextra.Text);
                 string descripcion = txtDescripcion.Text;
                 int idCategoriaExtra = (int)cmbCategoria.SelectedValue;
@@ -104,19 +96,25 @@ namespace Presentacion
 
                 if (String.IsNullOrEmpty(txtIdextra.Text) || String.IsNullOrEmpty(txtDescripcion.Text) || String.IsNullOrEmpty(txtPrecio.Text))
                 {
+
                     MessageBox.Show("No deje campos vacios por favor...");
+
                 }
                 else if (cmbEstado.SelectedIndex == -1 && cmbCategoria.SelectedIndex == -1)
                 {
+
                     MessageBox.Show("No deje campos vacios por favor...");
+
+
                 }
                 else
                 {
                     bool estado = cmbEstado.SelectedIndex == 0;
                     ExtraLN extraLN = new ExtraLN();
-                    Extra registrarExtra = new Extra(int.Parse(txtIdextra.Text), txtDescripcion.Text, int.Parse(txtPrecio.Text), cmbEstado.SelectedIndex == 0, (int)cmbCategoria.SelectedValue);
-                    dgvExtra.DataSource = extraLN.ListarExtra();
-                    dgvExtra.Refresh();
+                    Extra registrarExtra = new Extra(int.Parse(txtIdextra.Text), txtDescripcion.Text, int.Parse(txtPrecio.Text), cmbEstado.SelectedIndex ==0,(int)cmbCategoria.SelectedValue);
+                    GuardarExtra(registrarExtra);
+                    SolicitarDatosAlServidor();
+
                 }
 
                 txtIdextra.Text = " ";
@@ -124,11 +122,15 @@ namespace Presentacion
                 cmbEstado.SelectedIndex = -1;
                 cmbCategoria.SelectedValue = " ";
                 txtPrecio.Text = " ";
+
+
             }
             catch (Exception ex)
             {
+
                 MessageBox.Show(ex.Message, "\n\tHa sucedido un error y no podido registrar el extra \n", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+
         }
 
         private void txtIdextra_TextChanged(object sender, EventArgs e)
@@ -147,7 +149,6 @@ namespace Presentacion
                 }
             }
         }
-
         //Este método se ejecuta cuando el usuario cambia el texto de un cuadro de texto que representa el identificador de una categoría de plato.
         //El método recibe como parámetro el cuadro de texto y el evento que lo desencadena. El método obtiene el texto del cuadro de texto y lo almacena
         //en una variable llamada texto.Luego, recorre cada carácter del texto y verifica si es un dígito o no.Si encuentra un carácter que no es un dígito,
@@ -168,7 +169,6 @@ namespace Presentacion
                 }
             }
         }
-
         //Este método se llama cuando el usuario cambia el texto del campo de precio extra.
         //Recibe como parámetro el objeto que representa el campo de texto. Luego, asigna el texto del campo a una variable llamada texto.
         //Después, recorre cada carácter del texto y verifica si es un número o no. Si no es un número, lo elimina del texto y mueve el cursor
@@ -189,7 +189,6 @@ namespace Presentacion
                 }
             }
         }
-
         //validacion por si el usuario no escoje en el combo box
         private void cmbEstado_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -217,12 +216,13 @@ namespace Presentacion
                 if (col.Name == "IdCategoriaExtra")
                 {
                     if (e.Value != null)
-                        e.Value = ObtenerCategoriasDisponibles()
+                        e.Value = listaCategoriaPlatos
                             .Where(cp => cp.IdCategoria == (int)e.Value).FirstOrDefault().Descripcion;
                 }
             }
             catch (Exception ex)
             {
+
             }
 
             try
@@ -239,10 +239,108 @@ namespace Presentacion
             }
         }
 
-        //llama a la array de categorias disponibles y la muestra en el combo box de categorias
-        private CategoriaPlato[] ObtenerCategoriasDisponibles()
+        private void GuardarExtra(Extra ingresarExtras)
         {
-            return categorias.ListarCategoriaPlatoCombo();
+            try
+            {
+                if (tcpClient.ConectarTCP())
+                {
+                    var paquete = new Paquete<Extra>()
+                    {
+                        ClienteId = nombreMaquinaCliente,
+                        TiposAccion = TiposAccion.Agregar,
+                        ListaInstaciasGenericas = new ArrayList() { ingresarExtras }
+                    };
+
+                    string ExtraSerializada = AdmistradorPaquetes.SerializePackage(paquete);
+                    tcpClient.TcpClient.WriteLineAndGetReply(ExtraSerializada, TimeSpan.FromSeconds(3));
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al conectar con el servidor: " + ex.Message);
+            }
         }
+
+
+        private void SolicitarDatosAlServidor()
+        {
+            try
+            {
+                if (tcpClient.ConectarTCP())
+                {
+                    pantallaEspera.Show();
+                    Extra extra = new Extra(0,"",0,true,0);
+                    CategoriaPlato categoriaPlato = new CategoriaPlato(0, "", true);
+                    var paquete = new Paquete<Extra>()
+                    {
+                        ClienteId = nombreMaquinaCliente,
+                        TiposAccion = TiposAccion.Listar,
+                        ListaInstaciasGenericas = new ArrayList() { extra }
+                    };
+
+                    string ExtraSerializada = AdmistradorPaquetes.SerializePackage(paquete);
+                    tcpClient.TcpClient.WriteLineAndGetReply(ExtraSerializada, TimeSpan.FromSeconds(3));
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al conectar con el servidor: " + ex.Message);
+            }
+        }
+
+        private void Client_DataReceived(object sender, SimpleTCP.Message e)
+        {
+            string valorRecibido = e.MessageString.TrimEnd('\u0013');
+            var informacionExtra = AdmistradorPaquetes.DeserializePackage(valorRecibido);
+
+            if (informacionExtra != null)
+            {
+                switch (informacionExtra.TiposAccion)
+                {
+                    case TiposAccion.Agregar:
+                        ReiniciarPantalla();
+                        break;
+
+                    case TiposAccion.Listar:
+                        List<Extra> ingresarExtras = informacionExtra.InstaciaGenerica;
+                        CargarDatos(ingresarExtras);
+                        break;
+
+                    case TiposAccion.ObtenerObjetoEspecifico:
+
+                    default:
+                        break;
+                }
+            }
+            else
+            {
+                MessageBox.Show("La categoría de plato no existe");
+            }
+        }
+
+        private void ReiniciarPantalla()
+        {
+            txtIdextra.Invoke((MethodInvoker)delegate ()
+            {
+                SolicitarDatosAlServidor();
+                txtIdextra.Focus();
+                cmbEstado.SelectedIndex = 1;
+            });
+        }
+
+        private void CargarDatos(List<Extra> lista)
+        {
+            dgvExtra.Invoke((MethodInvoker)delegate ()
+            {
+                pantallaEspera.Hide();
+                dgvExtra.DataSource = lista;
+                dgvExtra.Refresh();
+            });
+        }
+
+
+
     }
+
 }

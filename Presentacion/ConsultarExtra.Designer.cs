@@ -51,7 +51,6 @@
             this.dvgConsultaExtra.Name = "dvgConsultaExtra";
             this.dvgConsultaExtra.Size = new System.Drawing.Size(523, 357);
             this.dvgConsultaExtra.TabIndex = 4;
-            this.dvgConsultaExtra.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             this.dvgConsultaExtra.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridView1_CellFormatting);
             // 
             // label1
@@ -73,6 +72,7 @@
             this.Controls.Add(this.label1);
             this.Name = "ConsultarExtra";
             this.Text = "ConsultarExtra";
+            this.Load += new System.EventHandler(this.ConsultarExtra_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dvgConsultaExtra)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

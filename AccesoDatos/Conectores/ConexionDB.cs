@@ -6,16 +6,16 @@ namespace AccesoDatos
 {
     public static class ConexionDB
     {
-        
+
         //static readonly string serverName = "JOSEANDRES\\SQLEXPRESS";
         //agrega su base de datos del profesor....
-        //static SqlConnection conectar = new SqlConnection($"Data Source={***Nombre servidor***};Initial Catalog=RESTUNED;Integrated Security=True");
+        //static SqlConnection conectar = new SqlConnection($"Data Source=/*{***Nombre servidor****/};Initial Catalog=RESTUNED;Integrated Security=True");
 
         //base de datos estudiante.
-        //static SqlConnection conectar = new SqlConnection($"Data Source={serverName};Initial Catalog=RESTUNED;Integrated Security=True");
+        static SqlConnection conectar = new SqlConnection($"Data Source=JOSEANDRES\\SQLEXPRESS;Initial Catalog=RESTUNED;Integrated Security=True");
 
-        static readonly string serverName = "LUGOBO-LAPTOP";
-        static SqlConnection conectar = new SqlConnection($"Data Source={serverName};Initial Catalog=RESTUNED;Integrated Security=True");
+        //static readonly string serverName = "LUGOBO-LAPTOP";
+        //static SqlConnection conectar = new SqlConnection($"Data Source={serverName};Initial Catalog=RESTUNED;Integrated Security=True");
 
         //Este método intenta abrir una conexión con la base de datos utilizando la información de conexión predefinida.
         //Si la conexión es exitosa, devuelve true, lo que significa que la conexión se realizó correctamente.

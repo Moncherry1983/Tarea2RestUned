@@ -1,17 +1,17 @@
-﻿using Entidades;
-using LogicaNegocio;
-using LogicaNegocio.Enumeradores;
-using Presentacion.Miscelaneas;
+﻿using System;
+using Entidades;
 using SimpleTCP;
-using System;
+using LogicaNegocio;
 using System.Collections;
-using System.Collections.Generic;
 using System.Windows.Forms;
+using Presentacion.Miscelaneas;
+using LogicaNegocio.Enumeradores;
+using System.Collections.Generic;
 
 namespace Presentacion
 {
     public partial class ConsultarCategoriaPlato : Form
-    {        
+    {
         readonly string nombreMaquinaCliente;
         PantallaEspera pantallaEspera = new PantallaEspera();
         AdministradorTCP tcpClient;
@@ -69,7 +69,7 @@ namespace Presentacion
             }
             catch (Exception)
             {
-                e.Value = "Unknown";
+                e.Value = "desconocido";
             }
         }
 

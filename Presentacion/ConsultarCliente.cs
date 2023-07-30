@@ -1,20 +1,27 @@
-﻿using LogicaNegocio.Accesores;
-using System;
+﻿using System;
+using Entidades;
+using LogicaNegocio;
 using System.Windows.Forms;
+using LogicaNegocio.Accesores;
+using Presentacion.Miscelaneas;
+using LogicaNegocio.Enumeradores;
+using System.Collections.Generic;
 
 namespace Presentacion
 {
     public partial class ConsultarCliente : Form
     {
-        ClienteLN cliente;
+        readonly string nombreMaquinaCliente;
+        PantallaEspera pantallaEspera = new PantallaEspera();
+        AdministradorTCP tcpClient;
 
-        public ConsultarCliente()
+        public ConsultarCliente(string nombreMaquinaCliente)
         {
             InitializeComponent();
             dgvConsultaCliente.ReadOnly = true;
-            cliente = new ClienteLN();
+            this.nombreMaquinaCliente = nombreMaquinaCliente;
             InicializarDataGridView();
-            CargarDatos();
+
         }
 
         void InicializarDataGridView()
@@ -47,14 +54,9 @@ namespace Presentacion
             dgvConsultaCliente.Columns["Genero"].DataPropertyName = "Genero";
             dgvConsultaCliente.Columns["Genero"].Width = 80;
 
-            CargarDatos();
         }
 
-        void CargarDatos()
-        {
-            dgvConsultaCliente.DataSource = cliente.ListarCliente();
-            dgvConsultaCliente.Refresh();
-        }
+
 
         private void btnRegersar_Click(object sender, EventArgs e)
         {
@@ -88,6 +90,64 @@ namespace Presentacion
             {
                 e.Value = "Desconocido";
             }
+        }
+
+
+        private void Client_DataReceived(object sender, SimpleTCP.Message e)
+        {
+            string valorRecibido = e.MessageString.TrimEnd('\u0013');
+            Paquete<List<Cliente>> informacionCliente = AdmistradorPaquetes.DeserializePackage(valorRecibido);
+
+            if (informacionCliente != null)
+            {
+                List<Cliente> listaCliente = (List<Cliente>)informacionCliente.ListaInstaciasGenericas[0];
+                CargarDatos(listaCliente);
+            }
+            else
+            {
+                MessageBox.Show("El plato no existe");
+            }
+        }
+
+        private void SolicitarDatosAlServidor()
+        {
+            try
+            {
+                if (tcpClient.ConectarTCP())
+                {
+                    pantallaEspera.Show();
+                    Cliente ingresoCliente = new Cliente("", "", "", "", new DateTime(), 'm');
+                    var paquete = new Paquete<Cliente>()
+                    {
+                        ClienteId = nombreMaquinaCliente,
+                        TiposAccion = TiposAccion.Listar,
+                        ListaInstaciasGenericas = new System.Collections.ArrayList() { ingresoCliente }
+                    };
+
+                    string CategoriaPlatoSerializada = AdmistradorPaquetes.SerializePackage(paquete);
+                    tcpClient.TcpClient.WriteLineAndGetReply(CategoriaPlatoSerializada, TimeSpan.FromSeconds(3));
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al conectar con el servidor: " + ex.Message);
+            }
+        }
+        private void CargarDatos(List<Cliente> lista)
+        {
+            dgvConsultaCliente.Invoke((MethodInvoker)delegate ()
+            {
+                dgvConsultaCliente.DataSource = lista;
+                dgvConsultaCliente.Refresh();
+                pantallaEspera.Hide();
+            });
+        }
+
+        private void ConsultarCliente_Load(object sender, EventArgs e)
+        {
+            tcpClient = new AdministradorTCP();
+            tcpClient.TcpClient.DataReceived += Client_DataReceived;
+            SolicitarDatosAlServidor();
         }
     }
 }

@@ -3,6 +3,7 @@ using Entidades;
 using System.Linq;
 using System.Text;
 using System.Data;
+using System.CodeDom;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ namespace AccesoDatos.Accesores
 {
     public static class ExtraAD
     {
-        public static void AgregarExtra(Extra ingresarExtras) 
+        public static bool AgregarExtra(Extra ingresarExtras) 
         {
             string query = $"INSERT INTO Extra(IdExtra, Descripcion, IdCategoria, Estado, Precio ) VALUES(@IdExtra, @Descripcion, @IdCategoria, @Estado, @Precio)";
             try
@@ -46,12 +47,14 @@ namespace AccesoDatos.Accesores
                     throw ex;
                 }
             }
+
+            return true;
         }
 
         public static List<Extra> ListarExtra()
         {
             List<Extra> ingresarExtras = new List<Extra>();
-            string query = $"SELECT e.IdExtra, e.Descripcion,e.IdCategoria, e.Estado, e.Precio FROM Extra as e INNER JOIN  CategoriaPlato as c ON e.IdExtra = c.IdCategoria ";
+            string query = $"SELECT e.IdExtra, e.Descripcion,e.IdCategoria, e.Estado, e.Precio, c.Descripcion, c.Estado FROM Extra as e INNER JOIN  CategoriaPlato as c ON e.IdExtra = c.IdCategoria WHERE e.Estado = 1";
 
             SqlDataReader reader = null;
 
@@ -66,9 +69,11 @@ namespace AccesoDatos.Accesores
                         while (reader.Read())
 
                         {
-                            CategoriaPlato categoriaPlato = new CategoriaPlato(reader.GetInt32(2), reader.GetString(4), reader.GetBoolean(5));
-                            Extra extra = new Extra(reader.GetInt32(0), reader.GetString(1), reader.GetInt32(2), reader.GetBoolean(3), reader.GetInt32(4));
+                            CategoriaPlato categoriaPlato = new CategoriaPlato(reader.GetInt32(2), reader.GetString(5), reader.GetBoolean(6));
+                            Extra extra = new Extra(reader.GetInt32(0), reader.GetString(1), reader.GetInt32(4), reader.GetBoolean(3), reader.GetInt32(2));
+
                             ingresarExtras.Add(extra);
+                           
                         }
                     }
                 }
@@ -99,7 +104,7 @@ namespace AccesoDatos.Accesores
         public static Extra ObtenerExtra(int idExtra)
         {
             Extra ingresarExtras = null;
-            string query = $"\"SELECT e.IdExtra, e.Descripcion,e.IdCategoria, e.Estado, e.Precio FROM Extra as e INNER JOIN  CategoriaPlato as c ON e.IdExtra = c.IdCategoria WHERE e.IdExtra ={idExtra}";
+            string query = $"\"SELECT e.IdExtra, e.Descripcion,e.IdCategoria, e.Estado, e.Precio, c.IdCategoria, c.Descripcion, c.Estado FROM Extra as e INNER JOIN  CategoriaPlato as c ON e.IdExtra = c.IdCategoria WHERE e.IdExtra ={idExtra}";
             SqlDataReader reader = null;
 
             try
@@ -112,7 +117,7 @@ namespace AccesoDatos.Accesores
                     {
                         while (reader.Read())
                         {
-                            CategoriaPlato categoriaPlato = new CategoriaPlato(reader.GetInt32(2), reader.GetString(4), reader.GetBoolean(5));
+                            CategoriaPlato categoriaPlato = new CategoriaPlato(reader.GetInt32(5), reader.GetString(6), reader.GetBoolean(71));
                             Extra extra = new Extra(reader.GetInt32(0), reader.GetString(1), reader.GetInt32(2), reader.GetBoolean(3), reader.GetInt32(4));
                             return ingresarExtras;
                         }

@@ -41,7 +41,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(157, 13);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Consulta de Clientes ingresados";            
+            this.label1.Text = "Consulta de Clientes ingresados";
             // 
             // dgvConsultaCliente
             // 
@@ -49,13 +49,13 @@
             this.dgvConsultaCliente.Location = new System.Drawing.Point(12, 81);
             this.dgvConsultaCliente.Name = "dgvConsultaCliente";
             this.dgvConsultaCliente.Size = new System.Drawing.Size(700, 357);
-            this.dgvConsultaCliente.TabIndex = 1;            
+            this.dgvConsultaCliente.TabIndex = 1;
             this.dgvConsultaCliente.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvConsultaCliente_CellFormatting);
             // 
-            // button1
+            // btnRegresar
             // 
             this.btnRegresar.Location = new System.Drawing.Point(601, 41);
-            this.btnRegresar.Name = "button1";
+            this.btnRegresar.Name = "btnRegresar";
             this.btnRegresar.Size = new System.Drawing.Size(90, 34);
             this.btnRegresar.TabIndex = 2;
             this.btnRegresar.Text = "Regresar";
@@ -72,6 +72,7 @@
             this.Controls.Add(this.label1);
             this.Name = "ConsultarCliente";
             this.Text = "ConsultarCliente";
+            this.Load += new System.EventHandler(this.ConsultarCliente_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvConsultaCliente)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

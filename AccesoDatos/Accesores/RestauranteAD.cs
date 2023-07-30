@@ -1,11 +1,11 @@
 ﻿//La capa de acceso a datos es una parte importante de cualquier aplicación que necesita trabajar con una base de datos o un servicio externo.
 //Su objetivo es simplificar la conexión, consulta y modificación de los datos, para que el resto de la aplicación los pueda usar de forma fácil y eficaz.
 //La capa de acceso a datos también se ocupa de las transacciones, los errores y la seguridad de los datos.
-using Entidades;
 using System;
-using System.Collections.Generic;
+using Entidades;
 using System.Data;
 using System.Data.SqlClient;
+using System.Collections.Generic;
 
 namespace AccesoDatos.Accesores
 {
@@ -51,7 +51,7 @@ namespace AccesoDatos.Accesores
         public static List<Restaurante> ListarRestaurante()
         {
             List<Restaurante> ListaRestaurantes = new List<Restaurante>();
-            string query = $"SELECT IdRestaurante, Nombre, Direccion, Estado, Telefono FROM Restaurante WHERE Estado = 1";
+            string query = $"SELECT IdRestaurante, Nombre, Direccion, Estado, Telefono FROM Restaurante WHERE Estado = 1" ;
 
             SqlDataReader reader = null;
 
@@ -65,13 +65,7 @@ namespace AccesoDatos.Accesores
                     {
                         while (reader.Read())
                         {
-                            Restaurante restaurante = new Restaurante(
-                                reader.GetInt32(0),
-                                reader.GetString(1),
-                                reader.GetString(2),
-                                reader.GetBoolean(3),
-                                reader.GetString(4)
-                            );
+                            Restaurante restaurante = new Restaurante(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetBoolean(3), reader.GetString(4));
                             ListaRestaurantes.Add(restaurante);
                         }
                     }

@@ -57,6 +57,10 @@ namespace Entidades
             get { return idCategoriaExtra; }
             set { idCategoriaExtra = value; }
         }
+
+
+
+
         #endregion
 
     }
