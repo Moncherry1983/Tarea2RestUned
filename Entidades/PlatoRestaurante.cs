@@ -3,6 +3,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace Entidades
 {
@@ -13,18 +14,29 @@ namespace Entidades
         private DateTime fechaAfiliacion;
         private Restaurante restauranteAsignado;
         private int idAsignacion;
-        private Plato platoAsociado;
+        private List<Plato> platosAsociados;
+        private int idPlatoAsociado;
 
-
-        public PlatoRestaurante( int idAsignacion, Restaurante restauranteAsignado, Plato platoAsociado, DateTime fechaAfiliacion)
+        [JsonConstructor]
+        public PlatoRestaurante( int idAsignacion, Restaurante restauranteAsignado, List<Plato> platoAsociado, DateTime fechaAfiliacion)
         {
             this.idAsignacion = idAsignacion;
             this.restauranteAsignado = restauranteAsignado;
-            this.platoAsociado = platoAsociado;
+            this.idPlatoAsociado = -1;
+            this.platosAsociados = platoAsociado;
             this.fechaAfiliacion = fechaAfiliacion;
         }
 
-      
+        public PlatoRestaurante(int idAsignacion, int restauranteAsignado, int idPlatoAsociado, DateTime fechaAfiliacion)
+        {
+            this.idAsignacion = idAsignacion;
+            this.restauranteAsignado = new Restaurante(restauranteAsignado);
+            this.idPlatoAsociado = idPlatoAsociado;
+            this.platosAsociados =  null;
+            this.fechaAfiliacion = fechaAfiliacion;
+        }
+
+
 
         public int IdAsignacion
         {
@@ -45,33 +57,39 @@ namespace Entidades
 
         }
 
-        public Plato PlatoAsociado
+        public List<Plato> ListaPlatosAsociados
         {
-            get { return platoAsociado; }
-            set { platoAsociado = value; }
+            get { return platosAsociados; }
+            set { platosAsociados = value; }
+
+        }
+
+        public int IdPlatoAsociado
+        {
+            get { return idPlatoAsociado; }
+            set { idPlatoAsociado = value; }
+        }
+
+
+        public int GetIdRestaurante
+        {
+            get { return restauranteAsignado!= null ? restauranteAsignado.IdRestaurante : -1; }
+
+        }
+
+        public string GetNombreRestaurante
+        {
+            get { return restauranteAsignado != null ? restauranteAsignado.NombreRestaurante : ""; }
+
+        }
+
+        public string GetDireccionRestaurante
+        {
+            get { return restauranteAsignado != null ? restauranteAsignado.Direccion: ""; }
 
         }
 
 
-        //public int GetIdRestaurante
-        //{
-        //    get { return restauranteAsignado.IdRestaurante; }            
-
-        //}
-
-        //public string GetNombreRestaurante
-        //{
-        //    get { return restauranteAsignado.NombreRestaurante; }
-
-        //}
-
-        //public string GetDireccionRestaurante
-        //{
-        //    get { return restauranteAsignado.Direccion; }
-
-        //}
-
-    
 
         #endregion
     }

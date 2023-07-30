@@ -162,7 +162,7 @@ namespace Presentacion
                     Restaurante restaurante = new Restaurante(0, "", "", true, "");
                     CategoriaPlato categoriaPlato = new CategoriaPlato(0, "", true);
                     Plato plato = new Plato(0, "", 0, categoriaPlato);
-                    PlatoRestaurante platoRestaurante = new PlatoRestaurante(0,restaurante,plato,new DateTime());
+                    PlatoRestaurante platoRestaurante = new PlatoRestaurante(0,restaurante,new List<Plato>(),new DateTime());
                     var paquete = new Paquete<PlatoRestaurante>()
                     {
                         ClienteId = nombreMaquinaCliente,
