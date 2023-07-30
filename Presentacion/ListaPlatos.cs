@@ -1,5 +1,8 @@
 ﻿using Entidades;
+using LogicaNegocio;
 using LogicaNegocio.Accesores;
+using LogicaNegocio.Enumeradores;
+using Presentacion.Miscelaneas;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -11,25 +14,23 @@ namespace Presentacion
     public partial class ListaPlatos : Form
     {
         //inicializacion de arrays a utilizar
-        private PlatoLN platoLn = new PlatoLN();
-        string nombreMaquinaCliente;
-
-        PlatoLN plato;
-        private readonly Plato[] platos = new Plato[10];
+        readonly string nombreMaquinaCliente;
+        PantallaEspera pantallaEspera = new PantallaEspera();
+        AdministradorTCP tcpClient;
+        List<CategoriaPlato> listaCategoriaPlatos = new List<CategoriaPlato>();
         public List<int> idPlatosSeleccionados = new List<int>();
 
         public ListaPlatos(string nombreMaquinaCliente)
         {
             //inicializacion de componentes
             InitializeComponent();
+            this.nombreMaquinaCliente = nombreMaquinaCliente;
             dgvPlatosDisponibles.ReadOnly = true;
-            plato = new PlatoLN();
             InicializarDataGridView();
-            CargarDatos();
         }
 
         //Este código corresponde a una clase llamada ListaPlatos que hereda de la clase Form y sirve para mostrar una lista de platos disponible
-        private void button2_Click(object sender, EventArgs e)
+        private void btnRegresar_Click(object sender, EventArgs e)
         {
             new MenuPlatoRestaurante(this.nombreMaquinaCliente).Show();
             this.Hide();
@@ -58,16 +59,14 @@ namespace Presentacion
             dgvPlatosDisponibles.Columns["Precio"].Width = 60;
 
             dgvPlatosDisponibles.Columns["IdPlato"].DataPropertyName = "IdPlato";
-            dgvPlatosDisponibles.Columns["IdPlato"].Width = 50;
-
-            CargarDatos();
+            dgvPlatosDisponibles.Columns["IdPlato"].Width = 50;            
         }
-
-        //Carga los datos de los platos al data grid view
-        void CargarDatos()
+        
+        private void ListaPlatos_Load(object sender, EventArgs e)
         {
-            dgvPlatosDisponibles.DataSource = plato.ListarPlato();
-            dgvPlatosDisponibles.Refresh();
+            tcpClient = new AdministradorTCP();
+            tcpClient.TcpClient.DataReceived += Client_DataReceived;
+            SolicitarDatosAlServidor();
         }
 
         //Este método se ejecuta cuando se hace clic en el botón 1.
@@ -76,7 +75,7 @@ namespace Presentacion
         //que es el id del plato. Agrega los ids de los platos seleccionados a una lista. Después pregunta
         //al usuario si quiere seguir agregando más platos o terminar. Si el usuario dice que no, cierra la ventana.
         //Si no hay ninguna fila seleccionada, muestra un mensaje de error.
-        private void button1_Click(object sender, EventArgs e)
+        private void btnGuardarSeleccionados_Click(object sender, EventArgs e)
         {
             DataGridViewRow[] selectedRows = dgvPlatosDisponibles.SelectedRows
             .OfType<DataGridViewRow>()
@@ -108,8 +107,56 @@ namespace Presentacion
             }
         }
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void Client_DataReceived(object sender, SimpleTCP.Message e)
         {
+            string valorRecibido = e.MessageString.TrimEnd('\u0013');
+            Paquete<List<Plato>> informacionCategoriaPlatos = AdmistradorPaquetes.DeserializePackage(valorRecibido);
+
+            if (informacionCategoriaPlatos != null)
+            {
+                List<Plato> listaCategoriaPlatos = (List<Plato>)informacionCategoriaPlatos.ListaInstaciasGenericas[0];
+                CargarDatos(listaCategoriaPlatos);
+            }
+            else
+            {
+                MessageBox.Show("El plato no existe");
+            }
         }
+
+        private void SolicitarDatosAlServidor()
+        {
+            try
+            {
+                if (tcpClient.ConectarTCP())
+                {
+                    pantallaEspera.Show();
+                    CategoriaPlato categoriaPlato = new CategoriaPlato(0, "", true);
+                    Plato plato = new Plato(0, "", 0, categoriaPlato);
+                    var paquete = new Paquete<Plato>()
+                    {
+                        ClienteId = nombreMaquinaCliente,
+                        TiposAccion = TiposAccion.Listar,
+                        ListaInstaciasGenericas = new System.Collections.ArrayList() { plato }
+                    };
+
+                    string CategoriaPlatoSerializada = AdmistradorPaquetes.SerializePackage(paquete);
+                    tcpClient.TcpClient.WriteLineAndGetReply(CategoriaPlatoSerializada, TimeSpan.FromSeconds(3));
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al conectar con el servidor: " + ex.Message);
+            }
+        }
+        private void CargarDatos(List<Plato> lista)
+        {
+            dgvPlatosDisponibles.Invoke((MethodInvoker)delegate ()
+            {
+                dgvPlatosDisponibles.DataSource = lista;
+                dgvPlatosDisponibles.Refresh();
+                pantallaEspera.Hide();
+            });
+        }
+
     }
 }

@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using AccesoDatos.Accesores;
 using LogicaNegocio.Enumeradores;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace AccesoDatos
 {
@@ -89,8 +90,7 @@ namespace AccesoDatos
                 case Paquete<PlatoRestaurante> paquetePlatoRestaurante:
                     ProcesarPlatoRestaurante(textoSolicitud, paquetePlatoRestaurante, msg);
                     break;
-
-                case Paquete<Restaurante> paqueteRestaurante:                    
+                                    
                 case Paquete<Restaurante> paqueteRestaurante:
                     ProcesarRestaurante(textoSolicitud, paqueteRestaurante, msg);
                     break;
@@ -396,6 +396,25 @@ namespace AccesoDatos
 
                         if (listaObjetos.Count > 0)
                         {
+                            //Armar los objeto ompletos de PlatoRestaurante
+                            List<PlatoRestaurante> listaProcesada = new List<PlatoRestaurante>();
+                            foreach (var item in (List<PlatoRestaurante>)listaObjetos[0])
+                            {
+                                List<Plato> listaPlatoTemp = new List<Plato>();
+                                foreach (var pl in item.ListaPlatosAsociados)
+                                {
+                                    Plato plTe = ((List<Plato>)listaObjetos[2]).Where(pla => pla.IdPlato == pl.IdPlato).FirstOrDefault();
+                                    listaPlatoTemp.Add(plTe);
+                                }
+
+                                Restaurante resTemp = ((List<Restaurante>)listaObjetos[1]).Where(rs=> rs.IdRestaurante == item.RestauranteAsignado.IdRestaurante).FirstOrDefault();
+                                PlatoRestaurante prTemp = new PlatoRestaurante(item.IdAsignacion, resTemp, listaPlatoTemp, item.FechaAfiliacion);
+                                listaProcesada.Add(prTemp);
+                            }
+
+                            listaObjetos[0] = listaProcesada;
+                            ////
+
                             Paquete<List<Restaurante>> paqueteLista = new Paquete<List<Restaurante>>
                             {
                                 ClienteId = paqueteRestaurante.ClienteId,

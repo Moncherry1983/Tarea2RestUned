@@ -56,7 +56,7 @@ namespace Presentacion
 
 
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnRegresar_Click(object sender, EventArgs e)
         {
             new MenuPrincipal().Show();
             this.Hide();

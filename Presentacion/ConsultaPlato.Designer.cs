@@ -42,7 +42,7 @@
             this.btnRegresar.TabIndex = 5;
             this.btnRegresar.Text = "Regresar";
             this.btnRegresar.UseVisualStyleBackColor = true;
-            this.btnRegresar.Click += new System.EventHandler(this.button1_Click);
+            this.btnRegresar.Click += new System.EventHandler(this.btnRegresar_Click);
             // 
             // dgvConsultaPlatos
             // 

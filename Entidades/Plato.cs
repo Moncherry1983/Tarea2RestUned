@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace Entidades
 {
@@ -20,6 +21,7 @@ namespace Entidades
 
 
         // Constructor de la clase
+        [JsonConstructor]
         public Plato(int idPlato, string nombrePlato, int precio, CategoriaPlato categoriaPlato)
         {
             this.idPlato = idPlato;
@@ -27,6 +29,13 @@ namespace Entidades
             this.precio = precio;
             this.categoriaPlato = categoriaPlato;
 
+        }
+
+        public Plato(int idPlato) { 
+            this.idPlato=idPlato;
+            this.nombrePlato = "";
+            this.precio = 0;
+            this.categoriaPlato = new CategoriaPlato(0,"",true);
         }
 
         // Métodos de acceso (getters y setters) de los atributos
