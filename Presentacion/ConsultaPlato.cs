@@ -1,11 +1,11 @@
-﻿using Entidades;
-using LogicaNegocio;
-using LogicaNegocio.Enumeradores;
-using Presentacion.Miscelaneas;
-using System;
-using System.Collections.Generic;
+﻿using System;
+using Entidades;
 using System.Linq;
+using LogicaNegocio;
 using System.Windows.Forms;
+using Presentacion.Miscelaneas;
+using LogicaNegocio.Enumeradores;
+using System.Collections.Generic;
 
 namespace Presentacion
 {
@@ -14,7 +14,7 @@ namespace Presentacion
         readonly string nombreMaquinaCliente;
         PantallaEspera pantallaEspera = new PantallaEspera();
         AdministradorTCP tcpClient;
-
+        List<CategoriaPlato> listaCategoriaPlatos = new List<CategoriaPlato>();
         public ConsultaPlato(string nombreMaquinaCliente)
         {
             InitializeComponent();
@@ -54,9 +54,6 @@ namespace Presentacion
             SolicitarDatosAlServidor();
         }
 
-        private void descripcion_TextChanged(object sender, EventArgs e)
-        {
-        }
 
 
         private void button1_Click(object sender, EventArgs e)
@@ -65,18 +62,7 @@ namespace Presentacion
             this.Hide();
         }
 
-        //private void Conectar_Click(object sender, EventArgs e)
-        //{
-        //    dgvConsultaPlatos.DataSource = plato.ListarPlato();
-        //    dgvConsultaPlatos.Refresh();
-        //}
-
-        private CategoriaPlato[] ObtenerCategoriasDisponibles()
-        {
-            //return categorias.ListarCategoriaPlatoCombo();
-            return null;
-        }
-
+      
         private void dgvConsultaPlatos_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
             if (dgvConsultaPlatos == null || dgvConsultaPlatos.Columns.Count <= e.ColumnIndex)
@@ -93,7 +79,7 @@ namespace Presentacion
                         int idCategoria;
                         if (int.TryParse(e.Value.ToString(), out idCategoria))
                         {
-                            var categoria = ObtenerCategoriasDisponibles()
+                            var categoria = listaCategoriaPlatos
                                 .FirstOrDefault(cp => cp.IdCategoria == idCategoria);
 
                             if (categoria != null)
@@ -118,7 +104,7 @@ namespace Presentacion
             }
             else
             {
-                MessageBox.Show("La categoría de plato no existe");
+                MessageBox.Show("El plato no existe");
             }
         }
 
@@ -130,12 +116,12 @@ namespace Presentacion
                 {
                     pantallaEspera.Show();
                     CategoriaPlato categoriaPlato = new CategoriaPlato(0, "", true);
-                    Plato plato = new Plato(0, "", 0,categoriaPlato);
+                    Plato plato = new Plato(0, "", 0, categoriaPlato);
                     var paquete = new Paquete<Plato>()
                     {
                         ClienteId = nombreMaquinaCliente,
                         TiposAccion = TiposAccion.Listar,
-                        ListaInstaciasGenericas = new System.Collections.ArrayList(){ plato }
+                        ListaInstaciasGenericas = new System.Collections.ArrayList() { plato }
                     };
 
                     string CategoriaPlatoSerializada = AdmistradorPaquetes.SerializePackage(paquete);
