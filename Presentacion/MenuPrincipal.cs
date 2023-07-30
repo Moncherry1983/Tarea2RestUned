@@ -1,6 +1,6 @@
-﻿using Entidades;
+﻿using System;
+using Entidades;
 using SimpleTCP;
-using System;
 using System.Windows.Forms;
 
 namespace Presentacion
@@ -60,19 +60,19 @@ namespace Presentacion
 
         private void button11_Click(object sender, EventArgs e)
         {
-            new ConsultaPlatoRestaurante().Show();
+            new ConsultaPlatoRestaurante(nombreMaquinaCliente).Show();
             this.Hide();
         }
 
         private void button10_Click(object sender, EventArgs e)
         {
-            new ConsultarCliente().Show();
+            new ConsultarCliente(nombreMaquinaCliente).Show();
             this.Hide();
         }
 
         private void button6_Click(object sender, EventArgs e)
         {
-            new MenuExtra().Show();
+            new MenuExtra(nombreMaquinaCliente).Show();
             this.Hide();
         }
 
@@ -96,7 +96,7 @@ namespace Presentacion
 
         private void button13_Click(object sender, EventArgs e)
         {
-            new ConsultarExtra().Show();
+            new ConsultarExtra(nombreMaquinaCliente).Show();
             this.Hide();
         }
 

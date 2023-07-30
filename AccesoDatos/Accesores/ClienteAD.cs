@@ -51,7 +51,7 @@ namespace AccesoDatos.Accesores
         public static List<Cliente> ListarClientes()
         {
             List<Cliente> ListaCliente = new List<Cliente>();
-            string query = $"SELECT IdCliente, Nombre, PrimerApellido, SegundoApellido, FechaNacimiento, Genero FROM Cliente ";
+            string query = $"SELECT IdCliente, Nombre, PrimerApellido, SegundoApellido, FechaNacimiento, Genero FROM Cliente";
 
             SqlDataReader reader = null;
 

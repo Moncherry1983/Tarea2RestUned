@@ -1,11 +1,12 @@
-﻿using Entidades;
+﻿using System;
+using Entidades;
+using SimpleTCP;
 using LogicaNegocio;
-using LogicaNegocio.Enumeradores;
-using Presentacion.Miscelaneas;
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Windows.Forms;
+using Presentacion.Miscelaneas;
+using LogicaNegocio.Enumeradores;
+using System.Collections.Generic;
 
 namespace Presentacion
 {
@@ -69,7 +70,7 @@ namespace Presentacion
             }
             catch (Exception)
             {
-                e.Value = "Unknown";
+                e.Value = "desconocido";
             }
         }
 
