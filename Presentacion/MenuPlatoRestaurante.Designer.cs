@@ -35,7 +35,7 @@
             this.dtpFechaAfiliacion = new System.Windows.Forms.DateTimePicker();
             this.label4 = new System.Windows.Forms.Label();
             this.btnGuardarAsociacionPlatoRest = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.btnRegresar = new System.Windows.Forms.Button();
             this.btnPLatos = new System.Windows.Forms.Button();
             this.lbxPlatosSeleccionados = new System.Windows.Forms.ListBox();
             this.dgvAsociacionesPlatos = new System.Windows.Forms.DataGridView();
@@ -109,15 +109,15 @@
             this.btnGuardarAsociacionPlatoRest.UseVisualStyleBackColor = true;
             this.btnGuardarAsociacionPlatoRest.Click += new System.EventHandler(this.btnGuardarAsociacionPlatoRest_Click);
             // 
-            // button2
+            // btnRegresar
             // 
-            this.button2.Location = new System.Drawing.Point(182, 388);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(115, 66);
-            this.button2.TabIndex = 16;
-            this.button2.Text = "Regresar";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.btnRegresar.Location = new System.Drawing.Point(182, 388);
+            this.btnRegresar.Name = "btnRegresar";
+            this.btnRegresar.Size = new System.Drawing.Size(115, 66);
+            this.btnRegresar.TabIndex = 16;
+            this.btnRegresar.Text = "Regresar";
+            this.btnRegresar.UseVisualStyleBackColor = true;
+            this.btnRegresar.Click += new System.EventHandler(this.btnRegresar_Click);
             // 
             // btnPLatos
             // 
@@ -127,7 +127,7 @@
             this.btnPLatos.TabIndex = 17;
             this.btnPLatos.Text = "Lista de Platos";
             this.btnPLatos.UseVisualStyleBackColor = true;
-            this.btnPLatos.Click += new System.EventHandler(this.btnPLatos_Click);
+            this.btnPLatos.Click += new System.EventHandler(this.btnListarPlatos_Click);
             // 
             // lbxPlatosSeleccionados
             // 
@@ -164,7 +164,6 @@
             this.label3.Size = new System.Drawing.Size(124, 18);
             this.label3.TabIndex = 21;
             this.label3.Text = "Platos Asociados";
-            this.label3.Click += new System.EventHandler(this.label3_Click_1);
             // 
             // lbAsignacion
             // 
@@ -186,7 +185,7 @@
             this.Controls.Add(this.dgvAsociacionesPlatos);
             this.Controls.Add(this.lbxPlatosSeleccionados);
             this.Controls.Add(this.btnPLatos);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.btnRegresar);
             this.Controls.Add(this.btnGuardarAsociacionPlatoRest);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.dtpFechaAfiliacion);
@@ -196,6 +195,7 @@
             this.Controls.Add(this.label1);
             this.Name = "MenuPlatoRestaurante";
             this.Text = "MenuPlatoRestaurante";
+            this.Load += new System.EventHandler(this.MenuPlatoRestaurante_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvAsociacionesRestaurantes)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAsociacionesPlatos)).EndInit();
             this.ResumeLayout(false);
@@ -212,7 +212,7 @@
         private System.Windows.Forms.DateTimePicker dtpFechaAfiliacion;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button btnGuardarAsociacionPlatoRest;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btnRegresar;
         private System.Windows.Forms.Button btnPLatos;
         private System.Windows.Forms.ListBox lbxPlatosSeleccionados;
         private System.Windows.Forms.DataGridView dgvAsociacionesPlatos;

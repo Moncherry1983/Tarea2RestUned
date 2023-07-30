@@ -59,8 +59,6 @@ namespace Presentacion
             cmbPlatos.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbPlatos.DisplayMember = "Descripcion";
             cmbPlatos.ValueMember = "IdCategoria";
-
-            //cmbPlatos.DataSource = ObtenerCategoriasDisponibles();
         }       
         
         private void MenuPlatos_Load(object sender, EventArgs e)
