@@ -14,7 +14,7 @@ namespace Presentacion
     public partial class MenuPlatos : Form
     {
         readonly string nombreMaquinaCliente;
-        PantallaEspera pantallaEspera = new PantallaEspera();
+        readonly PantallaEspera pantallaEspera = new PantallaEspera();
         AdministradorTCP tcpClient;
         List<CategoriaPlato> listaCategoriaPlatos= new List<CategoriaPlato>();
 
@@ -59,8 +59,6 @@ namespace Presentacion
             cmbPlatos.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbPlatos.DisplayMember = "Descripcion";
             cmbPlatos.ValueMember = "IdCategoria";
-
-            //cmbPlatos.DataSource = ObtenerCategoriasDisponibles();
         }       
         
         private void MenuPlatos_Load(object sender, EventArgs e)
@@ -198,7 +196,7 @@ namespace Presentacion
             }
         }
 
-        private void GuardarCambios(Plato Plato)
+        private void GuardarCambios(Plato plato)
         {
             try
             {
@@ -208,11 +206,11 @@ namespace Presentacion
                     {
                         ClienteId = nombreMaquinaCliente,
                         TiposAccion = TiposAccion.Agregar,
-                        ListaInstaciasGenericas = new ArrayList() { Plato }
+                        ListaInstaciasGenericas = new ArrayList() { plato }
                     };
 
-                    string CategoriaPlatoSerializada = AdmistradorPaquetes.SerializePackage(paquete);
-                    tcpClient.TcpClient.WriteLineAndGetReply(CategoriaPlatoSerializada, TimeSpan.FromSeconds(3));
+                    string paqueteSerializado = AdmistradorPaquetes.SerializePackage(paquete);
+                    tcpClient.TcpClient.WriteLineAndGetReply(paqueteSerializado, TimeSpan.FromSeconds(3));
                 }
             }
             catch (Exception ex)
@@ -237,8 +235,8 @@ namespace Presentacion
                         ListaInstaciasGenericas = new ArrayList() { categoriaPlato, plato }
                     };
 
-                    string CategoriaPlatoSerializada = AdmistradorPaquetes.SerializePackage(paquete);
-                    tcpClient.TcpClient.WriteLineAndGetReply(CategoriaPlatoSerializada, TimeSpan.FromSeconds(3));
+                    string paqueteSerializado = AdmistradorPaquetes.SerializePackage(paquete);
+                    tcpClient.TcpClient.WriteLineAndGetReply(paqueteSerializado, TimeSpan.FromSeconds(3));
                 }
             }
             catch (Exception ex)
@@ -250,19 +248,19 @@ namespace Presentacion
         private void Client_DataReceived(object sender, SimpleTCP.Message e)
         {
             string valorRecibido = e.MessageString.TrimEnd('\u0013');
-            var informacionCategoriaPlatos = AdmistradorPaquetes.DeserializePackage(valorRecibido);
+            var informacionPaquete = AdmistradorPaquetes.DeserializePackage(valorRecibido);
 
-            if (informacionCategoriaPlatos != null)
+            if (informacionPaquete != null)
             {
-                switch (informacionCategoriaPlatos.TiposAccion)
+                switch (informacionPaquete.TiposAccion)
                 {
                     case TiposAccion.Agregar:
                         ReiniciarPantalla();
                         break;
 
                     case TiposAccion.Listar:                        
-                        listaCategoriaPlatos = informacionCategoriaPlatos.ListaInstaciasGenericas[0];
-                        List<Plato> listaPlatos = informacionCategoriaPlatos.ListaInstaciasGenericas[1];
+                        listaCategoriaPlatos = informacionPaquete.ListaInstaciasGenericas[0];
+                        List<Plato> listaPlatos = informacionPaquete.ListaInstaciasGenericas[1];
                         CargarDatos(listaCategoriaPlatos, listaPlatos);
                         break;
 

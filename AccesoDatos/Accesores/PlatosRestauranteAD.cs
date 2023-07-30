@@ -8,7 +8,7 @@ namespace AccesoDatos.Accesores
 {
     public static class PlatosRestauranteAD
     {
-        public static void AgregarPlatoRestaurante(PlatoRestaurante plato)
+        public static bool AgregarPlatoRestaurante(PlatoRestaurante plato)
         {
             string query = $"INSERT INTO PlatoRestaurante(IdAsignacion, IdRestaurante, IdPlato, FechaAsignacion) VALUES(,@IdAsignacion,@IdRestaurante, @IdPlato, @FechaAsignacion)";
             try
@@ -41,12 +41,14 @@ namespace AccesoDatos.Accesores
                     throw ex;
                 }
             }
+
+            return true;
         }
 
         public static List<PlatoRestaurante> ListarPlatoRestaurante()
         {
             List<PlatoRestaurante> ListaPlatoRestaurante = new List<PlatoRestaurante>();
-            string query = $"SELECT (IdAsignacion, IdRestaurante, IdPlato, FechaAsignacion  FROM PlatoRestaurante";
+            string query = $"SELECT IdAsignacion, IdRestaurante, IdPlato, FechaAsignacion  FROM PlatoRestaurante";
 
             SqlDataReader reader = null;
 

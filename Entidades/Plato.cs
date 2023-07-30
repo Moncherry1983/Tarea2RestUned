@@ -55,7 +55,7 @@ namespace Entidades
 
         public int IdCategoria
         {
-            get { return categoriaPlato.IdCategoria; }            
+            get { return categoriaPlato !=  null ?  categoriaPlato.IdCategoria: 0 ; }            
         }
         
 
